@@ -3,34 +3,28 @@
   "targetDefaults": {
     "build": {
       "cache": false,
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "test": {
       "cache": false,
-      "inputs": [
-        "default",
-        "^production"
-      ]
+      "inputs": ["default", "^production"]
     }
   },
   "defaultBase": "master",
   "namedInputs": {
     "sharedGlobals": [],
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/**/*.spec.[jt]s"
     ]
   },
-  "nxCloudId": "680253aab4035e38c2decdec"
+  "nxCloudId": "680253aab4035e38c2decdec",
+  "generators": {
+    "@nx/angular:component": {
+      "style": "scss"
+    }
+  }
 }

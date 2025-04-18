@@ -1,0 +1,18 @@
+<header class="flex-none">
+  <nav>
+    <main-menu></main-menu>
+  </nav>
+</header>
+<main class="flex-auto">
+  <p-splitter [panelSizes]="[15, 75]" [minSizes]="[10, 50]" [style]="{ height: '100%' }" styleClass="mb-8">
+    <ng-template #panel>
+      <side-panel></side-panel>
+    </ng-template>
+    <ng-template #panel>
+      <div class="flex items-center justify-center h-full">Canvas</div>
+    </ng-template>
+  </p-splitter>
+</main>
+<footer class="flex-none">
+  <statusbar></statusbar>
+</footer>
