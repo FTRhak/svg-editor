@@ -1,0 +1,18 @@
+<div class="w-100">
+  <p-tree
+    [value]="items()"
+    [highlightOnSelect]="true"
+    selectionMode="single"
+    [contextMenu]="cm"
+    [(selection)]="selectedItem"
+    styleClass="w-100"
+    (onNodeContextMenuSelect)="onContextMenu($event)"
+    (selectionChange)="onChange($event)"
+  >
+    <ng-template let-node pTemplate="default">
+      <div>{{ node.typeName }}</div>
+    </ng-template>
+  </p-tree>
+</div>
+
+<p-contextmenu #cm [model]="menuItems()" />

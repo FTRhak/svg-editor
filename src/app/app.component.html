@@ -4,9 +4,11 @@
   </nav>
 </header>
 <main class="flex-auto">
-  <p-splitter [panelSizes]="[15, 75]" [minSizes]="[10, 50]" [style]="{ height: '100%' }" styleClass="mb-8">
+  <p-splitter [panelSizes]="[15, 75]" [minSizes]="[10, 50]" styleClass="h-100 w-100">
     <ng-template #panel>
-      <side-panel></side-panel>
+      <div class="h-100 w-100">
+        <side-panel></side-panel>
+      </div>
     </ng-template>
     <ng-template #panel>
       <div class="flex items-center justify-center h-full">Canvas</div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -16,6 +17,8 @@ import { SelectModule } from 'primeng/select';
 import { SplitterModule } from 'primeng/splitter';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
+import { TreeModule } from 'primeng/tree';
+import { TabsModule } from 'primeng/tabs';
 
 const modules = [
   MenubarModule,
@@ -34,6 +37,9 @@ const modules = [
   ConfirmDialogModule,
   InputGroupModule,
   InputGroupAddonModule,
+  ContextMenuModule,
+  TreeModule,
+  TabsModule,
 ];
 
 @NgModule({

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ProjectService } from '@core/services';
 
 @Component({
   selector: 'main-menu',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
   styleUrl: './main-menu.component.scss',
 })
 export class MainMenuComponent {
+  private project = inject(ProjectService);
+
   public readonly items = [
     {
       label: 'File',
@@ -15,6 +18,9 @@ export class MainMenuComponent {
         {
           label: 'New',
           icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.project.createNewProject();
+          },
         },
       ],
     },

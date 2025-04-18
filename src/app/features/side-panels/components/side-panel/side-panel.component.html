@@ -1,1 +1,21 @@
-<p>side-panel works!</p>
+<p-splitter [panelSizes]="[20, 85]" [minSizes]="[10, 50]" layout="vertical" class="h-100">
+  <ng-template #panel>
+    <div class="w-100 h-100">
+      <view-structure></view-structure>
+    </div>
+  </ng-template>
+  <ng-template #panel>
+    <div class="w-100 h-100">
+      <p-tabs [value]="0" scrollable>
+        <p-tablist>
+          <p-tab [value]="0">Properties</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+          <p-tabpanel [value]="0">
+            <properties></properties>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </div>
+  </ng-template>
+</p-splitter>
