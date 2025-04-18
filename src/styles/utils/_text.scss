@@ -1,0 +1,64 @@
+/* Text align */
+$textAlignList: (left, right, center);
+
+@each $textAlign in $textAlignList {
+  .text-#{$textAlign} {
+    text-align: #{$textAlign} !important;
+  }
+}
+
+$textTransforms: (lowercase, uppercase, capitalize);
+@each $textTransform in $textTransforms {
+  .text-#{$textTransform} {
+    text-transform: #{$textTransform} !important;
+  }
+}
+
+$textFontWeights: (700, bolder, 600, 400, 300, lighter, bold);
+@each $textFontWeight in $textFontWeights {
+  .fw-#{$textFontWeight} {
+    font-weight: #{$textFontWeight} !important;
+  }
+}
+
+$textFontStyles: (italic, normal);
+@each $textFontStyle in $textFontStyles {
+  .fst-#{$textFontStyle} {
+    font-style: #{$textFontStyle} !important;
+  }
+}
+
+$textFontSize: (0.2, 0.25, 0.5, 0.75, 0.9, 1, 2, 3, 4);
+@each $size in $textFontSize {
+  @if ($size < 1) {
+    $sizeName: '0' + $size * 100;
+    .fs-#{$sizeName} {
+      font-size: #{$size}rem;
+    }
+    .lh-#{$sizeName} {
+      line-height: #{$size}rem;
+    }
+  } @else {
+    .fs-#{$size} {
+      font-size: #{$size}rem;
+    }
+    .lh-#{$size} {
+      line-height: #{$size}rem;
+    }
+  }
+}
+
+/*
+
+.lh-1 {
+    line-height: 1!important;
+}
+.lh-sm {
+    line-height: 1.25!important;
+}
+.lh-base {
+    line-height: 1.5!important;
+}
+.lh-lg {
+    line-height: 2!important;
+}*/

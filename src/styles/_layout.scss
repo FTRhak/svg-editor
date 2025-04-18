@@ -1,0 +1,24 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+$sizeList: (1, 10, 20, 25, 50, 75, 80, 100);
+@each $size in $sizeList {
+  .w-#{$size} {
+    width: #{$size + '%'};
+  }
+
+  .h-#{$size} {
+    height: #{$size + '%'};
+  }
+
+  .wv-#{$size} {
+    width: #{$size}vw;
+  }
+
+  .hv-#{$size} {
+    height: #{$size}vh;
+  }
+}

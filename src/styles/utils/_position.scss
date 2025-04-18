@@ -1,0 +1,16 @@
+$positionList: (relative, static, absolute, fixed, sticky);
+@each $position in $positionList {
+  .position-#{$position} {
+    position: #{$position} !important;
+  }
+}
+
+$positionValues: (0, 25, 50, 100);
+$positionSides: (top, right, bottom, left);
+@each $positionSide in $positionSides {
+  @each $positionValue in $positionValues {
+    .#{$positionSide}-#{$positionValue} {
+      #{$positionSide}: #{$positionValue + '%'} !important;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+$pointerEvents: (none, auto, all);
+
+@each $pointerEvent in $pointerEvents {
+  .pe-#{$pointerEvent} {
+    pointer-events: #{$pointerEvent} !important;
+  }
+}

@@ -6,7 +6,8 @@
     "start": "nx serve",
     "build": "nx build",
     "watch": "nx build --watch --configuration development",
-    "test": "nx test"
+    "test": "nx test",
+    "prettier:fix": "prettier --config \"./src/.prettierrc\" --write --check \"./src/**/*.{ts,js,json,html,scss,css}\""
   },
   "private": true,
   "dependencies": {
@@ -17,6 +18,9 @@
     "@angular/platform-browser": "^19.2.0",
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
+    "@primeng/themes": "^19.1.0",
+    "primeicons": "^7.0.0",
+    "primeng": "^19.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
@@ -38,6 +42,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "nx": "20.8.0",
+    "prettier": "^3.5.3",
     "typescript": "~5.7.2"
   }
 }

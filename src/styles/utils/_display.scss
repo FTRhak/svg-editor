@@ -1,0 +1,66 @@
+/* Display */
+$displayList: (block, inline-block, inline, flex, none);
+
+@each $display in $displayList {
+  .d-#{$display} {
+    display: #{$display} !important;
+  }
+}
+
+/* Align and Justify */
+$alignList: (center, space-between, space-around, space-evenly, flex-start, flex-end);
+
+@each $align in $alignList {
+  .justify-#{$align} {
+    justify-content: #{$align} !important;
+  }
+
+  .align-items-#{$align} {
+    align-items: #{$align};
+  }
+
+  .justify-items-#{$align} {
+    justify-items: #{$align};
+  }
+
+  .content-#{$align} {
+    align-content: #{$align};
+  }
+}
+
+.flex-auto {
+  flex: 1 1 auto !important;
+}
+
+.flex-none {
+  flex: 0 0 auto !important;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-2 {
+  flex: 2;
+}
+
+$directionList: (column, row, column-reverse, row-reverse);
+@each $direction in $directionList {
+  .flex-#{$direction} {
+    flex-direction: #{$direction};
+  }
+}
+
+$gapsList: (0, 0.25, 0.5, 0.75, 1, 2, 3, 4, 5);
+@each $gap in $gapsList {
+  @if ($gap >= 1) {
+    .gap-#{$gap} {
+      gap: #{$gap}rem;
+    }
+  } @else if ($gap < 1) {
+    $gapName: '0' + $gap * 100;
+    .gap-#{$gapName} {
+      gap: #{$gap}rem;
+    }
+  }
+}

@@ -1,0 +1,7 @@
+$opacityList: (0, 25, 50, 75, 100);
+
+@each $opacity in $opacityList {
+  .opacity-#{$opacity} {
+    pointer-events: #{calc($opacity/100)} !important;
+  }
+}

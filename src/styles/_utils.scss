@@ -1,0 +1,13 @@
+/* Utility classes */
+
+@use 'utils/space';
+@use 'utils/display';
+@use 'utils/text';
+@use 'utils/interaction';
+@use 'utils/opacity';
+@use 'utils/position';
+
+/* Cursor */
+.cursor-pointer {
+  cursor: pointer;
+}
