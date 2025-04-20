@@ -23,7 +23,8 @@ export class PropertiesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([project, item]) => {
         this.viewContainer.clear();
-        switch (item._type) {
+
+        switch (item?._type) {
           case SVGNodeType.GROUP:
             this.viewContainer.createComponent(PropertiesNodeSvgGroupComponent);
             break;
