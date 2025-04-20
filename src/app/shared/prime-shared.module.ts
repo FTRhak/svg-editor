@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
@@ -15,10 +16,10 @@ import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { SelectModule } from 'primeng/select';
 import { SplitterModule } from 'primeng/splitter';
+import { TabsModule } from 'primeng/tabs';
 import { ToastModule } from 'primeng/toast';
 import { ToolbarModule } from 'primeng/toolbar';
 import { TreeModule } from 'primeng/tree';
-import { TabsModule } from 'primeng/tabs';
 
 const modules = [
   MenubarModule,
@@ -40,6 +41,7 @@ const modules = [
   ContextMenuModule,
   TreeModule,
   TabsModule,
+  ColorPickerModule,
 ];
 
 @NgModule({

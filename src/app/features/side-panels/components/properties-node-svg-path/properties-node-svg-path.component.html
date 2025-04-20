@@ -1,1 +1,38 @@
-<p>properties-node-svg-path works!</p>
+<form [formGroup]="form">
+  <p-floatlabel variant="on" class="mb-1">
+    <p-inputgroup>
+      <input pInputText formControlName="fill" />
+      <p-inputgroup-addon>
+        <p-colorpicker formControlName="fill" appendTo="body" />
+      </p-inputgroup-addon>
+    </p-inputgroup>
+    <label for="fillField">Fill</label>
+  </p-floatlabel>
+  <p-floatlabel variant="on" class="mb-1">
+    <p-inputgroup>
+      <input pInputText id="strokeField" formControlName="stroke" />
+      <p-inputgroup-addon>
+        <p-colorpicker formControlName="stroke" appendTo="body" />
+      </p-inputgroup-addon>
+    </p-inputgroup>
+    <label for="strokeField">Stroke</label>
+  </p-floatlabel>
+  <p-floatlabel variant="on" class="mb-1">
+    <p-inputnumber
+      id="strokeWidthField"
+      size="small"
+      name="strokeWidth"
+      formControlName="strokeWidth"
+      class="w-100"
+      mode="decimal"
+      [min]="0"
+      [max]="999"
+      [step]="1"
+    />
+    <label for="strokeWidthField">Stroke Width</label>
+  </p-floatlabel>
+  <p-floatlabel variant="on" class="mb-1">
+    <textarea id="dField" rows="5" class="w-100" name="d" pTextarea formControlName="d"></textarea>
+    <label for="dField">D (path)</label>
+  </p-floatlabel>
+</form>
