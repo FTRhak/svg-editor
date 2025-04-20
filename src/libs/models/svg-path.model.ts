@@ -5,7 +5,7 @@ import { SVGGroupModel } from './svg-group.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 
-export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel{
+export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.PATH;
   public override readonly _id: PID;
   public fill!: string;
@@ -23,7 +23,8 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel{
   }
 
   public override render() {
-    let res = `<path id="${this._id}" ` +
+    let res =
+      `<path id="${this._id}" ` +
       (isNotUndefined(this.fill) ? ` fill="${this.fill}"` : '') +
       (isNotUndefined(this.stroke) ? ` stroke="${this.stroke}"` : '') +
       (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
@@ -31,5 +32,6 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel{
       (isNotUndefined(this.style) ? ` style="${this.style}"` : '') +
       (isNotUndefined(this.d) ? ` d="${this.d}"` : '') +
       `></path>`;
-    return res;}
+    return res;
+  }
 }

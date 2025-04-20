@@ -41,6 +41,15 @@ export class ViewStructureComponent implements OnInit {
     },
   };
 
+  private readonly ADD_ELLIPSE = {
+    label: 'Ellipse',
+    type: SVGNodeType.ELLIPSE,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem &&
+        this.project.addChildItem(this.selectedItem.id, ev.item.type, { cx: 2, cy: 1, rx: 2, ry: 1 });
+    },
+  };
+
   private readonly ADD_PATH = {
     label: 'Path',
     type: SVGNodeType.PATH,
@@ -54,12 +63,14 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_PATH },
     { ...this.ADD_RECT },
     { ...this.ADD_CIRCLE },
+    { ...this.ADD_ELLIPSE },
   ];
   private readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
     { ...this.ADD_GROUP },
     { ...this.ADD_PATH },
     { ...this.ADD_RECT },
     { ...this.ADD_CIRCLE },
+    { ...this.ADD_ELLIPSE },
   ];
 
   private readonly MENU_ITEM_REMOVE: MenuItem = {

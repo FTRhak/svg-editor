@@ -3,11 +3,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '@core/services';
 import { SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
 import { fromEvent } from 'rxjs';
+import { PropertiesNodeSvgCircleComponent } from '../properties-node-svg-circle/properties-node-svg-circle.component';
+import { PropertiesNodeSvgEllipseComponent } from '../properties-node-svg-ellipse/properties-node-svg-ellipse.component';
 import { PropertiesNodeSvgGroupComponent } from '../properties-node-svg-group/properties-node-svg-group.component';
 import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/properties-node-svg-path.component';
 import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
 import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
-import { PropertiesNodeSvgCircleComponent } from '../properties-node-svg-circle/properties-node-svg-circle.component';
 
 @Component({
   selector: 'properties',
@@ -41,6 +42,9 @@ export class PropertiesComponent implements OnInit {
             break;
           case SVGNodeType.CIRCLE:
             component = this.viewContainer.createComponent(PropertiesNodeSvgCircleComponent);
+            break;
+          case SVGNodeType.ELLIPSE:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgEllipseComponent);
             break;
         }
 

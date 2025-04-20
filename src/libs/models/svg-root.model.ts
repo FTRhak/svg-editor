@@ -2,6 +2,7 @@ import { Generator } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { SVGCircleModel } from './svg-circle.model';
+import { SVGEllipseModel } from './svg-ellipse.model';
 import { SVGGroupModel } from './svg-group.model';
 import { SVGPathModel } from './svg-path.model';
 import { SVGRectModel } from './svg-rect.model';
@@ -51,6 +52,9 @@ export class SVGRootModel extends TreeNodeModel {
         break;
       case SVGNodeType.CIRCLE:
         node = new SVGCircleModel(config);
+        break;
+      case SVGNodeType.ELLIPSE:
+        node = new SVGEllipseModel(config);
         break;
       default:
         console.warn('Unknown node type to crate');
