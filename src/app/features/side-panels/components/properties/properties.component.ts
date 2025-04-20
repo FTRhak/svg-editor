@@ -7,6 +7,7 @@ import { PropertiesNodeSvgGroupComponent } from '../properties-node-svg-group/pr
 import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/properties-node-svg-path.component';
 import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
 import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
+import { PropertiesNodeSvgCircleComponent } from '../properties-node-svg-circle/properties-node-svg-circle.component';
 
 @Component({
   selector: 'properties',
@@ -37,6 +38,9 @@ export class PropertiesComponent implements OnInit {
             break;
           case SVGNodeType.RECT:
             component = this.viewContainer.createComponent(PropertiesNodeSvgRectComponent);
+            break;
+          case SVGNodeType.CIRCLE:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgCircleComponent);
             break;
         }
 

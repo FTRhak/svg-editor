@@ -33,6 +33,14 @@ export class ViewStructureComponent implements OnInit {
     },
   };
 
+  private readonly ADD_CIRCLE = {
+    label: 'Circle',
+    type: SVGNodeType.CIRCLE,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type, { cx: 1, cy: 1, r: 1 });
+    },
+  };
+
   private readonly ADD_PATH = {
     label: 'Path',
     type: SVGNodeType.PATH,
@@ -41,11 +49,17 @@ export class ViewStructureComponent implements OnInit {
     },
   };
 
-  private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [{ ...this.ADD_GROUP }, { ...this.ADD_PATH }, { ...this.ADD_RECT }];
+  private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [
+    { ...this.ADD_GROUP },
+    { ...this.ADD_PATH },
+    { ...this.ADD_RECT },
+    { ...this.ADD_CIRCLE },
+  ];
   private readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
     { ...this.ADD_GROUP },
     { ...this.ADD_PATH },
     { ...this.ADD_RECT },
+    { ...this.ADD_CIRCLE },
   ];
 
   private readonly MENU_ITEM_REMOVE: MenuItem = {

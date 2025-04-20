@@ -2,9 +2,10 @@ import { Generator, isNotUndefined } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { SVGGroupModel } from './svg-group.model';
+import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 
-export class SVGRectModel extends TreeNodeModel {
+export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.RECT;
   public override readonly _id: PID;
   public fill!: string;

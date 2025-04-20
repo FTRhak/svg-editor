@@ -1,9 +1,11 @@
 import { Generator } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
+import { SVGCircleModel } from './svg-circle.model';
 import { SVGGroupModel } from './svg-group.model';
 import { SVGPathModel } from './svg-path.model';
 import { SVGRectModel } from './svg-rect.model';
+import { SVGRefsModel } from './svg-refs.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGRootModel extends TreeNodeModel {
@@ -39,13 +41,16 @@ export class SVGRootModel extends TreeNodeModel {
         node = new SVGGroupModel();
         break;
       case SVGNodeType.REFS:
-        node = new SVGPathModel();
+        node = new SVGRefsModel();
         break;
       case SVGNodeType.PATH:
-        node = new SVGPathModel();
+        node = new SVGPathModel(config);
         break;
       case SVGNodeType.RECT:
         node = new SVGRectModel(config);
+        break;
+      case SVGNodeType.CIRCLE:
+        node = new SVGCircleModel(config);
         break;
       default:
         console.warn('Unknown node type to crate');

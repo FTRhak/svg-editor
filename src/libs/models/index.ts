@@ -1,5 +1,6 @@
 export type { PID } from './id.type';
 export { SVGNodeType } from './node.type';
+export { SVGCircleModel } from './svg-circle.model';
 export { SVGGroupModel } from './svg-group.model';
 export { SVGPathModel } from './svg-path.model';
 export { SVGRectModel } from './svg-rect.model';

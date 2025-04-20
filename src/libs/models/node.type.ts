@@ -3,5 +3,6 @@ export enum SVGNodeType {
   GROUP = 'group',
   PATH = 'path',
   RECT = 'rect',
+  CIRCLE = 'circle',
   REFS = 'refs',
 }

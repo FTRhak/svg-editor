@@ -10,6 +10,7 @@ import { PropertiesNodeSvgPathComponent } from './components/properties-node-svg
 import { ReactiveFormsModule } from '@angular/forms';
 import { PropertiesNodeSvgRectComponent } from './components/properties-node-svg-rect/properties-node-svg-rect.component';
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
+import { PropertiesNodeSvgCircleComponent } from './components/properties-node-svg-circle/properties-node-svg-circle.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FieldLockDirective } from './directives/field-lock/field-lock.directive
     PropertiesNodeSvgPathComponent,
     PropertiesNodeSvgRectComponent,
     FieldLockDirective,
+    PropertiesNodeSvgCircleComponent,
   ],
   exports: [SidePanelComponent],
   imports: [CommonModule, PrimeSharedModule, ReactiveFormsModule],
