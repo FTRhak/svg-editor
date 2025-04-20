@@ -4,4 +4,5 @@ export type ProjectEventName =
   | 'project:tree:updates'
   | 'project:item-added'
   | 'project:item-removed'
-  | 'project:item:selected';
+  | 'project:item:selected'
+  | 'project:item:updated';

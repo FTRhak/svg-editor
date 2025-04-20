@@ -1,7 +1,7 @@
 import { Component, DestroyRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '@core/services';
-import { TreeItem, PID, SVGRootModel, TreeNodeModel, SVGNodeType } from '@libs';
+import { SVGNodeType, SVGRootModel, TreeItem } from '@libs';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
 import { fromEvent } from 'rxjs';
@@ -16,40 +16,39 @@ export class ViewStructureComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private project = inject(ProjectService);
 
-  public readonly MENU_ITEM_ADD_SVG: MenuItem[] = [
-    {
-      label: 'Group',
-      type: SVGNodeType.GROUP,
-      command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-        this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
-      },
+  private readonly ADD_GROUP = {
+    label: 'Group',
+    type: SVGNodeType.GROUP,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
     },
-    {
-      label: 'Path',
-      type: SVGNodeType.PATH,
-      command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-        this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
-      },
+  };
+
+  private readonly ADD_RECT = {
+    label: 'Rect',
+    type: SVGNodeType.RECT,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem &&
+        this.project.addChildItem(this.selectedItem.id, ev.item.type, { x: 0, y: 0, width: 1, height: 1 });
     },
-  ];
-  public readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
-    {
-      label: 'Group',
-      type: SVGNodeType.GROUP,
-      command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-        this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
-      },
+  };
+
+  private readonly ADD_PATH = {
+    label: 'Path',
+    type: SVGNodeType.PATH,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
     },
-    {
-      label: 'Path',
-      type: SVGNodeType.PATH,
-      command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-        this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
-      },
-    },
+  };
+
+  private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [{ ...this.ADD_GROUP }, { ...this.ADD_PATH }, { ...this.ADD_RECT }];
+  private readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
+    { ...this.ADD_GROUP },
+    { ...this.ADD_PATH },
+    { ...this.ADD_RECT },
   ];
 
-  public readonly MENU_ITEM_REMOVE: MenuItem = {
+  private readonly MENU_ITEM_REMOVE: MenuItem = {
     label: 'Remove',
     command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
       this.selectedItem && this.project.removeItem(this.selectedItem.id);
@@ -95,6 +94,9 @@ export class ViewStructureComponent implements OnInit {
         menu.push({ ...this.MENU_ITEM_REMOVE });
         break;
       case SVGNodeType.PATH:
+        menu.push({ ...this.MENU_ITEM_REMOVE });
+        break;
+      case SVGNodeType.RECT:
         menu.push({ ...this.MENU_ITEM_REMOVE });
         break;
     }

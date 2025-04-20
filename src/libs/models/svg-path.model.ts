@@ -9,6 +9,7 @@ export class SVGPathModel extends TreeNodeModel {
   public override readonly _id: PID;
   public transform!: string;
   public style!: string;
+  public d!: string;
 
   public override children: SVGGroupModel[] = [];
 

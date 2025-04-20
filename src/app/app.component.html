@@ -4,14 +4,16 @@
   </nav>
 </header>
 <main class="flex-auto">
-  <p-splitter [panelSizes]="[15, 75]" [minSizes]="[10, 50]" styleClass="h-100 w-100">
+  <p-splitter [panelSizes]="[15, 75]" [minSizes]="[10, 50]" styleClass="h-100 w-100" (onResizeEnd)="onResizeEnd()">
     <ng-template #panel>
       <div class="h-100 w-100">
         <side-panel></side-panel>
       </div>
     </ng-template>
     <ng-template #panel>
-      <div class="flex items-center justify-center h-full">Canvas</div>
+      <div class="h-100 w-100 position-relative">
+        <canvas-panel></canvas-panel>
+      </div>
     </ng-template>
   </p-splitter>
 </main>

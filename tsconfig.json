@@ -20,6 +20,7 @@
       "@core/*": ["./src/app/core/*"],
       "@features/*": ["./src/app/features/*"],
       "@libs": ["./src/libs/index.ts"],
+      "@libs/utils": ["./src/libs/utils/index.ts"],
       "@shared": ["./src/app/shared/index.ts"],
       "@shared/*": ["./src/app/shared/*"]
     }

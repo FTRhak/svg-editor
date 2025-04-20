@@ -3,3 +3,10 @@
 @use './styles/layout';
 @use './styles/utils';
 @import 'primeicons/primeicons.css';
+
+.input-color {
+  width: 100%;
+  border: 1px solid var(--p-inputtext-border-color);
+  background: var(--p-inputtext-background);
+  height: 44px;
+}

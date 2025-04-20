@@ -20,8 +20,8 @@ export class ProjectService {
     this.events.trigger('project:tree:updates', this.project, []);
   }
 
-  public addChildItem(parentId: PID, type: SVGNodeType) {
-    const item = this.project.addChild(parentId, type);
+  public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {
+    const item = this.project.addChild(parentId, type, config);
     this.events.trigger('project:item-added', this.project, item);
     this.events.trigger('project:tree:updates', this.project, [item]);
   }
@@ -49,5 +49,14 @@ export class ProjectService {
     const item = this.project.toList().find((item) => item._id === id);
     this.selectedItem = item || null;
     this.events.trigger('project:item:selected', this.project, this.selectedItem);
+  }
+
+  public setNodeProperty(id: PID, propertyName: string, value: any) {
+    const item: any = this.project.toList().find((item) => item._id === id);
+    if (item) {
+      item[propertyName] = value;
+      this.events.trigger('project:item:updated', this.project, item);
+      this.events.trigger('project:tree:updates', this.project, [item]);
+    }
   }
 }

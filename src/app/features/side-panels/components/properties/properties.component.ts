@@ -5,6 +5,7 @@ import { SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
 import { fromEvent } from 'rxjs';
 import { PropertiesNodeSvgGroupComponent } from '../properties-node-svg-group/properties-node-svg-group.component';
 import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/properties-node-svg-path.component';
+import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
 import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
 
 @Component({
@@ -23,17 +24,24 @@ export class PropertiesComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([project, item]) => {
         this.viewContainer.clear();
-
+        let component: any;
         switch (item?._type) {
           case SVGNodeType.GROUP:
-            this.viewContainer.createComponent(PropertiesNodeSvgGroupComponent);
+            component = this.viewContainer.createComponent(PropertiesNodeSvgGroupComponent);
             break;
           case SVGNodeType.SVG:
-            this.viewContainer.createComponent(PropertiesNodeSvgComponent);
+            component = this.viewContainer.createComponent(PropertiesNodeSvgComponent);
             break;
           case SVGNodeType.PATH:
-            this.viewContainer.createComponent(PropertiesNodeSvgPathComponent);
+            component = this.viewContainer.createComponent(PropertiesNodeSvgPathComponent);
             break;
+          case SVGNodeType.RECT:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgRectComponent);
+            break;
+        }
+
+        if (component) {
+          component.setInput('node', item);
         }
       });
   }

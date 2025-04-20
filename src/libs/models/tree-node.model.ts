@@ -22,4 +22,8 @@ export class TreeNodeModel {
     });
     return list;
   }
+
+  public render(): string {
+    return `${this._id}`;
+  }
 }

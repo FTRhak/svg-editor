@@ -3,6 +3,7 @@ import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { SVGGroupModel } from './svg-group.model';
 import { SVGPathModel } from './svg-path.model';
+import { SVGRectModel } from './svg-rect.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGRootModel extends TreeNodeModel {
@@ -20,17 +21,17 @@ export class SVGRootModel extends TreeNodeModel {
     this._id = Generator.getId('svg-');
   }
 
-  public addChild(id: PID, type: SVGNodeType): TreeNodeModel | null {
+  public addChild(id: PID, type: SVGNodeType, config: { [key: string]: any }): TreeNodeModel | null {
     const list = this.toList();
     const item = list.find((item) => item._id === id);
     if (item) {
-      const node = SVGRootModel.createNode(item, type);
+      const node = SVGRootModel.createNode(item, type, config);
       return node;
     }
     return null;
   }
 
-  public static createNode(parent: TreeNodeModel, type: SVGNodeType) {
+  public static createNode(parent: TreeNodeModel, type: SVGNodeType, config: { [key: string]: any }) {
     let node: TreeNodeModel;
 
     switch (type) {
@@ -42,6 +43,9 @@ export class SVGRootModel extends TreeNodeModel {
         break;
       case SVGNodeType.PATH:
         node = new SVGPathModel();
+        break;
+      case SVGNodeType.RECT:
+        node = new SVGRectModel(config);
         break;
       default:
         console.warn('Unknown node type to crate');
