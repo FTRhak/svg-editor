@@ -33,11 +33,11 @@ export class SVGGroupModel extends TreeNodeModel {
       (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
       (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
       (hasStyleProperties(this.style) ? ` style="${styleToString(this.style)}"` : '') +
-      `>`;
+      `>\n`;
 
-    this.children.forEach((child) => (res += child.render()));
+    this.children.forEach((child) => (res += '  ' + child.render()));
 
-    res += `</g>`;
+    res += `</g>\n`;
     return res;
   }
 

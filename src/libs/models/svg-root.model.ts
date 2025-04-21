@@ -51,9 +51,9 @@ export class SVGRootModel extends TreeNodeModel {
       (isNotUndefined(this.height) ? ` height="${this.height}"` : '') +
       (isNotUndefined(vb) ? ` viewBox="${vb?.x} ${vb?.y} ${vb?.width} ${vb?.height}"` : '') +
       (isNotUndefined(this.version) ? ` version="${this.version}"` : '') +
-      `>`;
+      `>\n`;
 
-    this.children.forEach((child) => (res += child.render()));
+    this.children.forEach((child) => (res += '  ' + child.render()));
 
     res += `</svg>`;
     return res;

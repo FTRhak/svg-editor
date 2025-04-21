@@ -2,6 +2,7 @@ import { Component, inject, OnDestroy } from '@angular/core';
 import { ProjectService } from '@core/services';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImportDialogComponent } from '../../dialogs/import-dialog/import-dialog.component';
+import { ViewCodeDialogComponent } from '@features/main-menu/dialogs/view-code-dialog/view-code-dialog.component';
 
 @Component({
   selector: 'main-menu',
@@ -43,8 +44,17 @@ export class MainMenuComponent implements OnDestroy {
       ],
     },
     {
-      label: 'Features',
-      icon: 'pi pi-star',
+      label: 'View',
+      icon: 'pi pi-wrench',
+      items: [
+        {
+          label: 'Show Result Code',
+          icon: 'pi pi-fw pi-code',
+          command: () => {
+            this.showResultCode();
+          },
+        },
+      ],
     },
   ];
 
@@ -54,9 +64,13 @@ export class MainMenuComponent implements OnDestroy {
     this.ref?.close();
   }
 
+  public showResultCode() {
+    this.ref = this.dialogService.open(ViewCodeDialogComponent, { header: 'SVG code', modal: true, width: '80vw' });
+    this.ref.onClose.subscribe(() => {});
+  }
+
   public openFile() {
     this.ref = this.dialogService.open(ImportDialogComponent, { header: 'Import SVG', modal: true, width: '300px' });
-
     this.ref.onClose.subscribe(() => {});
   }
 

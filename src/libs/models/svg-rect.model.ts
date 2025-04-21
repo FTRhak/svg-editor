@@ -48,7 +48,7 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
       (isNotUndefined(this.height) ? ` height="${this.height}"` : '') +
       (isNotUndefined(this.rx) ? ` rx="${this.rx}"` : '') +
       (isNotUndefined(this.ry) ? ` ry="${this.ry}"` : '') +
-      `></rect>`;
+      `></rect>\n`;
     return res;
   }
 

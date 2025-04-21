@@ -36,7 +36,7 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel {
       (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
       (hasStyleProperties(this.style) ? ` style="${styleToString(this.style)}"` : '') +
       (isNotUndefined(this.d) ? ` d="${this.d}"` : '') +
-      `></path>`;
+      `></path>\n`;
     return res;
   }
 
