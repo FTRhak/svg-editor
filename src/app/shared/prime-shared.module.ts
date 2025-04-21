@@ -7,6 +7,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FieldsetModule } from 'primeng/fieldset';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -46,6 +47,7 @@ const modules = [
   ColorPickerModule,
   FileUploadModule,
   BadgeModule,
+  FieldsetModule,
 ];
 
 @NgModule({

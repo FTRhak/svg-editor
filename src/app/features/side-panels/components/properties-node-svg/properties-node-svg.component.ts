@@ -3,15 +3,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { SVGRootModel } from '@libs';
+import { isUndefined } from '@libs/utils';
+import { debounceTime } from 'rxjs';
 
 interface SVGNode {
-  width: FormControl<number>;
-  height: FormControl<number>;
-  viewBox: FormControl<string>;
-  baseProfile: FormControl<string>;
-  preserveAspectRatio: FormControl<string>;
-  x: FormControl<number>;
-  y: FormControl<number>;
+  width: FormControl<string | null>;
+  height: FormControl<string | null>;
+  baseProfile: FormControl<string | null>;
+  preserveAspectRatio: FormControl<string | null>;
+  x: FormControl<string | null>;
+  y: FormControl<string | null>;
+  viewBox: FormGroup;
 }
 
 @Component({
@@ -26,15 +28,11 @@ export class PropertiesNodeSvgComponent implements OnInit {
 
   public readonly node = input.required<SVGRootModel>();
 
-  public form = new FormGroup<SVGNode>({
-    width: new FormControl(1, { nonNullable: true }),
-    height: new FormControl(1, { nonNullable: true }),
-    viewBox: new FormControl('', { nonNullable: true }),
-    baseProfile: new FormControl('', { nonNullable: true }),
-    preserveAspectRatio: new FormControl('', { nonNullable: true }),
-    x: new FormControl(0, { nonNullable: true }),
-    y: new FormControl(0, { nonNullable: true }),
-  });
+  public form!: FormGroup<SVGNode>;
+
+  public get viewBoxGroup() {
+    return this.form.get('viewBox') as FormGroup;
+  }
 
   public readonly baseProfiles = ['none', 'full'];
   public readonly preserveAspectRatios = [
@@ -51,8 +49,36 @@ export class PropertiesNodeSvgComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-      console.log('change:', value);
+    const node = this.node();
+    this.form = new FormGroup<SVGNode>({
+      width: new FormControl({ value: node.width || '', disabled: isUndefined(node.width) }),
+      height: new FormControl({ value: node.height || '', disabled: isUndefined(node.height) }),
+      baseProfile: new FormControl({ value: node.baseProfile || '', disabled: isUndefined(node.baseProfile) }),
+      preserveAspectRatio: new FormControl({
+        value: node.preserveAspectRatio || '',
+        disabled: isUndefined(node.preserveAspectRatio),
+      }),
+      x: new FormControl({ value: node.x || '', disabled: isUndefined(node.x) }),
+      y: new FormControl({ value: node.y || '', disabled: isUndefined(node.y) }),
+
+      viewBox: new FormGroup({
+        x: new FormControl({ value: node.viewBox?.x || '', disabled: false }),
+        y: new FormControl({ value: node.viewBox?.y || '', disabled: false }),
+        width: new FormControl({ value: node.viewBox?.width || '', disabled: false }),
+        height: new FormControl({ value: node.viewBox?.height || '', disabled: false }),
+      }),
     });
+
+    const rawValue = this.form.getRawValue();
+    const properties = Object.keys(rawValue);
+
+    for (const property of properties) {
+      this.form
+        .get(property)
+        ?.valueChanges.pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
+        .subscribe((value) => {
+          this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
+        });
+    }
   }
 }

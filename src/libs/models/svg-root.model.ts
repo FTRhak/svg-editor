@@ -17,6 +17,10 @@ export class SVGRootModel extends TreeNodeModel {
   public readonly version = '1.0';
   public width!: string;
   public height!: string;
+  public x!: string;
+  public y!: string;
+  public baseProfile!: string;
+  public preserveAspectRatio!: string;
   viewBox?: RectModel;
 
   public override children: TreeNodeModel[] = [];
@@ -41,8 +45,10 @@ export class SVGRootModel extends TreeNodeModel {
     const vb = this.viewBox;
     let res =
       `<svg id="${this._id}" ` +
+      (isNotUndefined(this.x) ? ` x="${this.x}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y}"` : '') +
       (isNotUndefined(this.width) ? ` width="${this.width}"` : '') +
-      (isNotUndefined(this.height) ? ` stroke="${this.height}"` : '') +
+      (isNotUndefined(this.height) ? ` height="${this.height}"` : '') +
       (isNotUndefined(vb) ? ` viewBox="${vb?.x} ${vb?.y} ${vb?.width} ${vb?.height}"` : '') +
       (isNotUndefined(this.version) ? ` version="${this.version}"` : '') +
       `>`;

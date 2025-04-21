@@ -150,12 +150,12 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   private renderSVG(svg: SVGRootModel, rootNode: SVGGElement): void {
     if (rootNode) {
       const svgBorder = this.SVG_BORDER * this.zoom();
-      rootNode.innerHTML = '';
       let res = '';
+      rootNode.innerHTML = '';
 
-      res += `<rect id="borderSVGZone" x="${svg.viewBox!.x}" y="${svg.viewBox!.y}" width="${svg.viewBox!.width}" height="${svg.viewBox!.height}" fill="none" stroke="black" stroke-width="${svgBorder}"></rect>`;
+      res += `<rect id="borderSVGZone" x="${svg.viewBox!.x}" y="${svg.viewBox!.y}" width="${svg.viewBox!.width}" height="${svg.viewBox!.height}" fill="none" stroke="black" stroke-width="${svgBorder}"></rect>\n`;
       svg.children.forEach((item) => {
-        res += item.render();
+        res += item.render() + '\n';
       });
       console.log(res);
       rootNode.innerHTML = res;

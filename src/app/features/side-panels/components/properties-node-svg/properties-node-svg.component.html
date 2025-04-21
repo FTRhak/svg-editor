@@ -1,86 +1,164 @@
-<form [formGroup]="form">
-  <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="widthField"
-      size="small"
-      name="widthField"
-      formControlName="width"
-      class="w-100"
-      mode="decimal"
-      [min]="1"
-      [max]="999999"
-      [step]="1"
-    />
-    <label for="widthField">Width</label>
-  </p-floatlabel>
-  <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="heightField"
-      size="small"
-      name="heightField"
-      formControlName="height"
-      class="w-100"
-      mode="decimal"
-      [min]="1"
-      [max]="999999"
-      [step]="1"
-    />
-    <label for="heightField">Height</label>
-  </p-floatlabel>
+@if (form) {
+  <form [formGroup]="form">
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input
+          type="text"
+          pInputText
+          id="widthField"
+          size="small"
+          name="widthField"
+          formControlName="width"
+          class="w-100"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="width" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="widthField">Width</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input
+          type="text"
+          pInputText
+          id="heightField"
+          size="small"
+          name="heightField"
+          formControlName="height"
+          class="w-100"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="height" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="heightField">Height</label>
+    </p-floatlabel>
 
-  <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="xField"
-      size="small"
-      name="xField"
-      formControlName="x"
-      class="w-100"
-      mode="decimal"
-      [min]="0"
-      [max]="999999"
-      [step]="1"
-    />
-    <label for="xField">X</label>
-  </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input type="text" pInputText id="xField" size="small" name="xField" formControlName="x" class="w-100" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="x" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="xField">X</label>
+    </p-floatlabel>
 
-  <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="yField"
-      size="small"
-      name="yField"
-      formControlName="y"
-      class="w-100"
-      mode="decimal"
-      [min]="0"
-      [max]="999999"
-      [step]="1"
-    />
-    <label for="yField">Y</label>
-  </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input type="text" pInputText id="yField" size="small" name="yField" formControlName="y" class="w-100" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="y" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="yField">Y</label>
+    </p-floatlabel>
 
-  <p-floatlabel variant="on" class="mb-1">
-    <p-select
-      [options]="baseProfiles"
-      id="baseProfileField"
-      size="small"
-      class="w-100"
-      name="baseProfileField"
-      formControlName="baseProfile"
-      appendTo="body"
-    />
-    <label for="baseProfileField">BaseProfile</label>
-  </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-select
+          [options]="baseProfiles"
+          id="baseProfileField"
+          size="small"
+          class="w-100"
+          name="baseProfileField"
+          formControlName="baseProfile"
+          appendTo="body"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="baseProfile" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="baseProfileField">BaseProfile</label>
+    </p-floatlabel>
 
-  <p-floatlabel variant="on" class="mb-1">
-    <p-select
-      [options]="preserveAspectRatios"
-      id="preserveAspectRatioField"
-      size="small"
-      class="w-100"
-      name="preserveAspectRatioField"
-      formControlName="preserveAspectRatio"
-      appendTo="body"
-    />
-    <label for="preserveAspectRatioField">PreserveAspectRatio</label>
-  </p-floatlabel>
-</form>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-select
+          [options]="preserveAspectRatios"
+          id="preserveAspectRatioField"
+          size="small"
+          class="w-100"
+          name="preserveAspectRatioField"
+          formControlName="preserveAspectRatio"
+          appendTo="body"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="preserveAspectRatio" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="preserveAspectRatioField">PreserveAspectRatio</label>
+    </p-floatlabel>
+
+    <p-fieldset legend="ViewBox">
+      <div [formGroup]="viewBoxGroup">
+        <p-floatlabel variant="on" class="mb-1">
+          <p-inputgroup>
+            <p-inputnumber
+              id="xField"
+              size="small"
+              name="xField"
+              formControlName="x"
+              class="w-100"
+              mode="decimal"
+              [min]="0"
+              [max]="999999"
+              [step]="1"
+            />
+          </p-inputgroup>
+          <label for="xField">X</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on" class="mb-1">
+          <p-inputgroup>
+            <p-inputnumber
+              id="yField"
+              size="small"
+              name="yField"
+              formControlName="y"
+              class="w-100"
+              mode="decimal"
+              [min]="0"
+              [max]="999999"
+              [step]="1"
+            />
+          </p-inputgroup>
+          <label for="yField">Y</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on" class="mb-1">
+          <p-inputgroup>
+            <p-inputnumber
+              id="widthField"
+              size="small"
+              name="widthField"
+              formControlName="width"
+              class="w-100"
+              mode="decimal"
+              [min]="1"
+              [max]="999999"
+              [step]="1"
+            />
+          </p-inputgroup>
+          <label for="widthField">Width</label>
+        </p-floatlabel>
+        <p-floatlabel variant="on" class="mb-1">
+          <p-inputgroup>
+            <p-inputnumber
+              id="heightField"
+              size="small"
+              name="heightField"
+              formControlName="height"
+              class="w-100"
+              mode="decimal"
+              [min]="1"
+              [max]="999999"
+              [step]="1"
+            />
+          </p-inputgroup>
+          <label for="heightField">Height</label>
+        </p-floatlabel>
+      </div>
+    </p-fieldset>
+  </form>
+}
