@@ -18,15 +18,7 @@ export class SVGPathModel extends TreeNodeStyleModel {
   }
 
   public override render() {
-    let res =
-      `<path ` +
-      (isNotUndefined(this.fill) ? ` fill="${this.fill}"` : '') +
-      (isNotUndefined(this.stroke) ? ` stroke="${this.stroke}"` : '') +
-      (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
-      (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
-      (hasStyleProperties(this.style) ? ` style="${styleToString(this.style)}"` : '') +
-      (isNotUndefined(this.d) ? ` d="${this.d}"` : '') +
-      `></path>\n`;
+    let res = `<path ` + this.renderPart() + (isNotUndefined(this.d) ? ` d="${this.d}"` : '') + `></path>\n`;
     return res;
   }
 

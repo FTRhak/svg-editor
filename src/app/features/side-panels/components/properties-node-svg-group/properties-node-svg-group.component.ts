@@ -3,13 +3,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { SVGGroupModel } from '@libs';
-import { isUndefined } from '@libs/utils';
+import { isUndefined, styleToString } from '@libs/utils';
 import { debounceTime } from 'rxjs';
 
 interface SVGNode {
   fill: FormControl<string | null>;
   stroke: FormControl<string | null>;
   strokeWidth: FormControl<number | null>;
+  transform: FormControl<string | null>;
+  style: FormControl<string | null>;
 }
 
 @Component({
@@ -24,11 +26,7 @@ export class PropertiesNodeSvgGroupComponent implements OnInit {
 
   public readonly node = input.required<SVGGroupModel>();
 
-  public form = new FormGroup<SVGNode>({
-    fill: new FormControl('', { nonNullable: true }),
-    stroke: new FormControl('', { nonNullable: true }),
-    strokeWidth: new FormControl(0, { nonNullable: true }),
-  });
+  public form!: FormGroup<SVGNode>;
 
   ngOnInit(): void {
     const node = this.node();
@@ -36,6 +34,8 @@ export class PropertiesNodeSvgGroupComponent implements OnInit {
       fill: new FormControl({ value: node.fill || '', disabled: isUndefined(node.fill) }),
       stroke: new FormControl({ value: node.stroke || '', disabled: isUndefined(node.stroke) }),
       strokeWidth: new FormControl({ value: node.strokeWidth || 0, disabled: isUndefined(node.strokeWidth) }),
+      transform: new FormControl({ value: node.transform || '', disabled: isUndefined(node.transform) }),
+      style: new FormControl({ value: styleToString(node.style) || '', disabled: true }),
     });
 
     const rawValue = this.form.getRawValue();

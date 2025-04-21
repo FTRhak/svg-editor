@@ -130,6 +130,21 @@ function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
         parent.children.push(rect);
         importChildren(rect, item.children);
         break;
+      case SVGNodeType.ELLIPSE:
+        const ellipse = SVGEllipseModel.importFromDom(item as SVGEllipseElement);
+        parent.children.push(ellipse);
+        importChildren(ellipse, item.children);
+        break;
+      case SVGNodeType.CIRCLE:
+        const circle = SVGCircleModel.importFromDom(item as SVGCircleElement);
+        parent.children.push(circle);
+        importChildren(circle, item.children);
+        break;
+      case SVGNodeType.LINE:
+        const line = SVGLineModel.importFromDom(item as SVGLineElement);
+        parent.children.push(line);
+        importChildren(line, item.children);
+        break;
     }
   });
 }

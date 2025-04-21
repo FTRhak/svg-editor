@@ -3,13 +3,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { SVGLineModel } from '@libs';
-import { isUndefined } from '@libs/utils';
+import { isUndefined, styleToString } from '@libs/utils';
 import { debounceTime } from 'rxjs';
 
 interface SVGNode {
   fill: FormControl<string | null>;
   stroke: FormControl<string | null>;
   strokeWidth: FormControl<number | null>;
+  transform: FormControl<string | null>;
+  style: FormControl<string | null>;
   x1: FormControl<number | null>;
   y1: FormControl<number | null>;
   x2: FormControl<number | null>;
@@ -36,6 +38,8 @@ export class PropertiesNodeSvgLineComponent {
       fill: new FormControl({ value: node.fill || '', disabled: isUndefined(node.fill) }),
       stroke: new FormControl({ value: node.stroke || '', disabled: isUndefined(node.stroke) }),
       strokeWidth: new FormControl({ value: node.strokeWidth || 0, disabled: isUndefined(node.strokeWidth) }),
+      transform: new FormControl({ value: node.transform || '', disabled: isUndefined(node.transform) }),
+      style: new FormControl({ value: styleToString(node.style) || '', disabled: true }),
       x1: new FormControl({ value: node.x1 || 0, disabled: isUndefined(node.x1) }),
       y1: new FormControl({ value: node.y1 || 0, disabled: isUndefined(node.y1) }),
       x2: new FormControl({ value: node.x2 || 0, disabled: isUndefined(node.x2) }),

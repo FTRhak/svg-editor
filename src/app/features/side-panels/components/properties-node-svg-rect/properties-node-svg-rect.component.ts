@@ -3,13 +3,15 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { SVGRectModel } from '@libs';
+import { isUndefined, styleToString } from '@libs/utils';
 import { debounceTime } from 'rxjs';
-import { isUndefined } from '@libs/utils';
 
 interface SVGNode {
   fill: FormControl<string | null>;
   stroke: FormControl<string | null>;
   strokeWidth: FormControl<number | null>;
+  transform: FormControl<string | null>;
+  style: FormControl<string | null>;
   x: FormControl<number | null>;
   y: FormControl<number | null>;
   width: FormControl<number | null>;
@@ -38,6 +40,8 @@ export class PropertiesNodeSvgRectComponent implements OnInit {
       fill: new FormControl({ value: node.fill || '', disabled: isUndefined(node.fill) }),
       stroke: new FormControl({ value: node.stroke || '', disabled: isUndefined(node.stroke) }),
       strokeWidth: new FormControl({ value: node.strokeWidth || 0, disabled: isUndefined(node.strokeWidth) }),
+      transform: new FormControl({ value: node.transform || '', disabled: isUndefined(node.transform) }),
+      style: new FormControl({ value: styleToString(node.style) || '', disabled: true }),
       x: new FormControl({ value: node.x || 0, disabled: isUndefined(node.x) }),
       y: new FormControl({ value: node.y || 0, disabled: isUndefined(node.y) }),
       width: new FormControl({ value: node.width || 0, disabled: isUndefined(node.width) }),

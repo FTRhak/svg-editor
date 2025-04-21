@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { PID, SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
 import { EventManager } from '../../models';
+import { TreeNodeStyleModel } from '@libs';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,10 @@ export class ProjectService {
   }
 
   exportSVG() {
-    return this.project.render();
+    TreeNodeStyleModel.renderDebug = false;
+    const res = this.project.render();
+    TreeNodeStyleModel.renderDebug = true;
+    return res;
   }
 
   public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {

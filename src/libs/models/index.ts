@@ -11,5 +11,6 @@ export { SVGRectModel } from './svg-rect.model';
 export { SVGRefsModel } from './svg-refs.model';
 export { SVGRootModel } from './svg-root.model';
 export { TreeItem } from './tree-item.model';
+export { TreeNodeStyleModel } from './tree-node-style.model';
 export { TreeNodeModel } from './tree-node.model';
 export { VectorModel } from './vector.model';

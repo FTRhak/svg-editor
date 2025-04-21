@@ -28,7 +28,21 @@ export class SVGCircleModel extends TreeNodeStyleModel {
       (isNotUndefined(this.cx) ? ` cx="${this.cx}"` : '') +
       (isNotUndefined(this.cy) ? ` cy="${this.cy}"` : '') +
       (isNotUndefined(this.r) ? ` r="${this.r}"` : '') +
-      `></circle>`;
+      `/>\n`;
     return res;
+  }
+
+  public static override importFromDom(dom: SVGCircleElement) {
+    const node = new SVGCircleModel({
+      fill: dom.getAttribute('fill')! || undefined,
+      stroke: dom.getAttribute('stroke')! || undefined,
+      strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
+      style: TreeNodeModel.importStyle(dom.style),
+      cx: dom.getAttribute('cx') ? parseFloat(dom.getAttribute('cx')!) : undefined,
+      cy: dom.getAttribute('cy') ? parseFloat(dom.getAttribute('cy')!) : undefined,
+      r: dom.getAttribute('r') ? parseFloat(dom.getAttribute('r')!) : undefined,
+    });
+
+    return node;
   }
 }

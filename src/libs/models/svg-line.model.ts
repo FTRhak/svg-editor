@@ -35,4 +35,19 @@ export class SVGLineModel extends TreeNodeStyleModel {
       `></line>`;
     return res;
   }
+
+  public static override importFromDom(dom: SVGLineElement) {
+    const node = new SVGLineModel({
+      fill: dom.getAttribute('fill')! || undefined,
+      stroke: dom.getAttribute('stroke')! || undefined,
+      strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
+      style: TreeNodeModel.importStyle(dom.style),
+      x1: dom.getAttribute('x1') ? parseFloat(dom.getAttribute('x1')!) : undefined,
+      y1: dom.getAttribute('y1') ? parseFloat(dom.getAttribute('y1')!) : undefined,
+      x2: dom.getAttribute('x2') ? parseFloat(dom.getAttribute('x2')!) : undefined,
+      y2: dom.getAttribute('y2') ? parseFloat(dom.getAttribute('y2')!) : undefined,
+    });
+
+    return node;
+  }
 }

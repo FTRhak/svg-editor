@@ -1,4 +1,4 @@
-import { Generator, hasStyleProperties, isNotUndefined, styleToString } from '../utils';
+import { Generator } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';

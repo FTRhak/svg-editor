@@ -34,4 +34,19 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
       `></ellipse>`;
     return res;
   }
+
+  public static override importFromDom(dom: SVGEllipseElement) {
+    const node = new SVGEllipseModel({
+      fill: dom.getAttribute('fill')! || undefined,
+      stroke: dom.getAttribute('stroke')! || undefined,
+      strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
+      style: TreeNodeModel.importStyle(dom.style),
+      cx: dom.getAttribute('cx') ? parseFloat(dom.getAttribute('cx')!) : undefined,
+      cy: dom.getAttribute('cy') ? parseFloat(dom.getAttribute('cy')!) : undefined,
+      rx: dom.getAttribute('rx') ? parseFloat(dom.getAttribute('rx')!) : undefined,
+      ry: dom.getAttribute('ry') ? parseFloat(dom.getAttribute('ry')!) : undefined,
+    });
+
+    return node;
+  }
 }

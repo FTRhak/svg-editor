@@ -3,6 +3,8 @@ import { TreeNodeModel } from './tree-node.model';
 import { StyleAttributeModel } from './style-attribute.model';
 
 export class TreeNodeStyleModel extends TreeNodeModel {
+  public static renderDebug: boolean = true;
+
   public fill!: string;
   public stroke!: string;
   public strokeWidth!: number;
@@ -20,7 +22,10 @@ export class TreeNodeStyleModel extends TreeNodeModel {
 
   public renderPart(): string {
     let res = ``;
-    res += ` id="${this._id}"`;
+    if (TreeNodeStyleModel.renderDebug) {
+      res += ` id="${this._id}"`;
+    }
+
     if (isNotUndefined(this.fill)) res += ` fill="${this.fill}"`;
     if (isNotUndefined(this.stroke)) res += ` stroke="${this.stroke}"`;
     if (isNotUndefined(this.strokeWidth)) res += ` stroke-width="${this.strokeWidth}"`;

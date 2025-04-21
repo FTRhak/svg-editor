@@ -41,4 +41,40 @@
     </p-inputgroup>
     <label for="strokeWidthField">Stroke Width</label>
   </p-floatlabel>
+
+  <p-floatlabel variant="on" class="mb-1">
+    <p-inputgroup>
+      <input
+        type="text"
+        pInputText
+        id="transformField"
+        size="small"
+        name="transformField"
+        formControlName="transform"
+        class="w-100"
+      />
+      <p-inputgroup-addon>
+        <p-button icon="pi pi-lock" severity="secondary" fieldLock="transform" />
+      </p-inputgroup-addon>
+    </p-inputgroup>
+    <label for="transformField">Transform</label>
+  </p-floatlabel>
+
+  <p-floatlabel variant="on" class="mb-1">
+    <p-inputgroup>
+      <input
+        type="text"
+        pInputText
+        id="styleField"
+        size="small"
+        name="styleField"
+        formControlName="style"
+        class="w-100"
+      />
+      <p-inputgroup-addon>
+        <p-button icon="pi pi-lock" severity="secondary" fieldLock="style" />
+      </p-inputgroup-addon>
+    </p-inputgroup>
+    <label for="styleField">Style</label>
+  </p-floatlabel>
 </div>
