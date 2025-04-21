@@ -8,7 +8,7 @@ RUN npm install -g npm@latest
 RUN npm install
 RUN npm run build:prod
 
-COPY . .
+#COPY . .
 
-EXPOSE 4200
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+#EXPOSE 4200
+#CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
