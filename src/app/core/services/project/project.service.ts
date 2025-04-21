@@ -31,6 +31,10 @@ export class ProjectService {
     }
   }
 
+  exportSVG() {
+    return this.project.render();
+  }
+
   public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {
     const item = this.project.addChild(parentId, type, config);
     this.events.trigger('project:item-added', this.project, item);
