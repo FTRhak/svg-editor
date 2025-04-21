@@ -1,7 +1,7 @@
-import { Generator, isNotUndefined } from '../utils';
+import { Generator, hasStyleProperties, isNotUndefined, styleToString } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
-import { SVGGroupModel } from './svg-group.model';
+import { StyleAttributeModel } from './style-attribute.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 
@@ -12,7 +12,7 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel {
   public stroke!: string;
   public strokeWidth!: number;
   public transform!: string;
-  public style!: string;
+  public style!: StyleAttributeModel;
   public d!: string;
 
   public override children: TreeNodeModel[] = [];
@@ -20,6 +20,11 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel {
   constructor(params: Partial<SVGPathModel>) {
     super();
     this._id = Generator.getId('path-');
+    if (isNotUndefined(params.d)) this.d = params.d as string;
+    if (isNotUndefined(params.fill)) this.fill = params.fill as string;
+    if (isNotUndefined(params.stroke)) this.stroke = params.stroke as string;
+    if (isNotUndefined(params.strokeWidth)) this.strokeWidth = params.strokeWidth as number;
+    if (isNotUndefined(params.style)) this.style = params.style || {};
   }
 
   public override render() {
@@ -29,9 +34,21 @@ export class SVGPathModel extends TreeNodeModel implements TreeNodeStyleModel {
       (isNotUndefined(this.stroke) ? ` stroke="${this.stroke}"` : '') +
       (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
       (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
-      (isNotUndefined(this.style) ? ` style="${this.style}"` : '') +
+      (hasStyleProperties(this.style) ? ` style="${styleToString(this.style)}"` : '') +
       (isNotUndefined(this.d) ? ` d="${this.d}"` : '') +
       `></path>`;
     return res;
+  }
+
+  public static override importFromDom(dom: SVGPathElement) {
+    const node = new SVGPathModel({
+      d: dom.getAttribute('d')!,
+      fill: dom.getAttribute('fill')! || undefined,
+      stroke: dom.getAttribute('stroke')! || undefined,
+      strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
+      style: TreeNodeModel.importStyle(dom.style),
+    });
+
+    return node;
   }
 }

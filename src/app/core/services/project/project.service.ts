@@ -20,6 +20,21 @@ export class ProjectService {
     this.events.trigger('project:tree:updates', this.project, []);
   }
 
+  importSVG(svgCode: string) {
+    console.log('import:', svgCode);
+    const d = document.createElement('div');
+    d.innerHTML = svgCode;
+    const svgNode: SVGSVGElement | null = d.querySelector('svg');
+    if (svgNode) {
+      this.project = SVGRootModel.importFromDom(svgNode);
+      this.events.trigger('project:file:imported', this.project);
+      this.events.trigger('project:tree:updates', this.project, []);
+    }
+
+    //this.project = svg;
+    //this.events.trigger('project:imported', this.project);
+  }
+
   public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {
     const item = this.project.addChild(parentId, type, config);
     this.events.trigger('project:item-added', this.project, item);
@@ -55,7 +70,7 @@ export class ProjectService {
     const item: any = this.project.toList().find((item) => item._id === id);
     if (item) {
       item[propertyName] = value;
-      this.events.trigger('project:item:updated', this.project, item);
+      this.events.trigger('project:item:updated', this.project, item, propertyName, value);
       this.events.trigger('project:tree:updates', this.project, [item]);
     }
   }

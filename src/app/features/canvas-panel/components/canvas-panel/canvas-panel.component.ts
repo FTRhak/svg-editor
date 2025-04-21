@@ -32,9 +32,9 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
         this.renderSVG(project, this.svgBgView()!.nativeElement);
       });
 
-    fromEvent<[SVGRootModel, TreeNodeModel]>(this.project.events, 'project:item:selected')
+    /*fromEvent<[SVGRootModel, TreeNodeModel]>(this.project.events, 'project:item:selected')
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(([project, item]) => {});
+      .subscribe(([project, item]) => {});*/
   }
 
   ngAfterViewInit(): void {

@@ -17,3 +17,7 @@ export function isUndefined(value: any): boolean {
 export function isNotUndefined(value: any): boolean {
   return value !== undefined;
 }
+
+export function hasStyleProperties(value: any): boolean {
+  return isNotUndefined(value) && value && Object.keys(value).length > 0;
+}

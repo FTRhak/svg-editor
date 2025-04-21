@@ -6,6 +6,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ContextMenuModule } from 'primeng/contextmenu';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { FileUploadModule } from 'primeng/fileupload';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -42,6 +43,7 @@ const modules = [
   TreeModule,
   TabsModule,
   ColorPickerModule,
+  FileUploadModule,
 ];
 
 @NgModule({

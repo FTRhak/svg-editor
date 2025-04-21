@@ -1,4 +1,5 @@
 import { SVGNodeType } from './node.type';
+import { StyleAttributeModel } from './style-attribute.model';
 import { TreeItem } from './tree-item.model';
 
 export class TreeNodeModel {
@@ -24,6 +25,23 @@ export class TreeNodeModel {
   }
 
   public render(): string {
-    return `${this._id}`;
+    return `<${this._type} id="${this._id}"/>`;
+  }
+
+  public static importFromDom(dom: any): TreeNodeModel {
+    return new TreeNodeModel();
+  }
+
+  public static importStyle(domStyle: CSSStyleDeclaration): StyleAttributeModel {
+    const style: StyleAttributeModel = {};
+
+    let i = 0;
+    while (domStyle[i]) {
+      const key = domStyle[i] as any;
+      style[key] = domStyle[key];
+      i++;
+    }
+
+    return style;
   }
 }

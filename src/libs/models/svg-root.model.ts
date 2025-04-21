@@ -1,6 +1,7 @@
-import { Generator } from '../utils';
+import { Generator, isNotUndefined } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
+import { RectModel } from './rect.model';
 import { SVGCircleModel } from './svg-circle.model';
 import { SVGEllipseModel } from './svg-ellipse.model';
 import { SVGGroupModel } from './svg-group.model';
@@ -14,9 +15,9 @@ export class SVGRootModel extends TreeNodeModel {
   public override readonly _type = SVGNodeType.SVG;
   public override readonly _id: PID;
   public readonly version = '1.0';
-  public width!: number;
-  public height!: number;
-  viewBox?: string;
+  public width!: string;
+  public height!: string;
+  viewBox?: RectModel;
 
   public override children: TreeNodeModel[] = [];
 
@@ -33,6 +34,22 @@ export class SVGRootModel extends TreeNodeModel {
       return node;
     }
     return null;
+  }
+
+  public override render() {
+    const vb = this.viewBox;
+    let res =
+      `<svg id="${this._id}" ` +
+      (isNotUndefined(this.width) ? ` width="${this.width}"` : '') +
+      (isNotUndefined(this.height) ? ` stroke="${this.height}"` : '') +
+      (isNotUndefined(vb) ? ` viewBox="${vb?.x} ${vb?.y} ${vb?.width} ${vb?.height}"` : '') +
+      (isNotUndefined(this.version) ? ` version="${this.version}"` : '') +
+      `>`;
+
+    this.children.forEach((child) => (res += child.render()));
+
+    res += `</svg>`;
+    return res;
   }
 
   public static createNode(
@@ -75,4 +92,29 @@ export class SVGRootModel extends TreeNodeModel {
 
     return node!;
   }
+
+  public static override importFromDom(dom: SVGSVGElement): SVGRootModel {
+    const svg = new SVGRootModel();
+    //console.log('W:',dom.ve);
+    svg.width = dom.width.baseVal.valueAsString;
+    svg.height = dom.height.baseVal.valueAsString;
+    svg.viewBox = dom.viewBox.baseVal;
+    //svg.height = dom.height;
+    //svg.viewBox = dom.viewBox;
+    importChildren(svg, dom.children);
+
+    return svg;
+  }
+}
+
+function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
+  Array.from(collection).forEach((item) => {
+    if (item.nodeName === SVGNodeType.PATH) {
+      console.log((item as any).getAttribute('fill'));
+
+      const node = SVGPathModel.importFromDom(item as SVGPathElement);
+      parent.children.push(node);
+      importChildren(node, item.children);
+    }
+  });
 }
