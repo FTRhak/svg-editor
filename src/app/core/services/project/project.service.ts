@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PID, SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
+import { PID, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel } from '@libs';
 import { EventManager } from '../../models';
-import { TreeNodeStyleModel } from '@libs';
 
 @Injectable({
   providedIn: 'root',

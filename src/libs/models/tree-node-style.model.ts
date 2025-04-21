@@ -1,4 +1,4 @@
-import { isNotUndefined, styleToString } from '@libs/utils';
+import { hasStyleProperties, isNotUndefined, styleToString } from '@libs/utils';
 import { TreeNodeModel } from './tree-node.model';
 import { StyleAttributeModel } from './style-attribute.model';
 
@@ -30,7 +30,7 @@ export class TreeNodeStyleModel extends TreeNodeModel {
     if (isNotUndefined(this.stroke)) res += ` stroke="${this.stroke}"`;
     if (isNotUndefined(this.strokeWidth)) res += ` stroke-width="${this.strokeWidth}"`;
     if (isNotUndefined(this.transform)) res += ` transform="${this.transform}"`;
-    if (isNotUndefined(this.style)) res += ` style="${styleToString(this.style)}"`;
+    if (hasStyleProperties(this.style)) res += ` style="${styleToString(this.style)}"`;
     return res;
   }
 }

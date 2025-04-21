@@ -48,6 +48,7 @@ export class SVGRectModel extends TreeNodeStyleModel {
       stroke: dom.getAttribute('stroke')! || undefined,
       strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
       style: TreeNodeModel.importStyle(dom.style),
+      transform: dom.getAttribute('transform')! || undefined,
       x: dom.getAttribute('x') ? parseFloat(dom.getAttribute('x')!) : undefined,
       y: dom.getAttribute('y') ? parseFloat(dom.getAttribute('y')!) : undefined,
       width: dom.getAttribute('width') ? parseFloat(dom.getAttribute('width')!) : undefined,

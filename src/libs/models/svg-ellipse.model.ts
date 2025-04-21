@@ -41,6 +41,7 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
       stroke: dom.getAttribute('stroke')! || undefined,
       strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
       style: TreeNodeModel.importStyle(dom.style),
+      transform: dom.getAttribute('transform')! || undefined,
       cx: dom.getAttribute('cx') ? parseFloat(dom.getAttribute('cx')!) : undefined,
       cy: dom.getAttribute('cy') ? parseFloat(dom.getAttribute('cy')!) : undefined,
       rx: dom.getAttribute('rx') ? parseFloat(dom.getAttribute('rx')!) : undefined,

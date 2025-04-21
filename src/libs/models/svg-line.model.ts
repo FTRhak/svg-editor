@@ -42,6 +42,7 @@ export class SVGLineModel extends TreeNodeStyleModel {
       stroke: dom.getAttribute('stroke')! || undefined,
       strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
       style: TreeNodeModel.importStyle(dom.style),
+      transform: dom.getAttribute('transform')! || undefined,
       x1: dom.getAttribute('x1') ? parseFloat(dom.getAttribute('x1')!) : undefined,
       y1: dom.getAttribute('y1') ? parseFloat(dom.getAttribute('y1')!) : undefined,
       x2: dom.getAttribute('x2') ? parseFloat(dom.getAttribute('x2')!) : undefined,

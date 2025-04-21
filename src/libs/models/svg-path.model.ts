@@ -29,6 +29,7 @@ export class SVGPathModel extends TreeNodeStyleModel {
       stroke: dom.getAttribute('stroke')! || undefined,
       strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
       style: TreeNodeModel.importStyle(dom.style),
+      transform: dom.getAttribute('transform')! || undefined,
     });
 
     return node;
