@@ -4,6 +4,7 @@ import { SVGNodeType } from './node.type';
 import { SVGCircleModel } from './svg-circle.model';
 import { SVGEllipseModel } from './svg-ellipse.model';
 import { SVGGroupModel } from './svg-group.model';
+import { SVGLineModel } from './svg-line.model';
 import { SVGPathModel } from './svg-path.model';
 import { SVGRectModel } from './svg-rect.model';
 import { SVGRefsModel } from './svg-refs.model';
@@ -17,7 +18,7 @@ export class SVGRootModel extends TreeNodeModel {
   public height!: number;
   viewBox?: string;
 
-  public override children: SVGGroupModel[] = [];
+  public override children: TreeNodeModel[] = [];
 
   constructor() {
     super();
@@ -34,7 +35,11 @@ export class SVGRootModel extends TreeNodeModel {
     return null;
   }
 
-  public static createNode(parent: TreeNodeModel, type: SVGNodeType, config: { [key: string]: any }) {
+  public static createNode(
+    parent: TreeNodeModel,
+    type: SVGNodeType,
+    config: { [key: string]: any } = {},
+  ): TreeNodeModel {
     let node: TreeNodeModel;
 
     switch (type) {
@@ -55,6 +60,9 @@ export class SVGRootModel extends TreeNodeModel {
         break;
       case SVGNodeType.ELLIPSE:
         node = new SVGEllipseModel(config);
+        break;
+      case SVGNodeType.LINE:
+        node = new SVGLineModel(config);
         break;
       default:
         console.warn('Unknown node type to crate');

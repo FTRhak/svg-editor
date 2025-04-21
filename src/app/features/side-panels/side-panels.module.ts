@@ -12,6 +12,7 @@ import { PropertiesNodeSvgRectComponent } from './components/properties-node-svg
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
 import { PropertiesNodeSvgCircleComponent } from './components/properties-node-svg-circle/properties-node-svg-circle.component';
 import { PropertiesNodeSvgEllipseComponent } from './components/properties-node-svg-ellipse/properties-node-svg-ellipse.component';
+import { PropertiesNodeSvgLineComponent } from './components/properties-node-svg-line/properties-node-svg-line.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { PropertiesNodeSvgEllipseComponent } from './components/properties-node-
     FieldLockDirective,
     PropertiesNodeSvgCircleComponent,
     PropertiesNodeSvgEllipseComponent,
+    PropertiesNodeSvgLineComponent,
   ],
   exports: [SidePanelComponent],
   imports: [CommonModule, PrimeSharedModule, ReactiveFormsModule],

@@ -15,7 +15,7 @@ export class SVGCircleModel extends TreeNodeModel implements TreeNodeStyleModel 
   public cy: number = 0;
   public r: number = 0;
 
-  public override children: SVGGroupModel[] = [];
+  public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGCircleModel>) {
     super();

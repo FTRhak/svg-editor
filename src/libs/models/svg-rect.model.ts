@@ -20,7 +20,7 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
   public rx!: number;
   public ry!: number;
 
-  public override children: SVGGroupModel[] = [];
+  public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGRectModel>) {
     super();

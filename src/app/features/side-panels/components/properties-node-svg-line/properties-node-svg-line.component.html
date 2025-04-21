@@ -1,0 +1,134 @@
+@if (form) {
+  <form [formGroup]="form">
+    <!-- Fill -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input class="input-color p-filled" type="color" formControlName="fill" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="fill" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="fillField">Fill</label>
+    </p-floatlabel>
+    <!-- Stroke -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input class="input-color p-filled" type="color" formControlName="stroke" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="stroke" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="strokeField">Stroke</label>
+    </p-floatlabel>
+    <!-- Stroke Width -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="strokeWidthField"
+          size="small"
+          name="strokeWidth"
+          formControlName="strokeWidth"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="0"
+          [max]="999"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="strokeWidth" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="strokeWidthField">Stroke Width</label>
+    </p-floatlabel>
+    <!-- X1 -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="x1Field"
+          size="small"
+          name="x1"
+          formControlName="x1"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-99999"
+          [max]="99999"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="x1" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="x1Field">X1</label>
+    </p-floatlabel>
+    <!-- Y -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="y1Field"
+          size="small"
+          name="y1"
+          formControlName="y1"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-99999"
+          [max]="99999"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="y1" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="yField">Y1</label>
+    </p-floatlabel>
+    <!-- X2 -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="x2Field"
+          size="small"
+          name="x2"
+          formControlName="x2"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-99999"
+          [max]="99999"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="x2" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="x2Field">X2</label>
+    </p-floatlabel>
+    <!-- Y2 -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="y2Field"
+          size="small"
+          name="y2"
+          formControlName="y2"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-99999"
+          [max]="99999"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="y2" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="y2Field">Y2</label>
+    </p-floatlabel>
+  </form>
+}

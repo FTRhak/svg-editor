@@ -16,7 +16,7 @@ export class SVGEllipseModel extends TreeNodeModel implements TreeNodeStyleModel
   public rx: number = 0;
   public ry: number = 0;
 
-  public override children: SVGGroupModel[] = [];
+  public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGEllipseModel>) {
     super();

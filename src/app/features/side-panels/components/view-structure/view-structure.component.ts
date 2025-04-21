@@ -50,6 +50,15 @@ export class ViewStructureComponent implements OnInit {
     },
   };
 
+  private readonly ADD_LINE = {
+    label: 'Line',
+    type: SVGNodeType.LINE,
+    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
+      this.selectedItem &&
+        this.project.addChildItem(this.selectedItem.id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1 });
+    },
+  };
+
   private readonly ADD_PATH = {
     label: 'Path',
     type: SVGNodeType.PATH,
@@ -64,6 +73,7 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_RECT },
     { ...this.ADD_CIRCLE },
     { ...this.ADD_ELLIPSE },
+    { ...this.ADD_LINE },
   ];
   private readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
     { ...this.ADD_GROUP },
@@ -71,6 +81,7 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_RECT },
     { ...this.ADD_CIRCLE },
     { ...this.ADD_ELLIPSE },
+    { ...this.ADD_LINE },
   ];
 
   private readonly MENU_ITEM_REMOVE: MenuItem = {

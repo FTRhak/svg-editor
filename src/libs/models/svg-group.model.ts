@@ -9,7 +9,7 @@ export class SVGGroupModel extends TreeNodeModel {
   public transform!: string;
   public style!: string;
 
-  public override children: SVGGroupModel[] = [];
+  public override children: TreeNodeModel[] = [];
 
   constructor() {
     super();
