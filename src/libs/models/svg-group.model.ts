@@ -1,39 +1,22 @@
 import { Generator, hasStyleProperties, isNotUndefined, styleToString } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
-import { StyleAttributeModel } from './style-attribute.model';
+import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 
-export class SVGGroupModel extends TreeNodeModel {
+export class SVGGroupModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.GROUP;
   public override readonly _id: PID;
-  public fill!: string;
-  public stroke!: string;
-  public strokeWidth!: number;
-  public transform!: string;
-  public style!: StyleAttributeModel;
 
   public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGGroupModel>) {
-    super();
+    super(params);
     this._id = Generator.getId('group-');
-    if (isNotUndefined(params.fill)) this.fill = params.fill as string;
-    if (isNotUndefined(params.stroke)) this.stroke = params.stroke as string;
-    if (isNotUndefined(params.strokeWidth)) this.strokeWidth = params.strokeWidth as number;
-    if (isNotUndefined(params.style)) this.style = params.style || {};
-    if (isNotUndefined(params.transform)) this.transform = params.transform as string;
   }
 
   public override render() {
-    let res =
-      `<g id="${this._id}" ` +
-      (isNotUndefined(this.fill) ? ` fill="${this.fill}"` : '') +
-      (isNotUndefined(this.stroke) ? ` stroke="${this.stroke}"` : '') +
-      (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
-      (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
-      (hasStyleProperties(this.style) ? ` style="${styleToString(this.style)}"` : '') +
-      `>\n`;
+    let res = `<g ` + this.renderPart() + `>\n`;
 
     this.children.forEach((child) => (res += '  ' + child.render()));
 

@@ -1,19 +1,13 @@
 import { Generator, isNotUndefined } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
-import { StyleAttributeModel } from './style-attribute.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 import { VectorModel } from './vector.model';
 
-export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
+export class SVGRectModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.RECT;
   public override readonly _id: PID;
-  public fill!: string;
-  public stroke!: string;
-  public strokeWidth!: number;
-  public transform!: string;
-  public style!: StyleAttributeModel;
   public x!: number;
   public y!: number;
   public width!: number;
@@ -24,7 +18,7 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
   public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGRectModel>) {
-    super();
+    super(params);
     this._id = Generator.getId('rect-');
     if (isNotUndefined(params.x)) this.x = params.x as number;
     if (isNotUndefined(params.y)) this.y = params.y as number;
@@ -36,12 +30,8 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
 
   public override render() {
     let res =
-      `<rect id="${this._id}" ` +
-      (isNotUndefined(this.fill) ? ` fill="${this.fill}"` : '') +
-      (isNotUndefined(this.stroke) ? ` stroke="${this.stroke}"` : '') +
-      (isNotUndefined(this.strokeWidth) ? ` stroke-width="${this.strokeWidth}"` : '') +
-      (isNotUndefined(this.transform) ? ` transform="${this.transform}"` : '') +
-      (isNotUndefined(this.style) ? ` style="${this.style}"` : '') +
+      `<rect ` +
+      this.renderPart() +
       (isNotUndefined(this.x) ? ` x="${this.x}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y}"` : '') +
       (isNotUndefined(this.width) ? ` width="${this.width}"` : '') +

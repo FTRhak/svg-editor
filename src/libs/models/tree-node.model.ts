@@ -8,6 +8,8 @@ export class TreeNodeModel {
   public readonly _id!: string;
   children: TreeNodeModel[] = [];
 
+  constructor() {}
+
   public toTree(): TreeItem {
     const item: TreeItem = new TreeItem(this._id, this._type);
 
