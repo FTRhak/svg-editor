@@ -3,12 +3,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { SVGPathModel } from '@libs';
+import { isUndefined } from '@libs/utils';
+import { debounceTime } from 'rxjs';
 
 interface SVGNode {
-  fill: FormControl<string>;
-  stroke: FormControl<string>;
-  strokeWidth: FormControl<number>;
-  d: FormControl<string>;
+  fill: FormControl<string | null>;
+  stroke: FormControl<string | null>;
+  strokeWidth: FormControl<number | null>;
+  d: FormControl<string | null>;
 }
 
 @Component({
@@ -23,16 +25,27 @@ export class PropertiesNodeSvgPathComponent implements OnInit {
 
   public readonly node = input.required<SVGPathModel>();
 
-  public form = new FormGroup<SVGNode>({
-    fill: new FormControl('', { nonNullable: true }),
-    stroke: new FormControl('', { nonNullable: true }),
-    strokeWidth: new FormControl(0, { nonNullable: true }),
-    d: new FormControl('', { nonNullable: true }),
-  });
+  public form!: FormGroup<SVGNode>;
 
   ngOnInit(): void {
-    this.form.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
-      console.log('change:', value);
+    const node = this.node();
+    this.form = new FormGroup<SVGNode>({
+      fill: new FormControl({ value: node.fill || '', disabled: isUndefined(node.fill) }),
+      stroke: new FormControl({ value: node.stroke || '', disabled: isUndefined(node.stroke) }),
+      strokeWidth: new FormControl({ value: node.strokeWidth || 0, disabled: isUndefined(node.strokeWidth) }),
+      d: new FormControl({ value: node.d || '', disabled: isUndefined(node.d) }),
     });
+
+    const rawValue = this.form.getRawValue();
+    const properties = Object.keys(rawValue);
+
+    for (const property of properties) {
+      this.form
+        .get(property)
+        ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
+        .subscribe((value) => {
+          this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
+        });
+    }
   }
 }

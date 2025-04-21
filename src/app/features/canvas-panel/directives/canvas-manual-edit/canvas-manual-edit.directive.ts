@@ -1,8 +1,9 @@
-import { DestroyRef, Directive, ElementRef, inject, OnInit, viewChild } from '@angular/core';
+import { DestroyRef, Directive, ElementRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
 import { ProjectService } from '@core/services';
-import { SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
+import { SVGNodeType, SVGRectModel, SVGRootModel, TreeNodeModel } from '@libs';
+import { collectionToArray } from '@libs/utils';
 import { debounceTime, fromEvent } from 'rxjs';
 
 @Directive({
@@ -13,7 +14,15 @@ export class CanvasManualEditDirective implements OnInit {
   private readonly win = inject(WINDOW);
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
-  private el = inject(ElementRef);
+  private el: ElementRef<SVGGElement> = inject(ElementRef<SVGGElement>);
+
+  public zoom = input.required<number, number>({
+    alias: 'canvasManualEdit',
+    transform: (value) => {
+      this.updateEditElements(value);
+      return value;
+    },
+  });
 
   private item!: TreeNodeModel;
 
@@ -27,8 +36,26 @@ export class CanvasManualEditDirective implements OnInit {
   }
 
   private renderEditElements() {
-    console.log(this.item);
-    if (this.item._type === SVGNodeType.RECT) {
+    this.el.nativeElement.innerHTML = '';
+    if (this.item && this.item._type === SVGNodeType.RECT) {
+      this.renderEditRect(this.item as SVGRectModel);
     }
+  }
+
+  private updateEditElements(zoom: number) {
+    collectionToArray(this.el.nativeElement.children).forEach((item: HTMLElement) => {
+      if (item.hasAttribute('r')) {
+        item.setAttribute('r', `${zoom * 0.1}`);
+      }
+    });
+  }
+
+  private renderEditRect(rect: SVGRectModel) {
+    const zoom = this.zoom();
+    const anchors = rect
+      .anchorPoints()
+      .map((item) => `<circle cx="${item.x}" cy="${item.y}" r="${zoom * 0.1}" fill="red" />`)
+      .join('');
+    this.el.nativeElement.innerHTML = anchors;
   }
 }

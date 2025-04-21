@@ -4,6 +4,7 @@ import { SVGNodeType } from './node.type';
 import { SVGGroupModel } from './svg-group.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
+import { VectorModel } from './vector.model';
 
 export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.RECT;
@@ -49,5 +50,14 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
       (isNotUndefined(this.ry) ? ` ry="${this.ry}"` : '') +
       `></rect>`;
     return res;
+  }
+
+  public override anchorPoints(): VectorModel[] {
+    return [
+      new VectorModel(this.x, this.y),
+      new VectorModel(this.x + this.width, this.y),
+      new VectorModel(this.x + this.width, this.y + this.height),
+      new VectorModel(this.x, this.y + this.height),
+    ];
   }
 }

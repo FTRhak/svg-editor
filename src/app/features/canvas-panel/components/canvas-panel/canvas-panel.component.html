@@ -1,6 +1,6 @@
 <svg #svgCanvas xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="100%" height="100%">
   <g #gridList></g>
   <g #svgBgView></g>
-  <g #svgManualEdit canvasManualEdit></g>
+  <g #svgManualEdit [canvasManualEdit]="zoom()"></g>
 </svg>
 <zoom-panel></zoom-panel>

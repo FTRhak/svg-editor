@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
@@ -24,7 +24,7 @@ interface SVGNode {
   templateUrl: './properties-node-svg-rect.component.html',
   styleUrl: './properties-node-svg-rect.component.scss',
 })
-export class PropertiesNodeSvgRectComponent {
+export class PropertiesNodeSvgRectComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
 

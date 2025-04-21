@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -44,6 +45,7 @@ const modules = [
   TabsModule,
   ColorPickerModule,
   FileUploadModule,
+  BadgeModule,
 ];
 
 @NgModule({

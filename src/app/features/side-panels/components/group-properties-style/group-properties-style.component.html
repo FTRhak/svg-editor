@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<div [formGroup]="form()">
   <!-- Fill -->
   <p-floatlabel variant="on" class="mb-1">
     <p-inputgroup>
@@ -41,31 +41,4 @@
     </p-inputgroup>
     <label for="strokeWidthField">Stroke Width</label>
   </p-floatlabel>
-  <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="strokeWidthField"
-      size="small"
-      name="strokeWidth"
-      formControlName="strokeWidth"
-      class="w-100"
-      mode="decimal"
-      [min]="0"
-      [max]="999"
-      [step]="1"
-    />
-    <label for="strokeWidthField">Stroke Width</label>
-  </p-floatlabel>
-  <p-floatlabel variant="on" class="mb-1">
-    <textarea
-      id="dField"
-      rows="5"
-      size="small"
-      class="w-100 p-filled"
-      name="d"
-      [readonly]="true"
-      pTextarea
-      formControlName="d"
-    ></textarea>
-    <label for="dField">D (path)</label>
-  </p-floatlabel>
-</form>
+</div>

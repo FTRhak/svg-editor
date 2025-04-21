@@ -26,7 +26,10 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   private readonly win = inject(WINDOW);
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
-  private el = inject(ElementRef);
+  private readonly el = inject(ElementRef);
+
+  private readonly SVG_BORDER = 0.02;
+  private readonly SVG_GRID_LINE = 0.01;
 
   svgCanvas = viewChild<ElementRef<SVGSVGElement>>('svgCanvas');
   svgGridView = viewChild<ElementRef<SVGGElement>>('gridList');
@@ -69,7 +72,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    fromEvent<WheelEvent>(this.win, 'wheel')
+    fromEvent<WheelEvent>(this.svgCanvas()?.nativeElement!, 'wheel')
       .pipe(
         filter((ev) => !(ev.ctrlKey || ev.buttons === 1 || ev.buttons === 2)),
         map((ev) => ev.deltaY / Math.abs(ev.deltaY)),
@@ -125,7 +128,8 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   }
 
   private renderGrid(zoom: number, view: RectModel) {
-    const gridLineWidth = 0.01 * zoom;
+    const svgBorder = this.SVG_BORDER * this.zoom();
+    const gridLineWidth = this.SVG_GRID_LINE * zoom;
     let res = '';
     const x = view.width + view.x;
     const y = view.height + view.y;
@@ -139,12 +143,17 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
     }
 
     this.svgGridView()!.nativeElement.innerHTML = res;
+
+    this.svgBgView()?.nativeElement.querySelector('#borderSVGZone')?.setAttribute('stroke-width', `${svgBorder}`);
   }
 
   private renderSVG(svg: SVGRootModel, rootNode: SVGGElement): void {
     if (rootNode) {
+      const svgBorder = this.SVG_BORDER * this.zoom();
       rootNode.innerHTML = '';
       let res = '';
+
+      res += `<rect id="borderSVGZone" x="${svg.viewBox!.x}" y="${svg.viewBox!.y}" width="${svg.viewBox!.width}" height="${svg.viewBox!.height}" fill="none" stroke="black" stroke-width="${svgBorder}"></rect>`;
       svg.children.forEach((item) => {
         res += item.render();
       });

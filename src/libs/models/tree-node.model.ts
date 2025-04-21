@@ -1,6 +1,7 @@
 import { SVGNodeType } from './node.type';
 import { StyleAttributeModel } from './style-attribute.model';
 import { TreeItem } from './tree-item.model';
+import { VectorModel } from './vector.model';
 
 export class TreeNodeModel {
   public readonly _type!: SVGNodeType;
@@ -26,6 +27,10 @@ export class TreeNodeModel {
 
   public render(): string {
     return `<${this._type} id="${this._id}"/>`;
+  }
+
+  public anchorPoints(): VectorModel[] {
+    return [];
   }
 
   public static importFromDom(dom: any): TreeNodeModel {

@@ -1,18 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { PrimeSharedModule } from '@shared';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PrimeSharedModule, SharedModule } from '@shared';
+import { GroupPropertiesStyleComponent } from './components/group-properties-style/group-properties-style.component';
+import { PropertiesNodeSvgCircleComponent } from './components/properties-node-svg-circle/properties-node-svg-circle.component';
+import { PropertiesNodeSvgEllipseComponent } from './components/properties-node-svg-ellipse/properties-node-svg-ellipse.component';
 import { PropertiesNodeSvgGroupComponent } from './components/properties-node-svg-group/properties-node-svg-group.component';
+import { PropertiesNodeSvgLineComponent } from './components/properties-node-svg-line/properties-node-svg-line.component';
+import { PropertiesNodeSvgPathComponent } from './components/properties-node-svg-path/properties-node-svg-path.component';
+import { PropertiesNodeSvgRectComponent } from './components/properties-node-svg-rect/properties-node-svg-rect.component';
 import { PropertiesNodeSvgComponent } from './components/properties-node-svg/properties-node-svg.component';
 import { PropertiesComponent } from './components/properties/properties.component';
 import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { ViewStructureComponent } from './components/view-structure/view-structure.component';
-import { PropertiesNodeSvgPathComponent } from './components/properties-node-svg-path/properties-node-svg-path.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { PropertiesNodeSvgRectComponent } from './components/properties-node-svg-rect/properties-node-svg-rect.component';
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
-import { PropertiesNodeSvgCircleComponent } from './components/properties-node-svg-circle/properties-node-svg-circle.component';
-import { PropertiesNodeSvgEllipseComponent } from './components/properties-node-svg-ellipse/properties-node-svg-ellipse.component';
-import { PropertiesNodeSvgLineComponent } from './components/properties-node-svg-line/properties-node-svg-line.component';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { PropertiesNodeSvgLineComponent } from './components/properties-node-svg
     PropertiesNodeSvgCircleComponent,
     PropertiesNodeSvgEllipseComponent,
     PropertiesNodeSvgLineComponent,
+    GroupPropertiesStyleComponent,
   ],
   exports: [SidePanelComponent],
-  imports: [CommonModule, PrimeSharedModule, ReactiveFormsModule],
+  imports: [CommonModule, PrimeSharedModule, SharedModule, ReactiveFormsModule],
 })
 export class SidePanelsModule {}

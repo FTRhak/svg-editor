@@ -21,7 +21,6 @@ export class ProjectService {
   }
 
   importSVG(svgCode: string) {
-    console.log('import:', svgCode);
     const d = document.createElement('div');
     d.innerHTML = svgCode;
     const svgNode: SVGSVGElement | null = d.querySelector('svg');
@@ -30,9 +29,6 @@ export class ProjectService {
       this.events.trigger('project:file:imported', this.project);
       this.events.trigger('project:tree:updates', this.project, []);
     }
-
-    //this.project = svg;
-    //this.events.trigger('project:imported', this.project);
   }
 
   public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {

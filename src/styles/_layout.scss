@@ -22,3 +22,11 @@ $sizeList: (1, 10, 20, 25, 50, 75, 80, 100);
     height: #{$size}vh;
   }
 }
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}

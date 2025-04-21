@@ -1,9 +1,10 @@
 import { Component, DestroyRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '@core/services';
-import { SVGNodeType, SVGRootModel, TreeItem } from '@libs';
+import { PID, SVGNodeType, SVGRootModel, TreeItem } from '@libs';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
+import { TreeNodeContextMenuSelectEvent } from 'primeng/tree';
 import { fromEvent } from 'rxjs';
 
 @Component({
@@ -19,51 +20,54 @@ export class ViewStructureComponent implements OnInit {
   private readonly ADD_GROUP = {
     label: 'Group',
     type: SVGNodeType.GROUP,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
     },
   };
 
   private readonly ADD_RECT = {
     label: 'Rect',
     type: SVGNodeType.RECT,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem &&
-        this.project.addChildItem(this.selectedItem.id, ev.item.type, { x: 0, y: 0, width: 1, height: 1 });
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type, { x: 0, y: 0, width: 1, height: 1 });
     },
   };
 
   private readonly ADD_CIRCLE = {
     label: 'Circle',
     type: SVGNodeType.CIRCLE,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type, { cx: 1, cy: 1, r: 1 });
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type, { cx: 1, cy: 1, r: 1 });
     },
   };
 
   private readonly ADD_ELLIPSE = {
     label: 'Ellipse',
     type: SVGNodeType.ELLIPSE,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem &&
-        this.project.addChildItem(this.selectedItem.id, ev.item.type, { cx: 2, cy: 1, rx: 2, ry: 1 });
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type, { cx: 2, cy: 1, rx: 2, ry: 1 });
     },
   };
 
   private readonly ADD_LINE = {
     label: 'Line',
     type: SVGNodeType.LINE,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem &&
-        this.project.addChildItem(this.selectedItem.id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1 });
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1 });
     },
   };
 
   private readonly ADD_PATH = {
     label: 'Path',
     type: SVGNodeType.PATH,
-    command: (ev: { item: { type: SVGNodeType }; originalEvent: Event }) => {
-      this.selectedItem && this.project.addChildItem(this.selectedItem.id, ev.item.type);
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
     },
   };
 
@@ -111,34 +115,32 @@ export class ViewStructureComponent implements OnInit {
     this.project.selectItem(this.selectedItem?.id || null);
   }
 
-  onContextMenu(event: any) {
-    console.log('onContextMenu:', event.originalEvent.currentTarget);
+  onContextMenu(event: TreeNodeContextMenuSelectEvent) {
     const menu: MenuItem[] = [];
 
-    switch (event.node.typeName) {
+    switch ((event.node as TreeItem).typeName) {
       case SVGNodeType.SVG:
         menu.push({
           label: 'Add',
-          items: [...this.MENU_ITEM_ADD_SVG],
+          items: this.MENU_ITEM_ADD_SVG.map((item) => ({ ...item, idRef: (event.node as TreeItem).id })),
         });
         break;
       case SVGNodeType.GROUP:
         menu.push({
           label: 'Add',
-          items: [...this.MENU_ITEM_ADD_GROUP],
+          items: this.MENU_ITEM_ADD_GROUP.map((item) => ({ ...item, idRef: (event.node as TreeItem).id })),
         });
-        menu.push({ ...this.MENU_ITEM_REMOVE });
+        menu.push({ ...this.MENU_ITEM_REMOVE, idRef: (event.node as TreeItem).id });
         break;
       case SVGNodeType.PATH:
-        menu.push({ ...this.MENU_ITEM_REMOVE });
+        menu.push({ ...this.MENU_ITEM_REMOVE, idRef: (event.node as TreeItem).id });
         break;
       case SVGNodeType.RECT:
-        menu.push({ ...this.MENU_ITEM_REMOVE });
+        menu.push({ ...this.MENU_ITEM_REMOVE, idRef: (event.node as TreeItem).id });
         break;
     }
     this.menuItems.set(menu);
 
-    //this.cm.target = event.originalEvent.currentTarget;
-    this.cm.show(event.originalEvent);
+    //this.cm.show(event.originalEvent);
   }
 }

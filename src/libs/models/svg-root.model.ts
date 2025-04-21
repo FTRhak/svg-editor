@@ -21,9 +21,10 @@ export class SVGRootModel extends TreeNodeModel {
 
   public override children: TreeNodeModel[] = [];
 
-  constructor() {
+  constructor(x: number = 0, y: number = 0, width: number = 10, height: number = 10) {
     super();
     this._id = Generator.getId('svg-');
+    this.viewBox = new RectModel(x, y, width, height);
   }
 
   public addChild(id: PID, type: SVGNodeType, config: { [key: string]: any }): TreeNodeModel | null {
