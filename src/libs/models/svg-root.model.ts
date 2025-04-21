@@ -95,12 +95,10 @@ export class SVGRootModel extends TreeNodeModel {
 
   public static override importFromDom(dom: SVGSVGElement): SVGRootModel {
     const svg = new SVGRootModel();
-    //console.log('W:',dom.ve);
     svg.width = dom.width.baseVal.valueAsString;
     svg.height = dom.height.baseVal.valueAsString;
     svg.viewBox = dom.viewBox.baseVal;
-    //svg.height = dom.height;
-    //svg.viewBox = dom.viewBox;
+
     importChildren(svg, dom.children);
 
     return svg;
@@ -110,8 +108,6 @@ export class SVGRootModel extends TreeNodeModel {
 function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
   Array.from(collection).forEach((item) => {
     if (item.nodeName === SVGNodeType.PATH) {
-      console.log((item as any).getAttribute('fill'));
-
       const node = SVGPathModel.importFromDom(item as SVGPathElement);
       parent.children.push(node);
       importChildren(node, item.children);

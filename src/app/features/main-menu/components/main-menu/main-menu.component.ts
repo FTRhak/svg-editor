@@ -1,7 +1,7 @@
-import { Component, ElementRef, inject, OnDestroy, viewChild } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { ProjectService } from '@core/services';
-import { ImportDialogComponent } from '@features/main-menu/dialogs/import-dialog/import-dialog.component';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ImportDialogComponent } from '../../dialogs/import-dialog/import-dialog.component';
 
 @Component({
   selector: 'main-menu',

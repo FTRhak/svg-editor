@@ -1,9 +1,20 @@
-import { AfterViewInit, Component, DestroyRef, ElementRef, inject, OnInit, signal, viewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DestroyRef,
+  effect,
+  ElementRef,
+  inject,
+  OnInit,
+  signal,
+  viewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
 import { ProjectService } from '@core/services';
-import { SVGRootModel, TreeNodeModel } from '@libs';
-import { debounceTime, fromEvent, map } from 'rxjs';
+import { RectModel, SVGRootModel, TreeNodeModel, VectorModel } from '@libs';
+import { debounceTime, filter, fromEvent, map, switchMap, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'canvas-panel',
@@ -17,13 +28,37 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   private readonly project = inject(ProjectService);
   private el = inject(ElementRef);
 
-  svgCanvas = viewChild<ElementRef<SVGElement>>('svgCanvas');
+  svgCanvas = viewChild<ElementRef<SVGSVGElement>>('svgCanvas');
+  svgGridView = viewChild<ElementRef<SVGGElement>>('gridList');
   svgBgView = viewChild<ElementRef<SVGGElement>>('svgBgView');
 
-  width = signal<number>(0);
-  height = signal<number>(0);
+  width = signal<number>(1);
+  height = signal<number>(1);
 
+  center = signal<{ x: number; y: number }>({ x: 0, y: 0 });
   zoom = signal<number>(1);
+  //view!: RectModel;
+
+  constructor() {
+    const baseSize = 10;
+
+    effect(() => {
+      const width = this.width();
+      const height = this.height();
+      const zoom = this.zoom();
+      const center = this.center();
+
+      const rec = new RectModel(
+        center.x * zoom,
+        center.y * zoom,
+        baseSize * zoom - center.x,
+        baseSize * (height / width) * zoom - center.y,
+      );
+
+      this.svgCanvas()?.nativeElement.setAttribute('viewBox', `${rec.x} ${rec.y} ${rec.width} ${rec.height}`);
+      this.renderGrid(zoom, rec);
+    });
+  }
 
   ngOnInit(): void {
     fromEvent<[SVGRootModel, TreeNodeModel[]]>(this.project.events, 'project:tree:updates')
@@ -31,16 +66,18 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       .subscribe(([project, item]) => {
         this.renderSVG(project, this.svgBgView()!.nativeElement);
       });
-
-    /*fromEvent<[SVGRootModel, TreeNodeModel]>(this.project.events, 'project:item:selected')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(([project, item]) => {});*/
   }
 
   ngAfterViewInit(): void {
     fromEvent<WheelEvent>(this.win, 'wheel')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((event) => {});
+      .pipe(
+        filter((ev) => !(ev.ctrlKey || ev.buttons === 1 || ev.buttons === 2)),
+        map((ev) => ev.deltaY / Math.abs(ev.deltaY)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((event) => {
+        this.zoom.update((value) => value * (event < 0 ? 0.5 : 2));
+      });
 
     fromEvent(this.win, 'resize')
       .pipe(
@@ -59,6 +96,49 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       });
 
     this.win.dispatchEvent(new Event('resize'));
+
+    const up$ = fromEvent(this.svgCanvas()?.nativeElement!, 'mouseup');
+    const start = new VectorModel();
+    const startCenter = new VectorModel();
+    const zoom = this.zoom();
+    fromEvent<MouseEvent>(this.svgCanvas()?.nativeElement!, 'mousedown')
+      .pipe(
+        filter((ev) => ev.buttons === 1),
+        switchMap((event: MouseEvent) => {
+          start.x = event.clientX;
+          start.y = event.clientY;
+          startCenter.x = this.center().x;
+          startCenter.y = this.center().y;
+          return fromEvent<MouseEvent>(this.svgCanvas()?.nativeElement!, 'mousemove').pipe(
+            debounceTime(10),
+            map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
+            takeUntil(up$),
+          );
+        }),
+      )
+      .subscribe((ev) => {
+        this.center.set({
+          x: startCenter.x - ((ev.x - start.x) * zoom) / 100,
+          y: startCenter.y - ((ev.y - start.y) * zoom) / 100,
+        });
+      });
+  }
+
+  private renderGrid(zoom: number, view: RectModel) {
+    const gridLineWidth = 0.01 * zoom;
+    let res = '';
+    const x = view.width + view.x;
+    const y = view.height + view.y;
+    const t = 1 * zoom;
+
+    for (let i = view.x - (view.x % t); i < x; i += t) {
+      res += `<line class="grid-line" x1="${i}" y1="${view.y}" x2="${i}" y2="${view.y + view.height}" stroke-width="${gridLineWidth}"></line>`;
+    }
+    for (let i = view.y - (view.y % t); i < y; i += t) {
+      res += `<line class="grid-line" x1="${view.x}" y1="${i}" x2="${view.x + view.width}" y2="${i}" stroke-width="${gridLineWidth}"></line>`;
+    }
+
+    this.svgGridView()!.nativeElement.innerHTML = res;
   }
 
   private renderSVG(svg: SVGRootModel, rootNode: SVGGElement): void {
