@@ -1,7 +1,7 @@
 import { Generator, isNotUndefined } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
-import { SVGGroupModel } from './svg-group.model';
+import { StyleAttributeModel } from './style-attribute.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 import { VectorModel } from './vector.model';
@@ -13,7 +13,7 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
   public stroke!: string;
   public strokeWidth!: number;
   public transform!: string;
-  public style!: string;
+  public style!: StyleAttributeModel;
   public x!: number;
   public y!: number;
   public width!: number;
@@ -50,6 +50,21 @@ export class SVGRectModel extends TreeNodeModel implements TreeNodeStyleModel {
       (isNotUndefined(this.ry) ? ` ry="${this.ry}"` : '') +
       `></rect>`;
     return res;
+  }
+
+  public static override importFromDom(dom: SVGRectElement) {
+    const node = new SVGRectModel({
+      fill: dom.getAttribute('fill')! || undefined,
+      stroke: dom.getAttribute('stroke')! || undefined,
+      strokeWidth: dom.getAttribute('stroke-width') ? parseFloat(dom.getAttribute('stroke-width')!) : undefined,
+      style: TreeNodeModel.importStyle(dom.style),
+      x: dom.getAttribute('x') ? parseFloat(dom.getAttribute('x')!) : undefined,
+      y: dom.getAttribute('y') ? parseFloat(dom.getAttribute('y')!) : undefined,
+      width: dom.getAttribute('width') ? parseFloat(dom.getAttribute('width')!) : undefined,
+      height: dom.getAttribute('height') ? parseFloat(dom.getAttribute('height')!) : undefined,
+    });
+
+    return node;
   }
 
   public override anchorPoints(): VectorModel[] {

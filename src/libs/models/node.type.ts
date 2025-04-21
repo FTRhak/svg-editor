@@ -1,6 +1,6 @@
 export enum SVGNodeType {
   SVG = 'svg',
-  GROUP = 'group',
+  GROUP = 'g',
   PATH = 'path',
   RECT = 'rect',
   CIRCLE = 'circle',

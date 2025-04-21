@@ -68,7 +68,7 @@ export class SVGRootModel extends TreeNodeModel {
 
     switch (type) {
       case SVGNodeType.GROUP:
-        node = new SVGGroupModel();
+        node = new SVGGroupModel(config);
         break;
       case SVGNodeType.REFS:
         node = new SVGRefsModel();
@@ -114,10 +114,22 @@ export class SVGRootModel extends TreeNodeModel {
 
 function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
   Array.from(collection).forEach((item) => {
-    if (item.nodeName === SVGNodeType.PATH) {
-      const node = SVGPathModel.importFromDom(item as SVGPathElement);
-      parent.children.push(node);
-      importChildren(node, item.children);
+    switch (item.nodeName) {
+      case SVGNodeType.GROUP:
+        const group = SVGGroupModel.importFromDom(item as SVGGElement);
+        parent.children.push(group);
+        importChildren(group, item.children);
+        break;
+      case SVGNodeType.PATH:
+        const path = SVGPathModel.importFromDom(item as SVGPathElement);
+        parent.children.push(path);
+        importChildren(path, item.children);
+        break;
+      case SVGNodeType.RECT:
+        const rect = SVGRectModel.importFromDom(item as SVGRectElement);
+        parent.children.push(rect);
+        importChildren(rect, item.children);
+        break;
     }
   });
 }
