@@ -1,8 +1,9 @@
 FROM node:current
 RUN ls
 RUN mkdir -p /app
+RUN ls
 WORKDIR /app
-
+RUN ls
 COPY package.json .
 RUN ls
 RUN npm install -g npm@9.2.0
