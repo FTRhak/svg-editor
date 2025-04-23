@@ -18,9 +18,11 @@ jobs:
       run: docker build . --file Dockerfile --tag svg-editor:$(date +%s)
     
     - name: Upload artifact
+      #run: docker save svg-editor:$(date +%s) > svg-editor.tar
+      run: WORKDIR /app
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: /app
+        path: .
   
   deploy:
     # Add a dependency to the build job
