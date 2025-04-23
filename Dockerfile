@@ -4,9 +4,12 @@ RUN mkdir -p /app
 RUN ls
 WORKDIR /app
 RUN ls
-COPY package.json .
+#COPY package.json .
+#RUN ls
+run -v $(pwd)
+
+RUN git clone https://github.com/FTRhak/svg-editor.git
 RUN ls
-RUN PWD
 RUN npm install -g npm@9.2.0
 RUN npm install
 RUN ls
