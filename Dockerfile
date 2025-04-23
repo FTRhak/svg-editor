@@ -17,3 +17,5 @@ EXPOSE 4200
 #CMD ["npm", "run", "start:prod"]
 #CMD ["npm", "run", "build:prod"]
 RUN npm run build:prod
+
+RUN ls -a

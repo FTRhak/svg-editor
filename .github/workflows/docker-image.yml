@@ -20,7 +20,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3.0.1
       with:
-        path: /app/dist/svg-editor/
+        path: /app/dist/svg-editor
   
   deploy:
     # Add a dependency to the build job
