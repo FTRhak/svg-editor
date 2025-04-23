@@ -26,3 +26,5 @@ WORKDIR /app/dist/svg-editor/browser
 
 #RUN CD dist/svg-editor/browser
 RUN ls -l
+
+COPY ./browser .
