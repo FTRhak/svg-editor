@@ -20,4 +20,7 @@ RUN npm run build:prod
 
 WORKDIR /app/dist/svg-editor/browser
 
+#RUN tar -c . | docker save - svg-editor:$(date +%s)
+RUN tar -c /home/runner/work/_temp/artifact.tar .
+
 RUN ls -l
