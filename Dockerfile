@@ -20,3 +20,6 @@ RUN npm run build:prod
 
 RUN ls -d
 RUN ls -l
+
+RUN CD dist/svg-editor/browser
+RUN ls -l
