@@ -18,9 +18,9 @@ EXPOSE 4200
 #CMD ["npm", "run", "build:prod"]
 RUN npm run build:prod
 
-WORKDIR /app/dist/svg-editor/browser
+#WORKDIR /app/dist/svg-editor/browser
 
 #RUN tar -c . | docker save - svg-editor:$(date +%s)
-RUN tar -c /home/runner/work/_temp/artifact.tar .
+RUN tar -c /home/runner/work/_temp/artifact.tar dist/svg-editor/browser/
 
 RUN ls -l
