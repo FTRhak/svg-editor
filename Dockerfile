@@ -9,8 +9,11 @@ RUN npm install
 
 COPY . .
 
-RUN ls
+#RUN ls
 
 EXPOSE 4200
 #CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
-CMD ["npm", "run", "start:prod"]
+#CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "build:prod"]
+
+RUN ls
