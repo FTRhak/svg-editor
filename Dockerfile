@@ -18,10 +18,11 @@ EXPOSE 4200
 #CMD ["npm", "run", "build:prod"]
 RUN npm run build:prod
 
-RUN ls -d
-RUN ls -l
+#RUN ls -d
+#RUN ls -l
 
 WORKDIR /app/dist/svg-editor/browser
+
 
 #RUN CD dist/svg-editor/browser
 RUN ls -l
