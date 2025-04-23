@@ -6,7 +6,7 @@ WORKDIR /app
 RUN ls
 COPY package.json .
 RUN ls
-PWD
+RUN PWD
 RUN npm install -g npm@9.2.0
 RUN npm install
 RUN ls
