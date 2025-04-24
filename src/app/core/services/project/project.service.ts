@@ -80,18 +80,18 @@ export class ProjectService {
     }
   }
 
+  /**
+   * Shifts the selected item by the given vector.
+   * If the item is moved, an event "project:item:updated" is triggered for each changed property.
+   * @param shift The vector to shift the item by.
+   */
   public dragMoveSelectedItem(shift: VectorModel) {
     const item: any = this.selectedItem;
     if (item) {
-      //item.x += shift.x;
-      //item.y += shift.y;
       const changedProperties = item.moveShift(shift.x, shift.y);
       changedProperties.forEach((prop: string) =>
         this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
       );
-      //this.events.trigger('project:item:updated', this.project, item, 'x', item.x);
-      //this.events.trigger('project:item:updated', this.project, item, 'y', item.y);
-      //this.events.trigger('project:tree:updates', this.project, [item]);
     }
   }
 }
