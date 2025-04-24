@@ -37,10 +37,10 @@ export class SVGLineModel extends TreeNodeStyleModel {
   }
 
   public override moveShift(dx: number, dy: number) {
-    this.x1 += dx;
-    this.y1 += dy;
-    this.x2 += dx;
-    this.y2 += dy;
+    this.x1 = (this.x1 || 0) + dx;
+    this.y1 = (this.y1 || 0) + dy;
+    this.x2 = (this.x2 || 0) + dx;
+    this.y2 = (this.y2 || 0) + dy;
 
     return ['x1', 'y1', 'x2', 'y2'];
   }

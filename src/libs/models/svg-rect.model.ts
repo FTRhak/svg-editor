@@ -43,8 +43,8 @@ export class SVGRectModel extends TreeNodeStyleModel {
   }
 
   public override moveShift(dx: number, dy: number) {
-    this.x += dx;
-    this.y += dy;
+    this.x = (this.x || 0) + dx;
+    this.y = (this.y || 0) + dy;
 
     return ['x', 'y'];
   }

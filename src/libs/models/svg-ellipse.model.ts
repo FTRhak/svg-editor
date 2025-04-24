@@ -36,8 +36,8 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
   }
 
   public override moveShift(dx: number, dy: number) {
-    this.cx += dx;
-    this.cy += dy;
+    this.cx = (this.cx || 0) + dx;
+    this.cy = (this.cy || 0) + dy;
 
     return ['cx', 'cy'];
   }
