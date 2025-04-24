@@ -35,6 +35,10 @@ export class TreeNodeModel {
     return [];
   }
 
+  public moveShift(dx: number, dy: number): string[] {
+    return [];
+  }
+
   public static importFromDom(dom: any): TreeNodeModel {
     return new TreeNodeModel();
   }

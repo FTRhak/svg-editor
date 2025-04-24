@@ -1,4 +1,4 @@
-import { Generator, hasStyleProperties, isNotUndefined, styleToString } from '../utils';
+import { Generator, isNotUndefined } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';
@@ -20,6 +20,11 @@ export class SVGPathModel extends TreeNodeStyleModel {
   public override render() {
     let res = `<path ` + this.renderPart() + (isNotUndefined(this.d) ? ` d="${this.d}"` : '') + `></path>\n`;
     return res;
+  }
+
+  public override moveShift(dx: number, dy: number) {
+    console.warn('Need to implement moveShift for SVGPathModel');
+    return ['d'];
   }
 
   public static override importFromDom(dom: SVGPathElement) {

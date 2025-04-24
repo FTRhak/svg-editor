@@ -2,9 +2,9 @@ import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
-import { SVGGroupModel } from '@libs';
+import { SVGGroupModel, SVGRootModel, TreeNodeModel } from '@libs';
 import { isUndefined, styleToString } from '@libs/utils';
-import { debounceTime } from 'rxjs';
+import { debounceTime, fromEvent } from 'rxjs';
 
 interface SVGNode {
   fill: FormControl<string | null>;
@@ -49,5 +49,11 @@ export class PropertiesNodeSvgGroupComponent implements OnInit {
           this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
         });
     }
+
+    fromEvent<[SVGRootModel, TreeNodeModel, string, any]>(this.project.events, 'project:item:updated')
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(([project, item, propertyName, value]) => {
+        this.form.setValue({ ...this.form.getRawValue(), [propertyName]: value } as any, { emitEvent: false });
+      });
   }
 }

@@ -32,6 +32,13 @@ export class SVGCircleModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override moveShift(dx: number, dy: number) {
+    this.cx += dx;
+    this.cy += dy;
+
+    return ['cx', 'cy'];
+  }
+
   public static override importFromDom(dom: SVGCircleElement) {
     const node = new SVGCircleModel({
       fill: dom.getAttribute('fill')! || undefined,

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PID, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel } from '@libs';
+import { PID, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel, VectorModel } from '@libs';
 import { EventManager } from '../../models';
 
 @Injectable({
@@ -76,6 +76,21 @@ export class ProjectService {
     if (item) {
       item[propertyName] = value;
       this.events.trigger('project:item:updated', this.project, item, propertyName, value);
+      //this.events.trigger('project:tree:updates', this.project, [item]);
+    }
+  }
+
+  public dragMoveSelectedItem(shift: VectorModel) {
+    const item: any = this.selectedItem;
+    if (item) {
+      //item.x += shift.x;
+      //item.y += shift.y;
+      const changedProperties = item.moveShift(shift.x, shift.y);
+      changedProperties.forEach((prop: string) =>
+        this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
+      );
+      //this.events.trigger('project:item:updated', this.project, item, 'x', item.x);
+      //this.events.trigger('project:item:updated', this.project, item, 'y', item.y);
       //this.events.trigger('project:tree:updates', this.project, [item]);
     }
   }

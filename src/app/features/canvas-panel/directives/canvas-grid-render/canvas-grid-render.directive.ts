@@ -69,5 +69,7 @@ export class CanvasGridRenderDirective {
       line.setAttribute('stroke-width', `${gridAxeLineWidth}`);
     });
     //#endregion
+
+    // TODO need to recalculate start/end greed lines positions
   }
 }

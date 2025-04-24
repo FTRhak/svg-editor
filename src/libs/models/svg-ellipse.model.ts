@@ -35,6 +35,13 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override moveShift(dx: number, dy: number) {
+    this.cx += dx;
+    this.cy += dy;
+
+    return ['cx', 'cy'];
+  }
+
   public static override importFromDom(dom: SVGEllipseElement) {
     const node = new SVGEllipseModel({
       fill: dom.getAttribute('fill')! || undefined,

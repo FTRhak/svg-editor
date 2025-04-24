@@ -36,6 +36,15 @@ export class SVGLineModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override moveShift(dx: number, dy: number) {
+    this.x1 += dx;
+    this.y1 += dy;
+    this.x2 += dx;
+    this.y2 += dy;
+
+    return ['x1', 'y1', 'x2', 'y2'];
+  }
+
   public static override importFromDom(dom: SVGLineElement) {
     const node = new SVGLineModel({
       fill: dom.getAttribute('fill')! || undefined,

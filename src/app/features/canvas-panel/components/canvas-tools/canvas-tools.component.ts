@@ -3,7 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
 import { ProjectService } from '@core/services';
 import { VectorModel } from '@libs';
-import { filter, fromEvent, map, switchMap, takeUntil } from 'rxjs';
+import { filter, fromEvent, map, switchMap, takeUntil, tap } from 'rxjs';
 
 type CanvasModes = 'drag' | 'edit';
 
@@ -51,19 +51,15 @@ export class CanvasToolsComponent implements AfterViewInit {
   private bindDragElement(): void {
     const up$ = fromEvent(this.svgCanvas(), 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
     const start = new VectorModel();
-    const startCenter = new VectorModel();
     const zoom = this.zoom();
     fromEvent<MouseEvent>(this.svgCanvas()!, 'mousedown')
       .pipe(
-        filter((ev) => (ev.target! as HTMLElement).tagName === 'svg'),
+        filter((ev) => (ev.target! as HTMLElement).tagName !== 'svg'),
         filter((ev) => ev.buttons === 1),
         switchMap((event: MouseEvent) => {
           start.x = event.clientX;
           start.y = event.clientY;
-          startCenter.x = this.center().x;
-          startCenter.y = this.center().y;
           return fromEvent<MouseEvent>(this.svgCanvas()!, 'mousemove').pipe(
-            //debounceTime(10),
             map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
             takeUntil(up$),
             takeUntilDestroyed(this.destroyRef),
@@ -72,10 +68,11 @@ export class CanvasToolsComponent implements AfterViewInit {
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
-        /*this.center.set({
-              x: startCenter.x - ((ev.x - start.x) * zoom) / 100,
-              y: startCenter.y - ((ev.y - start.y) * zoom) / 100,
-            });*/
+        // TODO need to recalculate shift coefficients
+        const coefficients = zoom / 100;
+        this.project.dragMoveSelectedItem({ x: (ev.x - start.x) * coefficients, y: (ev.y - start.y) * coefficients });
+        start.x = ev.x;
+        start.y = ev.y;
       });
   }
 }

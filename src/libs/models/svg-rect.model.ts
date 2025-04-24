@@ -42,6 +42,13 @@ export class SVGRectModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override moveShift(dx: number, dy: number) {
+    this.x += dx;
+    this.y += dy;
+
+    return ['x', 'y'];
+  }
+
   public static override importFromDom(dom: SVGRectElement) {
     const node = new SVGRectModel({
       fill: dom.getAttribute('fill')! || undefined,
