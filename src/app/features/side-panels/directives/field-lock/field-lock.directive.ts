@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, HostListener, inject, input, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Directive, HostListener, inject, input, signal } from '@angular/core';
 import { FormGroupDirective, NG_VALIDATORS } from '@angular/forms';
 import { Button } from 'primeng/button';
 
@@ -8,8 +8,9 @@ import { Button } from 'primeng/button';
   providers: [{ provide: NG_VALIDATORS, useExisting: FieldLockDirective, multi: true }],
 })
 export class FieldLockDirective implements AfterViewInit {
-  private formGroup = inject(FormGroupDirective);
-  private el = inject(Button);
+  private readonly ref: ChangeDetectorRef = inject(ChangeDetectorRef);
+  private readonly formGroup = inject(FormGroupDirective);
+  private readonly el = inject(Button);
 
   formFieldName = input.required<string>({ alias: 'fieldLock' });
 
@@ -34,6 +35,8 @@ export class FieldLockDirective implements AfterViewInit {
 
   private updateButtonStatus() {
     const field = this.formGroup.control.get(this.formFieldName());
+    this.disabled.set(field?.disabled || false);
     this.el.icon = field?.disabled ? 'pi pi-lock' : 'pi pi-lock-open';
+    this.ref.markForCheck();
   }
 }

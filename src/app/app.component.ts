@@ -23,7 +23,7 @@ import { PrimeNG } from 'primeng/config';
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  host: { class: 'dark-theme d-flex flex-column h-100' },
+  host: { class: 'd-flex flex-column h-100' }, //dark-theme
 })
 export class AppComponent implements OnInit {
   public readonly title = 'SVG Editor';

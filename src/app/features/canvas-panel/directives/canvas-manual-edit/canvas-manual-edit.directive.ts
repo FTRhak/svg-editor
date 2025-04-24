@@ -42,7 +42,7 @@ export class CanvasManualEditDirective implements OnInit {
     }
   }
 
-  private updateEditElements(zoom: number) {
+  private updateEditElements(zoom: number): void {
     collectionToArray(this.el.nativeElement.children).forEach((item: HTMLElement) => {
       if (item.hasAttribute('r')) {
         item.setAttribute('r', `${zoom * 0.1}`);
@@ -50,7 +50,7 @@ export class CanvasManualEditDirective implements OnInit {
     });
   }
 
-  private renderEditRect(rect: SVGRectModel) {
+  private renderEditRect(rect: SVGRectModel): void {
     const zoom = this.zoom();
     const anchors = rect
       .anchorPoints()

@@ -25,9 +25,19 @@ export class SVGRootModel extends TreeNodeModel {
 
   public override children: TreeNodeModel[] = [];
 
+  /**
+   * Constructor
+   *
+   * @param x - The x coordinate of the top left of the view box
+   * @param y - The y coordinate of the top left of the view box
+   * @param width - The width of the view box
+   * @param height - The height of the view box
+   */
   constructor(x: number = 0, y: number = 0, width: number = 10, height: number = 10) {
     super();
     this._id = Generator.getId('svg-');
+    this.width = `${width}px`;
+    this.height = `${height}px`;
     this.viewBox = new RectModel(x, y, width, height);
   }
 

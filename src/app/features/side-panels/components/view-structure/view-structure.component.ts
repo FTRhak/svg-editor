@@ -58,7 +58,8 @@ export class ViewStructureComponent implements OnInit {
     type: SVGNodeType.LINE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
       const id: PID = this.selectedItem?.id || ev.item.idRef;
-      id && this.project.addChildItem(id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1 });
+      id &&
+        this.project.addChildItem(id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1, stroke: 'black', strokeWidth: 0.1 });
     },
   };
 

@@ -64,6 +64,8 @@ export class ProjectService {
   }
 
   public selectItem(id: PID | null) {
+    if (this.selectedItem?._id === id) return;
+
     const item = this.project.toList().find((item) => item._id === id);
     this.selectedItem = item || null;
     this.events.trigger('project:item:selected', this.project, this.selectedItem);
@@ -74,7 +76,7 @@ export class ProjectService {
     if (item) {
       item[propertyName] = value;
       this.events.trigger('project:item:updated', this.project, item, propertyName, value);
-      this.events.trigger('project:tree:updates', this.project, [item]);
+      //this.events.trigger('project:tree:updates', this.project, [item]);
     }
   }
 }

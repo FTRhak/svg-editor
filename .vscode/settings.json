@@ -6,6 +6,7 @@
         "inputgroupaddon",
         "inputnumber",
         "primeicons",
-        "primeng"
+        "primeng",
+        "selectbutton"
     ]
 }

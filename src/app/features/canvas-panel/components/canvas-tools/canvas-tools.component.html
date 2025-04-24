@@ -1,0 +1,13 @@
+<p-toolbar>
+  <p-selectbutton
+    [options]="paymentOptions"
+    [(ngModel)]="value"
+    optionLabel="name"
+    optionValue="value"
+    (onChange)="onModeChanged()"
+  >
+    <ng-template #item let-item>
+      <i [class]="item.icon" [title]="item.name"></i>
+    </ng-template>
+  </p-selectbutton>
+</p-toolbar>

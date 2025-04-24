@@ -18,6 +18,7 @@ import { ListboxModule } from 'primeng/listbox';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { SelectModule } from 'primeng/select';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { SplitterModule } from 'primeng/splitter';
 import { TabsModule } from 'primeng/tabs';
 import { ToastModule } from 'primeng/toast';
@@ -48,6 +49,7 @@ const modules = [
   FileUploadModule,
   BadgeModule,
   FieldsetModule,
+  SelectButtonModule,
 ];
 
 @NgModule({
