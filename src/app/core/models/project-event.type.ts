@@ -6,4 +6,6 @@ export type ProjectEventName =
   | 'project:item-added'
   | 'project:item-removed'
   | 'project:item:selected'
-  | 'project:item:updated';
+  | 'project:item:updated'
+  | 'project:item:moved'
+  | 'project:item:transformed';

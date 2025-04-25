@@ -42,6 +42,54 @@ export class SVGRectModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
+    const selectionRecSize = 0.1;
+    let res =
+      `<rect ` +
+      this.renderPartStyle() +
+      (isNotUndefined(this.x) ? ` x="${this.x}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y}"` : '') +
+      (isNotUndefined(this.width) ? ` width="${this.width}"` : '') +
+      (isNotUndefined(this.height) ? ` height="${this.height}"` : '') +
+      ` fill="${fill}"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      // render selection move area
+      `<rect ` +
+      (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n`;
+    return res;
+  }
+
   public override moveShift(dx: number, dy: number) {
     this.x = (this.x || 0) + dx;
     this.y = (this.y || 0) + dy;

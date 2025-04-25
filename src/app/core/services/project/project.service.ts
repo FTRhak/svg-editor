@@ -33,7 +33,7 @@ export class ProjectService {
 
   exportSVG() {
     TreeNodeStyleModel.renderDebug = false;
-    const res = this.project.render();
+    const res = `<?xml version="1.0" encoding="utf-8"?>\n` + this.project.render();
     TreeNodeStyleModel.renderDebug = true;
     return res;
   }
@@ -92,6 +92,18 @@ export class ProjectService {
       changedProperties.forEach((prop: string) =>
         this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
       );
+      this.events.trigger('project:item:moved', this.project, item, shift);
+    }
+  }
+
+  public transformSelectedItem(transformAnchor: string, shift: VectorModel) {
+    const item: any = this.selectedItem;
+    if (item) {
+      const changedProperties = item.transformShift(transformAnchor, shift);
+      changedProperties.forEach((prop: string) =>
+        this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
+      );
+      this.events.trigger('project:item:transformed', this.project, item, shift);
     }
   }
 }

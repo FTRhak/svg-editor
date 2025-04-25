@@ -31,11 +31,19 @@ export class TreeNodeModel {
     return `<${this._type} id="${this._id}"/>`;
   }
 
+  public renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
+    return `<${this._type} id="${this._id}"/>`;
+  }
+
   public anchorPoints(): VectorModel[] {
     return [];
   }
 
   public moveShift(dx: number, dy: number): string[] {
+    return [];
+  }
+
+  public transformShift(anchor: string, shift: VectorModel): string[] {
     return [];
   }
 

@@ -59,8 +59,9 @@ export class SVGRootModel extends TreeNodeModel {
       (isNotUndefined(this.y) ? ` y="${this.y}"` : '') +
       (isNotUndefined(this.width) ? ` width="${this.width}"` : '') +
       (isNotUndefined(this.height) ? ` height="${this.height}"` : '') +
-      (isNotUndefined(vb) ? ` viewBox="${vb?.x} ${vb?.y} ${vb?.width} ${vb?.height}"` : '') +
+      (isNotUndefined(vb) ? ` viewBox="${vb?.x}  ${vb?.y}  ${vb?.width}  ${vb?.height}"` : '') +
       (isNotUndefined(this.version) ? ` version="${this.version}"` : '') +
+      ` xmlns="http://www.w3.org/2000/svg"` +
       `>\n`;
 
     this.children.forEach((child) => (res += '  ' + child.render()));

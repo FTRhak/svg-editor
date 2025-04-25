@@ -1,6 +1,13 @@
 <svg #svgCanvasRef xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="100%" height="100%" version="1.1">
-  <g #gridList style="transform: scale(1)" canvasGridRender [zoom]="zoom()" [center]="center()"></g>
-  <g #svgBgView></g>
+  <g
+    data-type-layer="grid"
+    #gridList
+    style="transform: scale(1)"
+    canvasGridRender
+    [zoom]="zoom()"
+    [center]="center()"
+  ></g>
+  <g data-type-layer="content" #svgBgView></g>
   <g #svgManualEdit></g>
 </svg>
 <canvas-tools [canvasRef]="svgCanvasRef" [zoom]="zoom()" [center]="center()"></canvas-tools>

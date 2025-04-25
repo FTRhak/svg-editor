@@ -3,6 +3,7 @@ import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
+import { VectorModel } from './vector.model';
 
 export class SVGCircleModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.CIRCLE;
@@ -32,11 +33,52 @@ export class SVGCircleModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
+    const selectionRecSize = 0.1;
+    let res =
+      `<circle ` +
+      this.renderPartStyle() +
+      (isNotUndefined(this.cx) ? ` cx="${this.cx}"` : '') +
+      (isNotUndefined(this.cy) ? ` cy="${this.cy}"` : '') +
+      (isNotUndefined(this.r) ? ` r="${this.r}"` : '') +
+      ` fill="${fill}"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></circle>\n` +
+      // render selection move area;
+      `<rect ` +
+      (isNotUndefined(this.cx) ? ` x="${this.cx - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.cy) ? ` y="${this.cy - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      `data-transform-name="r"` +
+      (isNotUndefined(this.cx) ? ` x="${this.cx + this.r - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.cy) ? ` y="${this.cy - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n`;
+    return res;
+  }
+
   public override moveShift(dx: number, dy: number) {
     this.cx = (this.cx || 0) + dx;
     this.cy = (this.cy || 0) + dy;
 
     return ['cx', 'cy'];
+  }
+
+  public override transformShift(anchor: string, shift: VectorModel): string[] {
+    if (anchor === 'r') {
+      this.r = this.r + shift.x;
+      return ['r'];
+    } else {
+      return []; // do nothing
+    }
   }
 
   public static override importFromDom(dom: SVGCircleElement) {

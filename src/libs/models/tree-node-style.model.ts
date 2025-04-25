@@ -29,6 +29,12 @@ export class TreeNodeStyleModel extends TreeNodeModel {
     if (isNotUndefined(this.fill)) res += ` fill="${this.fill}"`;
     if (isNotUndefined(this.stroke)) res += ` stroke="${this.stroke}"`;
     if (isNotUndefined(this.strokeWidth)) res += ` stroke-width="${this.strokeWidth}"`;
+    res += this.renderPartStyle();
+    return res;
+  }
+
+  public renderPartStyle(): string {
+    let res = ``;
     if (isNotUndefined(this.transform)) res += ` transform="${this.transform}"`;
     if (hasStyleProperties(this.style)) res += ` style="${styleToString(this.style)}"`;
     return res;
