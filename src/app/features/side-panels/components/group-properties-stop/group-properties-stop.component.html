@@ -1,0 +1,56 @@
+<p-fieldset [legend]="index()">
+  <div [formGroup]="form()">
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="offsetField"
+          size="small"
+          name="offset"
+          formControlName="offset"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="0"
+          [max]="100"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="offset" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="offsetField">Offset</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="stopOpacityField"
+          size="small"
+          name="stopOpacity"
+          formControlName="stopOpacity"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="100"
+          [min]="0"
+          [max]="1"
+          [step]="0.1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="stopOpacity" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="stopOpacityField">Stop Opacity</label>
+    </p-floatlabel>
+
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input class="input-color p-filled" type="color" formControlName="stopColor" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="stopColor" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="stopColorField">Stop Color</label>
+    </p-floatlabel>
+  </div>
+</p-fieldset>

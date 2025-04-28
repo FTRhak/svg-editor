@@ -1,0 +1,46 @@
+@if (form) {
+  <form [formGroup]="form">
+    <!-- ID -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input type="text" pInputText id="idField" size="small" name="id" formControlName="id" class="w-100" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="id" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="idField">ID</label>
+    </p-floatlabel>
+    <!-- GradientTransform -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="gradientTransformField"
+          size="small"
+          name="gradientTransform"
+          formControlName="gradientTransform"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-360"
+          [max]="360"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="gradientTransform" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="gradientTransformField">Gradient Transform</label>
+    </p-floatlabel>
+    <div>
+      <div>
+        <button (click)="addStop()">Add</button>
+      </div>
+      <ng-container formArrayName="stops">
+        <ng-container *ngFor="let stopForm of stops.controls; let i = index">
+          <group-properties-stop [form]="stopForm" [index]="i"></group-properties-stop>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+}

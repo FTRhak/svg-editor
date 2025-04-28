@@ -28,11 +28,11 @@ export class TreeNodeModel {
   }
 
   public render(): string {
-    return `<${this._type} id="${this._id}"/>`;
+    return `<${this._type} data-id="${this._id}"/>`;
   }
 
   public renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
-    return `<${this._type} id="${this._id}"/>`;
+    return `<${this._type} data-id="${this._id}"/>`;
   }
 
   public anchorPoints(): VectorModel[] {

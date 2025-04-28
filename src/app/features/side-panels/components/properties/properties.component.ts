@@ -10,6 +10,8 @@ import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/prop
 import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
 import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
 import { PropertiesNodeSvgLineComponent } from '../properties-node-svg-line/properties-node-svg-line.component';
+import { PropertiesNodeSvgLinearGradientComponent } from '../properties-node-svg-linear-gradient/properties-node-svg-linear-gradient.component';
+import { PropertiesNodeSvgRadialGradientComponent } from '../properties-node-svg-radial-gradient/properties-node-svg-radial-gradient.component';
 
 @Component({
   selector: 'properties',
@@ -49,6 +51,12 @@ export class PropertiesComponent implements OnInit {
             break;
           case SVGNodeType.LINE:
             component = this.viewContainer.createComponent(PropertiesNodeSvgLineComponent);
+            break;
+          case SVGNodeType.LINEAR_GRADIENT:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgLinearGradientComponent);
+            break;
+          case SVGNodeType.RADIAL_GRADIENT:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgRadialGradientComponent);
             break;
         }
 

@@ -17,6 +17,42 @@ export class ViewStructureComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private project = inject(ProjectService);
 
+  private readonly ADD_DEFS = {
+    label: 'Definitions',
+    type: SVGNodeType.DEFS,
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
+    },
+  };
+
+  /*private readonly ADD_USE = {
+    label: 'Use',
+    type: SVGNodeType.USE,
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
+    },
+  };*/
+
+  private readonly ADD_LINEAR_GRADIENT = {
+    label: 'Linear Gradient',
+    type: SVGNodeType.LINEAR_GRADIENT,
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
+    },
+  };
+
+  private readonly ADD_RADIAL_GRADIENT = {
+    label: 'Radial Gradient',
+    type: SVGNodeType.RADIAL_GRADIENT,
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      id && this.project.addChildItem(id, ev.item.type);
+    },
+  };
+
   private readonly ADD_GROUP = {
     label: 'Group',
     type: SVGNodeType.GROUP,
@@ -73,6 +109,7 @@ export class ViewStructureComponent implements OnInit {
   };
 
   private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [
+    { ...this.ADD_DEFS },
     { ...this.ADD_GROUP },
     { ...this.ADD_PATH },
     { ...this.ADD_RECT },
@@ -80,6 +117,17 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_ELLIPSE },
     { ...this.ADD_LINE },
   ];
+
+  private readonly MENU_ITEM_ADD_DEFS: MenuItem[] = [
+    { ...this.ADD_LINEAR_GRADIENT },
+    { ...this.ADD_RADIAL_GRADIENT },
+    { ...this.ADD_PATH },
+    { ...this.ADD_RECT },
+    { ...this.ADD_CIRCLE },
+    { ...this.ADD_ELLIPSE },
+    { ...this.ADD_LINE },
+  ];
+
   private readonly MENU_ITEM_ADD_GROUP: MenuItem[] = [
     { ...this.ADD_GROUP },
     { ...this.ADD_PATH },
@@ -124,6 +172,12 @@ export class ViewStructureComponent implements OnInit {
         menu.push({
           label: 'Add',
           items: this.MENU_ITEM_ADD_SVG.map((item) => ({ ...item, idRef: (event.node as TreeItem).id })),
+        });
+        break;
+      case SVGNodeType.DEFS:
+        menu.push({
+          label: 'Add',
+          items: this.MENU_ITEM_ADD_DEFS.map((item) => ({ ...item, idRef: (event.node as TreeItem).id })),
         });
         break;
       case SVGNodeType.GROUP:

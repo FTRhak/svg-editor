@@ -23,7 +23,7 @@ export class TreeNodeStyleModel extends TreeNodeModel {
   public renderPart(): string {
     let res = ``;
     if (TreeNodeStyleModel.renderDebug) {
-      res += ` id="${this._id}"`;
+      res += ` data-id="${this._id}"`;
     }
 
     if (isNotUndefined(this.fill)) res += ` fill="${this.fill}"`;

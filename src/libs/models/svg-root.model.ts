@@ -3,12 +3,14 @@ import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { RectModel } from './rect.model';
 import { SVGCircleModel } from './svg-circle.model';
+import { SVGDefsModel } from './svg-defs.model';
 import { SVGEllipseModel } from './svg-ellipse.model';
 import { SVGGroupModel } from './svg-group.model';
 import { SVGLineModel } from './svg-line.model';
+import { SVGLinearGradientModel } from './svg-linear-gradient.model';
 import { SVGPathModel } from './svg-path.model';
+import { SVGRadialGradientModel } from './svg-radial-gradient.model';
 import { SVGRectModel } from './svg-rect.model';
-import { SVGRefsModel } from './svg-refs.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGRootModel extends TreeNodeModel {
@@ -81,8 +83,8 @@ export class SVGRootModel extends TreeNodeModel {
       case SVGNodeType.GROUP:
         node = new SVGGroupModel(config);
         break;
-      case SVGNodeType.REFS:
-        node = new SVGRefsModel();
+      case SVGNodeType.DEFS:
+        node = new SVGDefsModel(config);
         break;
       case SVGNodeType.PATH:
         node = new SVGPathModel(config);
@@ -98,6 +100,15 @@ export class SVGRootModel extends TreeNodeModel {
         break;
       case SVGNodeType.LINE:
         node = new SVGLineModel(config);
+        break;
+      case SVGNodeType.DEFS:
+        node = new SVGDefsModel(config);
+        break;
+      case SVGNodeType.LINEAR_GRADIENT:
+        node = new SVGLinearGradientModel(config);
+        break;
+      case SVGNodeType.RADIAL_GRADIENT:
+        node = new SVGRadialGradientModel(config);
         break;
       default:
         console.warn('Unknown node type to crate');
@@ -155,6 +166,21 @@ function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
         const line = SVGLineModel.importFromDom(item as SVGLineElement);
         parent.children.push(line);
         importChildren(line, item.children);
+        break;
+      case SVGNodeType.DEFS:
+        const defs = SVGDefsModel.importFromDom(item as SVGDefsElement);
+        parent.children.push(defs);
+        importChildren(defs, item.children);
+        break;
+      case SVGNodeType.LINEAR_GRADIENT:
+        const lgr = SVGLinearGradientModel.importFromDom(item as SVGLinearGradientElement);
+        parent.children.push(lgr);
+        importChildren(lgr, item.children);
+        break;
+      case SVGNodeType.RADIAL_GRADIENT:
+        const rgr = SVGRadialGradientModel.importFromDom(item as SVGRadialGradientElement);
+        parent.children.push(rgr);
+        importChildren(rgr, item.children);
         break;
     }
   });
