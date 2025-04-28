@@ -3,6 +3,7 @@ import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
+import { VectorModel } from './vector.model';
 
 export class SVGEllipseModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.ELLIPSE;
@@ -35,11 +36,72 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
     return res;
   }
 
-  public override moveShift(dx: number, dy: number) {
-    this.cx = (this.cx || 0) + dx;
-    this.cy = (this.cy || 0) + dy;
+  public override renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
+    const selectionRecSize = 0.1;
+    let res =
+      `<ellipse ` +
+      this.renderPartStyle() +
+      (isNotUndefined(this.cx) ? ` cx="${this.cx}"` : '') +
+      (isNotUndefined(this.cy) ? ` cy="${this.cy}"` : '') +
+      (isNotUndefined(this.rx) ? ` rx="${this.rx}"` : '') +
+      (isNotUndefined(this.ry) ? ` ry="${this.ry}"` : '') +
+      ` fill="${fill}"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></ellipse>\n` +
+      // render selection move area;
+      `<rect ` +
+      (isNotUndefined(this.cx) ? ` x="${this.cx - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.cy) ? ` y="${this.cy - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` data-action="move"` +
+      ` data-move="cx_cy"` +
+      ` class="action-move"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      ` class="action-transform"` +
+      ` data-action="transform"` +
+      ` data-transform="rx"` +
+      (isNotUndefined(this.cx) ? ` x="${this.cx + this.rx - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.cy) ? ` y="${this.cy - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n` +
+      `<rect ` +
+      ` class="action-transform"` +
+      ` data-action="transform"` +
+      ` data-transform="ry"` +
+      (isNotUndefined(this.cx) ? ` x="${this.cx - selectionRecSize / 2}"` : '') +
+      (isNotUndefined(this.cy) ? ` y="${this.cy + this.ry - selectionRecSize / 2}"` : '') +
+      ` width="0.1"` +
+      ` height="0.1"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n`;
+    return res;
+  }
+
+  public override moveShift(shift: VectorModel) {
+    this.cx = (this.cx || 0) + shift.x;
+    this.cy = (this.cy || 0) + shift.y;
 
     return ['cx', 'cy'];
+  }
+
+  public override transformShift(anchor: string[], shift: VectorModel): string[] {
+    if (anchor[0] === 'rx') {
+      this.rx = this.rx + shift.x;
+      return ['rx'];
+    } else if (anchor[0] === 'ry') {
+      this.ry = this.ry + shift.y;
+      return ['ry'];
+    } else {
+      return []; // do nothing
+    }
   }
 
   public static override importFromDom(dom: SVGEllipseElement) {

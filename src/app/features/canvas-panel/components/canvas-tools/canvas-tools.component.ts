@@ -120,24 +120,33 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
     fromEvent<MouseEvent>(this.svgCanvas()!, 'mousedown')
       .pipe(
         filter(() => this.value === 'edit'),
-        filter((ev: MouseEvent) => (ev.target! as HTMLElement).hasAttribute('data-transform-name')),
+        filter((ev: MouseEvent) => (ev.target! as HTMLElement).hasAttribute('data-action')),
         filter((ev: MouseEvent) => ev.buttons === 1),
         switchMap((event: MouseEvent) => {
           start.x = event.clientX;
           start.y = event.clientY;
+          const action = (event.target! as HTMLElement).getAttribute('data-action') as string;
+          const actionParam = (event.target! as HTMLElement).getAttribute(`data-${action}`) as string;
+
           return fromEvent<MouseEvent>(this.svgCanvas()!, 'mousemove').pipe(
-            map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
+            map((event: MouseEvent) => ({
+              x: event.clientX,
+              y: event.clientY,
+              action,
+              param: actionParam ? actionParam.split('_') : [],
+            })),
             takeUntil(up$),
             takeUntilDestroyed(this.destroyRef),
           );
         }),
       )
+      .pipe(filter((ev) => ev.param.length > 0))
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
         console.log(ev);
         // TODO need to recalculate shift coefficients
         const coefficients = zoom / 100;
-        this.project.transformSelectedItem('r', {
+        this.project.transformSelectedItem(ev.action, ev.param, {
           x: (ev.x - start.x) * coefficients,
           y: (ev.y - start.y) * coefficients,
         });

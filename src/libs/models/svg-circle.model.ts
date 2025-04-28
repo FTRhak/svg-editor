@@ -51,10 +51,15 @@ export class SVGCircleModel extends TreeNodeStyleModel {
       ` width="0.1"` +
       ` height="0.1"` +
       ` fill="blue"` +
+      ` data-action="move"` +
+      ` data-move="cx_cy"` +
+      ` class="action-move"` +
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
       `<rect ` +
-      `data-transform-name="r"` +
+      ` class="action-transform"` +
+      ` data-action="transform"` +
+      ` data-transform="r"` +
       (isNotUndefined(this.cx) ? ` x="${this.cx + this.r - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.cy) ? ` y="${this.cy - selectionRecSize / 2}"` : '') +
       ` width="0.1"` +
@@ -65,15 +70,15 @@ export class SVGCircleModel extends TreeNodeStyleModel {
     return res;
   }
 
-  public override moveShift(dx: number, dy: number) {
-    this.cx = (this.cx || 0) + dx;
-    this.cy = (this.cy || 0) + dy;
+  public override moveShift(shift: VectorModel): string[] {
+    this.cx = (this.cx || 0) + shift.x;
+    this.cy = (this.cy || 0) + shift.y;
 
     return ['cx', 'cy'];
   }
 
-  public override transformShift(anchor: string, shift: VectorModel): string[] {
-    if (anchor === 'r') {
+  public override transformShift(anchor: string[], shift: VectorModel): string[] {
+    if (anchor[0] === 'r') {
       this.r = this.r + shift.x;
       return ['r'];
     } else {

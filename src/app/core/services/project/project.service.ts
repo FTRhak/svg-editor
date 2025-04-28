@@ -88,7 +88,7 @@ export class ProjectService {
   public dragMoveSelectedItem(shift: VectorModel) {
     const item: any = this.selectedItem;
     if (item) {
-      const changedProperties = item.moveShift(shift.x, shift.y);
+      const changedProperties = item.moveShift(shift);
       changedProperties.forEach((prop: string) =>
         this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
       );
@@ -96,12 +96,23 @@ export class ProjectService {
     }
   }
 
-  public transformSelectedItem(transformAnchor: string, shift: VectorModel) {
-    const item: any = this.selectedItem;
+  public transformSelectedItem(action: string, transformAnchor: string[], shift: VectorModel) {
+    const item: TreeNodeModel = this.selectedItem!;
     if (item) {
-      const changedProperties = item.transformShift(transformAnchor, shift);
+      /*transformAnchor.forEach((anchor: string, index: number) => {
+        if (anchor) {
+          item.transformShift(anchor, shift);
+        }
+      });*/
+      let changedProperties: string[] = [];
+      if (action === 'move') {
+        changedProperties = item.moveShift(shift);
+      } else if (action === 'transform') {
+        changedProperties = item.transformShift(transformAnchor, shift);
+      }
+
       changedProperties.forEach((prop: string) =>
-        this.events.trigger('project:item:updated', this.project, item, prop, item[prop]),
+        this.events.trigger('project:item:updated', this.project, item, prop, (item as any)[prop]),
       );
       this.events.trigger('project:item:transformed', this.project, item, shift);
     }

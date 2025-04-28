@@ -56,6 +56,9 @@ export class SVGRectModel extends TreeNodeStyleModel {
       `></rect>\n` +
       // render selection move area
       `<rect ` +
+      ` data-action="move"` +
+      ` data-move="x_y"` +
+      ` class="action-move"` +
       (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
       ` width="0.1"` +
@@ -64,6 +67,9 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
       `<rect ` +
+      ` data-action="transform"` +
+      ` data-transform="width"` +
+      ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
       ` width="0.1"` +
@@ -72,6 +78,9 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
       `<rect ` +
+      ` data-action="transform"` +
+      ` data-transform="height"` +
+      ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
       ` width="0.1"` +
@@ -80,6 +89,9 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
       `<rect ` +
+      ` data-action="transform"` +
+      ` data-transform="width_height"` +
+      ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
       ` width="0.1"` +
@@ -90,11 +102,23 @@ export class SVGRectModel extends TreeNodeStyleModel {
     return res;
   }
 
-  public override moveShift(dx: number, dy: number) {
-    this.x = (this.x || 0) + dx;
-    this.y = (this.y || 0) + dy;
+  public override moveShift(shift: VectorModel) {
+    this.x = (this.x || 0) + shift.x;
+    this.y = (this.y || 0) + shift.y;
 
     return ['x', 'y'];
+  }
+
+  public override transformShift(anchor: string[], shift: VectorModel): string[] {
+    anchor.forEach((item) => {
+      if (item === 'width') {
+        this.width = this.width + shift.x;
+      } else if (item === 'height') {
+        this.height = this.height + shift.y;
+      }
+    });
+
+    return anchor;
   }
 
   public static override importFromDom(dom: SVGRectElement) {

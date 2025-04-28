@@ -3,6 +3,7 @@ import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
+import { VectorModel } from './vector.model';
 
 export class SVGPathModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.PATH;
@@ -22,7 +23,7 @@ export class SVGPathModel extends TreeNodeStyleModel {
     return res;
   }
 
-  public override moveShift(dx: number, dy: number) {
+  public override moveShift(shift: VectorModel) {
     console.warn('Need to implement moveShift for SVGPathModel');
     return ['d'];
   }

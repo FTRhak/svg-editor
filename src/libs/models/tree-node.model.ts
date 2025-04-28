@@ -39,11 +39,11 @@ export class TreeNodeModel {
     return [];
   }
 
-  public moveShift(dx: number, dy: number): string[] {
+  public moveShift(shift: VectorModel): string[] {
     return [];
   }
 
-  public transformShift(anchor: string, shift: VectorModel): string[] {
+  public transformShift(anchor: string[], shift: VectorModel): string[] {
     return [];
   }
 
