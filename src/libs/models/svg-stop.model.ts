@@ -14,11 +14,17 @@ export class SVGStopModel extends TreeNodeModel {
   constructor(params: Partial<SVGStopModel>) {
     super();
     this._id = Generator.getId('stop-');
+
+    if (isNotUndefined(params.offset)) this.offset = params.offset as number;
+    if (isNotUndefined(params.stopColor)) this.stopColor = params.stopColor as string;
+    if (isNotUndefined(params.stopOpacity)) this.stopOpacity = params.stopOpacity as number;
   }
 
   public override render() {
     let res =
       `<stop ` +
+      this.renderId() +
+      (isNotUndefined(this._id) ? ` id="${this._id}"` : '') +
       (isNotUndefined(this.offset) ? ` offset="${this.offset}"` : '') +
       (isNotUndefined(this.stopColor) ? ` stop-color="rotate(${this.stopColor})"` : '') +
       (isNotUndefined(this.stopOpacity) ? ` stop-opacity="rotate(${this.stopOpacity})"` : '') +

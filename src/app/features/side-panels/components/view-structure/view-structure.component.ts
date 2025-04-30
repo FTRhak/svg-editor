@@ -195,7 +195,5 @@ export class ViewStructureComponent implements OnInit {
         break;
     }
     this.menuItems.set(menu);
-
-    //this.cm.show(event.originalEvent);
   }
 }

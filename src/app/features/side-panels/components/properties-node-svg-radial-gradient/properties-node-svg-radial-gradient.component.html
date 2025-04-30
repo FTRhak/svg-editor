@@ -1,1 +1,184 @@
-<p>properties-node-svg-radial-gradient works!</p>
+@if (form) {
+  <form [formGroup]="form">
+    <!-- ID -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <input type="text" pInputText id="idField" size="small" name="id" formControlName="id" class="w-100" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="id" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="idField">ID</label>
+    </p-floatlabel>
+    <!-- GradientTransform -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="gradientTransformField"
+          size="small"
+          name="gradientTransform"
+          formControlName="gradientTransform"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+          [min]="-360"
+          [max]="360"
+          [step]="1"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="gradientTransform" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="gradientTransformField">Gradient Transform</label>
+    </p-floatlabel>
+    <!-- cx -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="cxField"
+          size="small"
+          name="cx"
+          formControlName="cx"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="cx" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="cxField">CX</label>
+    </p-floatlabel>
+    <!-- cy -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="cyField"
+          size="small"
+          name="cy"
+          formControlName="cy"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="cy" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="cyField">CY</label>
+    </p-floatlabel>
+    <!-- fr -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="frField"
+          size="small"
+          name="fr"
+          formControlName="fr"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="fr" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="frField">FR</label>
+    </p-floatlabel>
+    <!-- fx -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="fxField"
+          size="small"
+          name="fx"
+          formControlName="fx"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="fx" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="fxField">FX</label>
+    </p-floatlabel>
+    <!-- fy -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="fyField"
+          size="small"
+          name="fy"
+          formControlName="fy"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="fy" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="fyField">FY</label>
+    </p-floatlabel>
+    <!-- r -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-inputnumber
+          id="rField"
+          size="small"
+          name="r"
+          formControlName="r"
+          class="w-100"
+          mode="decimal"
+          [minFractionDigits]="0"
+          [maxFractionDigits]="10"
+        />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="r" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="rField">R</label>
+    </p-floatlabel>
+    <!-- gradientUnits -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-select [options]="gradientUnitsList" formControlName="gradientUnits" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="gradientUnits" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="gradientUnitsField">Gradient Units</label>
+    </p-floatlabel>
+    <!-- spreadMethod -->
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputgroup>
+        <p-select [options]="spreadMethodList" formControlName="spreadMethod" />
+        <p-inputgroup-addon>
+          <p-button icon="pi pi-lock" severity="secondary" fieldLock="spreadMethod" />
+        </p-inputgroup-addon>
+      </p-inputgroup>
+      <label for="spreadMethodField">Spread Method</label>
+    </p-floatlabel>
+
+    <!-- TODO ADD HREF -->
+
+    <!-- Stops -->
+    <div>
+      <div>
+        <button (click)="onClickAddStop()">Add</button>
+      </div>
+      <ng-container formArrayName="stops">
+        <ng-container *ngFor="let stopForm of stops.controls; let i = index">
+          <group-properties-stop [form]="stopForm" [index]="i"></group-properties-stop>
+        </ng-container>
+      </ng-container>
+    </div>
+  </form>
+}

@@ -77,7 +77,8 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
     fromEvent<MouseEvent>(this.svgCanvas()!, 'click')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((event) => {
-        const id = (event.target as HTMLElement)?.getAttribute('id');
+        const id = (event.target as HTMLElement)?.getAttribute('data-id');
+
         if (id) {
           this.project.selectItem(id);
         }
@@ -160,7 +161,7 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
     this.elRef?.remove();
     if (this.selectedEl) {
       const container = this.svgCanvas();
-      const domSelectedEl = container?.querySelector(`#${this.selectedEl._id}`);
+      const domSelectedEl = container?.querySelector(`[data-id="${this.selectedEl._id}"]`);
 
       this.elRef = this.win.document.createElementNS('http://www.w3.org/2000/svg', 'g');
       this.elRef.setAttribute('id', 'selection-highlight');

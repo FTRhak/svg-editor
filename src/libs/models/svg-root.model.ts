@@ -11,6 +11,7 @@ import { SVGLinearGradientModel } from './svg-linear-gradient.model';
 import { SVGPathModel } from './svg-path.model';
 import { SVGRadialGradientModel } from './svg-radial-gradient.model';
 import { SVGRectModel } from './svg-rect.model';
+import { SVGStopModel } from './svg-stop.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGRootModel extends TreeNodeModel {
@@ -110,8 +111,11 @@ export class SVGRootModel extends TreeNodeModel {
       case SVGNodeType.RADIAL_GRADIENT:
         node = new SVGRadialGradientModel(config);
         break;
+      case SVGNodeType.STOP:
+        node = new SVGStopModel(config);
+        break;
       default:
-        console.warn('Unknown node type to crate');
+        console.warn('Unknown node type to create');
         break;
     }
 

@@ -22,9 +22,8 @@ export class TreeNodeStyleModel extends TreeNodeModel {
 
   public renderPart(): string {
     let res = ``;
-    if (TreeNodeStyleModel.renderDebug) {
-      res += ` data-id="${this._id}"`;
-    }
+
+    res += this.renderId();
 
     if (isNotUndefined(this.fill)) res += ` fill="${this.fill}"`;
     if (isNotUndefined(this.stroke)) res += ` stroke="${this.stroke}"`;

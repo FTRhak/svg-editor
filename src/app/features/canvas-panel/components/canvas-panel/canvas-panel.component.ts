@@ -166,6 +166,8 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   }
 
   private updateSVGNode(item: TreeNodeModel, propertyName: string, value: any) {
-    this.el.nativeElement.querySelector(`#${item._id}`)?.setAttribute(normalizePropertyName(propertyName), value);
+    this.el.nativeElement
+      .querySelector(`[data-id="${item._id}"]`)
+      ?.setAttribute(normalizePropertyName(propertyName), value);
   }
 }

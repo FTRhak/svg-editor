@@ -2,14 +2,21 @@ import { Component, DestroyRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
-import { SVGLinearGradientModel, SVGRootModel, SVGStopModel, TreeNodeModel } from '@libs';
+import { SVGLinearGradientModel, SVGNodeType, SVGRootModel, SVGStopModel, TreeNodeModel } from '@libs';
 import { isUndefined } from '@libs/utils';
 import { debounceTime, fromEvent } from 'rxjs';
+
+interface SVGNodeStop {
+  id: FormControl<string | null>;
+  stopColor: FormControl<string | null>;
+  stopOpacity: FormControl<number | null>;
+  offset: FormControl<number | null>;
+}
 
 interface SVGNode {
   id: FormControl<string | null>;
   gradientTransform: FormControl<number | null>;
-  stops: FormArray<any>;
+  stops: FormArray<FormGroup<SVGNodeStop>>;
 }
 
 @Component({
@@ -26,8 +33,8 @@ export class PropertiesNodeSvgLinearGradientComponent {
 
   public form!: FormGroup<SVGNode>;
 
-  get stops() {
-    return this.form.controls['stops'] as FormArray<FormGroup>;
+  get stops(): FormArray<FormGroup<SVGNodeStop>> {
+    return this.form.controls['stops'];
   }
 
   ngOnInit(): void {
@@ -38,11 +45,11 @@ export class PropertiesNodeSvgLinearGradientComponent {
         value: node.gradientTransform || null,
         disabled: isUndefined(node.gradientTransform),
       }),
-      stops: new FormArray<any>([]),
+      stops: new FormArray<FormGroup<SVGNodeStop>>([]),
     });
 
-    if (node.stops.length) {
-      node.stops.forEach((model) => this.addStop(model));
+    if (node.children.length) {
+      node.children.forEach((model) => this.addStop(model as SVGStopModel));
     }
 
     const rawValue = this.form.getRawValue();
@@ -53,10 +60,7 @@ export class PropertiesNodeSvgLinearGradientComponent {
         .get(property)
         ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => {
-          console.log(property, value);
-          if (property === 'stops') {
-            //this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
-          } else {
+          if (property !== 'stops') {
             this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
           }
         });
@@ -71,13 +75,26 @@ export class PropertiesNodeSvgLinearGradientComponent {
   }
 
   addStop(model: SVGStopModel = {} as any) {
-    const stops = this.form.get('stops') as FormArray<any>;
-    stops.push(
-      new FormGroup<any>({
-        stopColor: new FormControl({ value: model.stopColor || '', disabled: isUndefined(model.stopColor) }),
-        stopOpacity: new FormControl({ value: model.stopOpacity || '', disabled: isUndefined(model.stopOpacity) }),
-        offset: new FormControl({ value: model.offset || '', disabled: isUndefined(model.offset) }),
-      }),
-    );
+    const stopGroup = new FormGroup<SVGNodeStop>({
+      id: new FormControl(model._id),
+      stopColor: new FormControl({ value: model.stopColor || '', disabled: isUndefined(model.stopColor) }),
+      stopOpacity: new FormControl({ value: model.stopOpacity || 1, disabled: isUndefined(model.stopOpacity) }),
+      offset: new FormControl({ value: model.offset || 0, disabled: isUndefined(model.offset) }),
+    });
+
+    this.stops.push(stopGroup);
+
+    stopGroup.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef)).subscribe((value) => {
+      this.project.setNodeProperty(value.id!, 'stopColor', value.stopColor);
+      this.project.setNodeProperty(value.id!, 'stopOpacity', value.stopOpacity);
+      this.project.setNodeProperty(value.id!, 'offset', value.offset);
+    });
+  }
+
+  onClickAddStop() {
+    this.project.addChildItem(this.node()._id, SVGNodeType.STOP, { stopColor: '#fff', stopOpacity: 1, offset: 0 });
+
+    this.stops.clear();
+    this.node().children.forEach((model) => this.addStop(model as SVGStopModel));
   }
 }

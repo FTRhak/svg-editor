@@ -34,7 +34,7 @@
     </p-floatlabel>
     <div>
       <div>
-        <button (click)="addStop()">Add</button>
+        <button (click)="onClickAddStop()">Add</button>
       </div>
       <ng-container formArrayName="stops">
         <ng-container *ngFor="let stopForm of stops.controls; let i = index">

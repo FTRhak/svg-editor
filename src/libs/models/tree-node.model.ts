@@ -1,6 +1,7 @@
 import { SVGNodeType } from './node.type';
 import { StyleAttributeModel } from './style-attribute.model';
 import { TreeItem } from './tree-item.model';
+import { TreeNodeStyleModel } from './tree-node-style.model';
 import { VectorModel } from './vector.model';
 
 export class TreeNodeModel {
@@ -25,6 +26,14 @@ export class TreeNodeModel {
       list.push(...child.toList());
     });
     return list;
+  }
+
+  public renderId(): string {
+    let res = ``;
+    if (TreeNodeStyleModel.renderDebug) {
+      res += ` data-id="${this._id}"`;
+    }
+    return res;
   }
 
   public render(): string {
