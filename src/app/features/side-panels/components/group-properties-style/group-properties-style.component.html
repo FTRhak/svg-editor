@@ -2,7 +2,7 @@
   <!-- Fill -->
   <p-floatlabel variant="on" class="mb-1">
     <p-inputgroup>
-      <input class="input-color p-filled" type="color" formControlName="fill" />
+      <input-svg-color formControlName="fill"></input-svg-color>
       <p-inputgroup-addon>
         <p-button icon="pi pi-lock" severity="secondary" fieldLock="fill" />
       </p-inputgroup-addon>
@@ -42,6 +42,7 @@
     <label for="strokeWidthField">Stroke Width</label>
   </p-floatlabel>
 
+  <!-- Transform -->
   <p-floatlabel variant="on" class="mb-1">
     <p-inputgroup>
       <input
@@ -59,7 +60,7 @@
     </p-inputgroup>
     <label for="transformField">Transform</label>
   </p-floatlabel>
-
+  <!-- Style -->
   <p-floatlabel variant="on" class="mb-1">
     <p-inputgroup>
       <input

@@ -1,0 +1,25 @@
+<p-fieldset legend="Color" class="fieldset-small">
+  <div class="colors-collection">
+    <div class="color-item">
+      <p-colorpicker [(ngModel)]="color" (onChange)="onSelectSavedColor(color)" />
+    </div>
+    @for (item of colors; track $index) {
+      <div class="color-item">
+        <button class="color-item-view" [style.backgroundColor]="item" (click)="onSelectSavedColor(item)"></button>
+      </div>
+    }
+  </div>
+</p-fieldset>
+<p-fieldset legend="Gradients" class="fieldset-small">
+  @for (item of gradientsList; track $index) {
+    <button class="gradient-preview-button" (click)="onSelectGradient(item.id)">
+      <div [innerHTML]="item.code"></div>
+    </button>
+  }
+</p-fieldset>
+<div class="color-confirmation-panel">
+  <div class="selected-color">
+    <div class="selected-color-view" [style.backgroundColor]="selectedColor"></div>
+  </div>
+  <button pButton class="color-confirmation-button" (click)="onSelectColor()">Select</button>
+</div>

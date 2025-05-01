@@ -2,18 +2,15 @@
   <div [formGroup]="form()">
     <p-floatlabel variant="on" class="mb-1">
       <p-inputgroup>
-        <p-inputnumber
+        <input
+          type="text"
+          pInputText
           id="offsetField"
           size="small"
           name="offset"
           formControlName="offset"
           class="w-100"
-          mode="decimal"
-          [minFractionDigits]="0"
-          [maxFractionDigits]="10"
-          [min]="0"
-          [max]="100"
-          [step]="1"
+          pattern="([0-9.]{1,}(%))|0"
         />
         <p-inputgroup-addon>
           <p-button icon="pi pi-lock" severity="secondary" fieldLock="offset" />

@@ -1,6 +1,7 @@
 import { Generator } from '../utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
+import { TreeNodeGradientModel } from './tree-node-gradient.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGDefsModel extends TreeNodeModel {
@@ -8,6 +9,12 @@ export class SVGDefsModel extends TreeNodeModel {
   public override readonly _id: PID;
 
   public override children: TreeNodeModel[] = [];
+
+  public get gradients(): TreeNodeGradientModel[] {
+    return this.children.filter(
+      (item) => item._type === SVGNodeType.LINEAR_GRADIENT || item._type === SVGNodeType.RADIAL_GRADIENT,
+    ) as TreeNodeGradientModel[];
+  }
 
   constructor(params: Partial<SVGDefsModel>) {
     super();

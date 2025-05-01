@@ -17,6 +17,7 @@ import { SidePanelComponent } from './components/side-panel/side-panel.component
 import { ViewStructureComponent } from './components/view-structure/view-structure.component';
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
 import { GroupPropertiesStopComponent } from './components/group-properties-stop/group-properties-stop.component';
+import { InputColorModule } from '@features/input-color';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,6 @@ import { GroupPropertiesStopComponent } from './components/group-properties-stop
     GroupPropertiesStopComponent,
   ],
   exports: [SidePanelComponent],
-  imports: [CommonModule, PrimeSharedModule, SharedModule, ReactiveFormsModule],
+  imports: [CommonModule, PrimeSharedModule, SharedModule, ReactiveFormsModule, InputColorModule],
 })
 export class SidePanelsModule {}

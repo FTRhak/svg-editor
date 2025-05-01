@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PID, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel, VectorModel } from '@libs';
+import { PID, SVGDefsModel, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel, VectorModel } from '@libs';
 import { EventManager } from '../../models';
 
 @Injectable({
@@ -12,6 +12,10 @@ export class ProjectService {
 
   public get events() {
     return this.projectEvents;
+  }
+
+  public get defs(): SVGDefsModel | undefined {
+    return this.project.children.find((item) => item._type === SVGNodeType.DEFS) as SVGDefsModel;
   }
 
   createNewProject() {
@@ -42,6 +46,18 @@ export class ProjectService {
     const item = this.project.addChild(parentId, type, config);
     this.events.trigger('project:item-added', this.project, item);
     this.events.trigger('project:tree:updates', this.project, [item]);
+    return item;
+  }
+
+  public addDefItem(type: SVGNodeType, config: { [key: string]: any } = {}) {
+    let defs = this.defs!;
+    if (!defs) {
+      defs = this.addChildItem(this.project._id, SVGNodeType.DEFS, {})! as SVGDefsModel;
+    }
+    const item = this.project.addChild(defs._id, type, config);
+    this.events.trigger('project:item-added', this.project, item);
+    this.events.trigger('project:tree:updates', this.project, [item]);
+    return item;
   }
 
   public removeItem(id: PID) {

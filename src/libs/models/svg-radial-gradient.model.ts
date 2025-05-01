@@ -2,13 +2,11 @@ import { Generator, isNotUndefined } from '@libs/utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeModel } from './tree-node.model';
+import { TreeNodeGradientModel } from './tree-node-gradient.model';
 
-export class SVGRadialGradientModel extends TreeNodeModel {
+export class SVGRadialGradientModel extends TreeNodeGradientModel {
   public override readonly _type = SVGNodeType.RADIAL_GRADIENT;
   public override readonly _id: PID;
-
-  public id!: string;
-  public gradientTransform: number = 0;
 
   public cx!: number;
   public cy!: number;
@@ -26,11 +24,8 @@ export class SVGRadialGradientModel extends TreeNodeModel {
   public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGRadialGradientModel>) {
-    super();
+    super(params);
     this._id = Generator.getId('radialGradient-');
-
-    if (isNotUndefined(params.id)) this.id = params.id as string;
-    if (isNotUndefined(params.gradientTransform)) this.gradientTransform = params.gradientTransform as number;
 
     if (isNotUndefined(params.cx)) this.cx = params.cx as number;
     if (isNotUndefined(params.cy)) this.cy = params.cy as number;
@@ -56,5 +51,12 @@ export class SVGRadialGradientModel extends TreeNodeModel {
 
     res += `</radialGradient>\n`;
     return res;
+  }
+
+  public override clone(): SVGRadialGradientModel {
+    const item = new SVGRadialGradientModel(this);
+    item.children = this.children.map((child) => child.clone());
+
+    return item;
   }
 }

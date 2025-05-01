@@ -2,22 +2,17 @@ import { Generator, isNotUndefined } from '@libs/utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { TreeNodeModel } from './tree-node.model';
+import { TreeNodeGradientModel } from './tree-node-gradient.model';
 
-export class SVGLinearGradientModel extends TreeNodeModel {
+export class SVGLinearGradientModel extends TreeNodeGradientModel {
   public override readonly _type = SVGNodeType.LINEAR_GRADIENT;
   public override readonly _id: PID;
-
-  public id!: string;
-  public gradientTransform: number = 0;
 
   public override children: TreeNodeModel[] = [];
 
   constructor(params: Partial<SVGLinearGradientModel>) {
-    super();
+    super(params);
     this._id = Generator.getId('linearGradient-');
-
-    if (isNotUndefined(params.id)) this.id = params.id as string;
-    if (isNotUndefined(params.gradientTransform)) this.gradientTransform = params.gradientTransform as number;
   }
 
   public override render() {
@@ -32,5 +27,12 @@ export class SVGLinearGradientModel extends TreeNodeModel {
 
     res += `</linearGradient>\n`;
     return res;
+  }
+
+  public override clone(): SVGLinearGradientModel {
+    const item = new SVGLinearGradientModel(this);
+    item.children = this.children.map((child) => child.clone());
+
+    return item;
   }
 }

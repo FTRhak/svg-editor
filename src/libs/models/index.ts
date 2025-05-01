@@ -14,6 +14,7 @@ export { SVGRectModel } from './svg-rect.model';
 export { SVGRootModel } from './svg-root.model';
 export { SVGStopModel } from './svg-stop.model';
 export { TreeItem } from './tree-item.model';
+export { TreeNodeGradientModel } from './tree-node-gradient.model';
 export { TreeNodeStyleModel } from './tree-node-style.model';
 export { TreeNodeModel } from './tree-node.model';
 export { VectorModel } from './vector.model';

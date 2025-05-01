@@ -1,0 +1,22 @@
+<div class="input-svg-color-container">
+  <input
+    type="text"
+    pInputText
+    size="small"
+    name="transformField"
+    [(ngModel)]="value"
+    readonly
+    [disabled]="disabled"
+    class="w-100"
+  />
+  <p-button
+    icon="pi pi-palette"
+    class="select-color-popover-button"
+    severity="secondary"
+    (click)="op.toggle($event)"
+    [disabled]="disabled"
+  />
+  <p-popover #op>
+    <popover-color (select)="onSelectColor($event, op)"></popover-color>
+  </p-popover>
+</div>

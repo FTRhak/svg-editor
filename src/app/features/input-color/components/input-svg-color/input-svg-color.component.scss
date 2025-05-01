@@ -1,0 +1,16 @@
+.input-svg-color-container {
+  display: flex;
+  position: relative;
+
+  input {
+    flex: 1;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .select-color-popover-button {
+    border-radius: 0px;
+    border: 1px solid var(--p-inputtext-border-color);
+    border-left: none;
+  }
+}

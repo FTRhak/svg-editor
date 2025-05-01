@@ -12,7 +12,7 @@ export class SVGStopModel extends TreeNodeModel {
   public stopOpacity!: number;
 
   constructor(params: Partial<SVGStopModel>) {
-    super();
+    super(params);
     this._id = Generator.getId('stop-');
 
     if (isNotUndefined(params.offset)) this.offset = params.offset as number;
@@ -26,9 +26,13 @@ export class SVGStopModel extends TreeNodeModel {
       this.renderId() +
       (isNotUndefined(this._id) ? ` id="${this._id}"` : '') +
       (isNotUndefined(this.offset) ? ` offset="${this.offset}"` : '') +
-      (isNotUndefined(this.stopColor) ? ` stop-color="rotate(${this.stopColor})"` : '') +
-      (isNotUndefined(this.stopOpacity) ? ` stop-opacity="rotate(${this.stopOpacity})"` : '') +
+      (isNotUndefined(this.stopColor) ? ` stop-color="${this.stopColor}"` : '') +
+      (isNotUndefined(this.stopOpacity) ? ` stop-opacity="${this.stopOpacity}"` : '') +
       `/>\n`;
     return res;
+  }
+
+  public override clone(): SVGStopModel {
+    return new SVGStopModel(this);
   }
 }

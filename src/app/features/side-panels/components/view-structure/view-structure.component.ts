@@ -17,14 +17,14 @@ export class ViewStructureComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private project = inject(ProjectService);
 
-  private readonly ADD_DEFS = {
+  /*private readonly ADD_DEFS = {
     label: 'Definitions',
     type: SVGNodeType.DEFS,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
       const id: PID = this.selectedItem?.id || ev.item.idRef;
       id && this.project.addChildItem(id, ev.item.type);
     },
-  };
+  };*/
 
   /*private readonly ADD_USE = {
     label: 'Use',
@@ -39,8 +39,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Linear Gradient',
     type: SVGNodeType.LINEAR_GRADIENT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
-      id && this.project.addChildItem(id, ev.item.type);
+      this.project.addDefItem(ev.item.type);
     },
   };
 
@@ -48,8 +47,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Radial Gradient',
     type: SVGNodeType.RADIAL_GRADIENT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
-      id && this.project.addChildItem(id, ev.item.type);
+      this.project.addDefItem(ev.item.type);
     },
   };
 
@@ -57,7 +55,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Group',
     type: SVGNodeType.GROUP,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id && this.project.addChildItem(id, ev.item.type);
     },
   };
@@ -66,7 +64,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Rect',
     type: SVGNodeType.RECT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id && this.project.addChildItem(id, ev.item.type, { x: 0, y: 0, width: 1, height: 1 });
     },
   };
@@ -75,7 +73,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Circle',
     type: SVGNodeType.CIRCLE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id && this.project.addChildItem(id, ev.item.type, { cx: 1, cy: 1, r: 1 });
     },
   };
@@ -84,7 +82,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Ellipse',
     type: SVGNodeType.ELLIPSE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id && this.project.addChildItem(id, ev.item.type, { cx: 2, cy: 1, rx: 2, ry: 1 });
     },
   };
@@ -93,7 +91,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Line',
     type: SVGNodeType.LINE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id &&
         this.project.addChildItem(id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1, stroke: 'black', strokeWidth: 0.1 });
     },
@@ -103,13 +101,17 @@ export class ViewStructureComponent implements OnInit {
     label: 'Path',
     type: SVGNodeType.PATH,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = this.selectedItem?.id || ev.item.idRef;
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
       id && this.project.addChildItem(id, ev.item.type);
     },
   };
 
   private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [
-    { ...this.ADD_DEFS },
+    {
+      label: 'Definitions',
+      items: [{ ...this.ADD_LINEAR_GRADIENT }, { ...this.ADD_RADIAL_GRADIENT }],
+    },
+    //{ ...this.ADD_DEFS },
     { ...this.ADD_GROUP },
     { ...this.ADD_PATH },
     { ...this.ADD_RECT },

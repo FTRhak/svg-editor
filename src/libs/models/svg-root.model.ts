@@ -12,6 +12,7 @@ import { SVGPathModel } from './svg-path.model';
 import { SVGRadialGradientModel } from './svg-radial-gradient.model';
 import { SVGRectModel } from './svg-rect.model';
 import { SVGStopModel } from './svg-stop.model';
+import { TreeNodeGradientModel } from './tree-node-gradient.model';
 import { TreeNodeModel } from './tree-node.model';
 
 export class SVGRootModel extends TreeNodeModel {
@@ -135,6 +136,20 @@ export class SVGRootModel extends TreeNodeModel {
     importChildren(svg, dom.children);
 
     return svg;
+  }
+
+  public static previewGradient(gradient: TreeNodeGradientModel, width: number = 100, height: number = 50): string {
+    const root = new SVGRootModel(0, 0, width, height);
+    const def = new SVGDefsModel({});
+    root.children.push(def);
+    const g = gradient.clone();
+    g.id = 'myId';
+    def.children.push(g);
+
+    const rect = new SVGRectModel({ x: 0, y: 0, width, height, fill: 'url(#myId)' });
+    root.children.push(rect);
+
+    return root.render();
   }
 }
 

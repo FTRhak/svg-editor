@@ -9,7 +9,7 @@ export class TreeNodeModel {
   public readonly _id!: string;
   children: TreeNodeModel[] = [];
 
-  constructor() {}
+  constructor(params?: Partial<TreeNodeModel>) {}
 
   public toTree(): TreeItem {
     const item: TreeItem = new TreeItem(this._id, this._type);
@@ -54,6 +54,10 @@ export class TreeNodeModel {
 
   public transformShift(anchor: string[], shift: VectorModel): string[] {
     return [];
+  }
+
+  public clone(): TreeNodeModel {
+    return new TreeNodeModel(this);
   }
 
   public static importFromDom(dom: any): TreeNodeModel {
