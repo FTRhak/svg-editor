@@ -6,12 +6,13 @@ import { fromEvent } from 'rxjs';
 import { PropertiesNodeSvgCircleComponent } from '../properties-node-svg-circle/properties-node-svg-circle.component';
 import { PropertiesNodeSvgEllipseComponent } from '../properties-node-svg-ellipse/properties-node-svg-ellipse.component';
 import { PropertiesNodeSvgGroupComponent } from '../properties-node-svg-group/properties-node-svg-group.component';
-import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/properties-node-svg-path.component';
-import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
-import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
 import { PropertiesNodeSvgLineComponent } from '../properties-node-svg-line/properties-node-svg-line.component';
 import { PropertiesNodeSvgLinearGradientComponent } from '../properties-node-svg-linear-gradient/properties-node-svg-linear-gradient.component';
+import { PropertiesNodeSvgPathComponent } from '../properties-node-svg-path/properties-node-svg-path.component';
 import { PropertiesNodeSvgRadialGradientComponent } from '../properties-node-svg-radial-gradient/properties-node-svg-radial-gradient.component';
+import { PropertiesNodeSvgRectComponent } from '../properties-node-svg-rect/properties-node-svg-rect.component';
+import { PropertiesNodeSvgTextComponent } from '../properties-node-svg-text/properties-node-svg-text.component';
+import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
 
 @Component({
   selector: 'properties',
@@ -51,6 +52,9 @@ export class PropertiesComponent implements OnInit {
             break;
           case SVGNodeType.LINE:
             component = this.viewContainer.createComponent(PropertiesNodeSvgLineComponent);
+            break;
+          case SVGNodeType.TEXT:
+            component = this.viewContainer.createComponent(PropertiesNodeSvgTextComponent);
             break;
           case SVGNodeType.LINEAR_GRADIENT:
             component = this.viewContainer.createComponent(PropertiesNodeSvgLinearGradientComponent);

@@ -9,4 +9,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class GroupPropertiesStyleComponent {
   public readonly form = input.required<FormGroup>();
+
+  public readonly fields = input<string[]>(['fill', 'stroke', 'strokeWidth', 'transform', 'style']);
 }

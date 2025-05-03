@@ -6,13 +6,14 @@ import {
   ElementRef,
   inject,
   OnInit,
+  Renderer2,
   signal,
   viewChild,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
 import { ProjectService } from '@core/services';
-import { RectModel, SVGRootModel, TreeNodeModel, VectorModel } from '@libs';
+import { RectModel, SVGNodeType, SVGRootModel, TreeNodeModel, VectorModel } from '@libs';
 import { debounceTime, filter, fromEvent, map, switchMap, takeUntil, tap } from 'rxjs';
 
 const normalizePropertyName = (str: string) => str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
@@ -28,6 +29,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
   private readonly el = inject(ElementRef);
+  private readonly render = inject(Renderer2);
 
   private readonly SVG_BORDER = 0.02;
   private readonly SVG_GRID_LINE = 0.01;
@@ -166,8 +168,16 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   }
 
   private updateSVGNode(item: TreeNodeModel, propertyName: string, value: any) {
-    this.el.nativeElement
-      .querySelector(`[data-id="${item._id}"]`)
-      ?.setAttribute(normalizePropertyName(propertyName), value);
+    const target = this.el.nativeElement.querySelector(`[data-id="${item._id}"]`);
+    if (target) {
+      if (item._type === SVGNodeType.TEXT && propertyName === 'text') {
+        const text = this.render.createText(value);
+        target.innerHTML = '';
+        this.render.appendChild(target, text);
+      } else {
+        this.render.setAttribute(target, normalizePropertyName(propertyName), value);
+        //target?.setAttribute(normalizePropertyName(propertyName), value);
+      }
+    }
   }
 }

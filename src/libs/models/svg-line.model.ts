@@ -8,10 +8,54 @@ import { VectorModel } from './vector.model';
 export class SVGLineModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.LINE;
   public override readonly _id: PID;
-  public x1!: number;
-  public y1!: number;
-  public x2!: number;
-  public y2!: number;
+
+  //#region property X1
+  private _x1!: number;
+
+  public get x1(): number {
+    return this._x1;
+  }
+
+  public set x1(value: number) {
+    this._x1 = value;
+  }
+  //#endregion
+
+  //#region property Y1
+  public _y1!: number;
+
+  public get y1(): number {
+    return this._y1;
+  }
+
+  public set y1(value: number) {
+    this._y1 = value;
+  }
+  //#endregion
+
+  //#region property X2
+  public _x2!: number;
+
+  public get x2(): number {
+    return this._x2;
+  }
+
+  public set x2(value: number) {
+    this._x2 = value;
+  }
+  //#endregion
+
+  //#region property Y2
+  public _y2!: number;
+
+  public get y2(): number {
+    return this._y2;
+  }
+
+  public set y2(value: number) {
+    this._y2 = value;
+  }
+  //#endregion
 
   public override children: TreeNodeModel[] = [];
 

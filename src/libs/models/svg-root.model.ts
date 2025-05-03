@@ -12,6 +12,7 @@ import { SVGPathModel } from './svg-path.model';
 import { SVGRadialGradientModel } from './svg-radial-gradient.model';
 import { SVGRectModel } from './svg-rect.model';
 import { SVGStopModel } from './svg-stop.model';
+import { SVGTextModel } from './svg-text.model';
 import { TreeNodeGradientModel } from './tree-node-gradient.model';
 import { TreeNodeModel } from './tree-node.model';
 
@@ -115,6 +116,9 @@ export class SVGRootModel extends TreeNodeModel {
       case SVGNodeType.STOP:
         node = new SVGStopModel(config);
         break;
+      case SVGNodeType.TEXT:
+        node = new SVGTextModel(config);
+        break;
       default:
         console.warn('Unknown node type to create');
         break;
@@ -185,6 +189,11 @@ function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
         const line = SVGLineModel.importFromDom(item as SVGLineElement);
         parent.children.push(line);
         importChildren(line, item.children);
+        break;
+      case SVGNodeType.TEXT:
+        const text = SVGTextModel.importFromDom(item as SVGTextElement);
+        parent.children.push(text);
+        importChildren(text, item.children);
         break;
       case SVGNodeType.DEFS:
         const defs = SVGDefsModel.importFromDom(item as SVGDefsElement);

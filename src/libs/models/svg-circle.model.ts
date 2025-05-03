@@ -8,9 +8,42 @@ import { VectorModel } from './vector.model';
 export class SVGCircleModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.CIRCLE;
   public override readonly _id: PID;
-  public cx: number = 0;
-  public cy: number = 0;
-  public r: number = 0;
+
+  //#region property CX
+  private _cx: number = 0;
+
+  public get cx() {
+    return this._cx;
+  }
+
+  public set cx(value: number) {
+    this._cx = value;
+  }
+  //#endregion
+
+  //#region property CY
+  public _cy: number = 0;
+
+  public get cy() {
+    return this._cy;
+  }
+
+  public set cy(value: number) {
+    this._cy = value;
+  }
+  //#endregion
+
+  //#region property R
+  private _r: number = 0;
+
+  public get r() {
+    return this._r;
+  }
+
+  public set r(value: number) {
+    this._r = value;
+  }
+  //#endregion
 
   public override children: TreeNodeModel[] = [];
 

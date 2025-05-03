@@ -18,6 +18,7 @@ import { ViewStructureComponent } from './components/view-structure/view-structu
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
 import { GroupPropertiesStopComponent } from './components/group-properties-stop/group-properties-stop.component';
 import { InputColorModule } from '@features/input-color';
+import { PropertiesNodeSvgTextComponent } from './components/properties-node-svg-text/properties-node-svg-text.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { InputColorModule } from '@features/input-color';
     PropertiesNodeSvgLinearGradientComponent,
     PropertiesNodeSvgRadialGradientComponent,
     GroupPropertiesStopComponent,
+    PropertiesNodeSvgTextComponent,
   ],
   exports: [SidePanelComponent],
   imports: [CommonModule, PrimeSharedModule, SharedModule, ReactiveFormsModule, InputColorModule],

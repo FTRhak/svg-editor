@@ -8,12 +8,74 @@ import { VectorModel } from './vector.model';
 export class SVGRectModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.RECT;
   public override readonly _id: PID;
-  public x!: number;
-  public y!: number;
-  public width!: number;
-  public height!: number;
-  public rx!: number;
-  public ry!: number;
+
+  //#region property X
+  private _x!: number;
+
+  public get x() {
+    return this._x;
+  }
+
+  public set x(value: number) {
+    this._x = value;
+  }
+  //#endregion
+
+  //#region property Y
+  private _y!: number;
+
+  public get y() {
+    return this._y;
+  }
+
+  public set y(value: number) {
+    this._y = value;
+  }
+  //#endregion
+
+  //#region property Width
+  private _width!: number;
+  public get width() {
+    return this._width;
+  }
+
+  public set width(value: number) {
+    this._width = value < 0 ? 0 : value;
+  }
+  //#endregion
+
+  //#region property Height
+  private _height!: number;
+  public get height() {
+    return this._height;
+  }
+
+  public set height(value: number) {
+    this._height = value < 0 ? 0 : value;
+  }
+  //#endregion
+
+  //#region property RX
+  private _rx!: number;
+  public get rx() {
+    return this._rx;
+  }
+
+  public set rx(value: number) {
+    this._rx = value < 0 ? 0 : value;
+  }
+  //#endregion
+
+  //#region property RY
+  private _ry!: number;
+  public get ry() {
+    return this._ry;
+  }
+
+  public set ry(value: number) {
+    this._ry = value < 0 ? 0 : value;
+  }
+  //#endregion
 
   public override children: TreeNodeModel[] = [];
 

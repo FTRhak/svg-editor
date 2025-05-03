@@ -8,10 +8,54 @@ import { VectorModel } from './vector.model';
 export class SVGEllipseModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.ELLIPSE;
   public override readonly _id: PID;
-  public cx: number = 0;
-  public cy: number = 0;
-  public rx: number = 0;
-  public ry: number = 0;
+
+  //#region property CX
+  private _cx: number = 0;
+
+  public get cx() {
+    return this._cx;
+  }
+
+  public set cx(value: number) {
+    this._cx = value;
+  }
+  //#endregion
+
+  //#region property CY
+  private _cy: number = 0;
+
+  public get cy() {
+    return this._cy;
+  }
+
+  public set cy(value: number) {
+    this._cy = value;
+  }
+  //#endregion
+
+  //#region property RX
+  private _rx: number = 0;
+
+  public get rx() {
+    return this._rx;
+  }
+
+  public set rx(value: number) {
+    this._rx = value < 0 ? 0 : value;
+  }
+  //#endregion
+
+  //#region property RY
+  private _ry: number = 0;
+
+  public get ry() {
+    return this._ry;
+  }
+
+  public set ry(value: number) {
+    this._ry = value < 0 ? 0 : value;
+  }
+  //#endregion
 
   public override children: TreeNodeModel[] = [];
 

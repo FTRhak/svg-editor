@@ -13,6 +13,7 @@ export { SVGRadialGradientModel } from './svg-radial-gradient.model';
 export { SVGRectModel } from './svg-rect.model';
 export { SVGRootModel } from './svg-root.model';
 export { SVGStopModel } from './svg-stop.model';
+export { SVGTextModel } from './svg-text.model';
 export { TreeItem } from './tree-item.model';
 export { TreeNodeGradientModel } from './tree-node-gradient.model';
 export { TreeNodeStyleModel } from './tree-node-style.model';

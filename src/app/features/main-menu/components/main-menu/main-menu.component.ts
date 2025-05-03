@@ -56,6 +56,17 @@ export class MainMenuComponent implements OnDestroy {
         },
       ],
     },
+    {
+      label: 'Add',
+      icon: 'pi pi-plus',
+      items: [
+        {
+          label: 'Rectangle',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {},
+        },
+      ],
+    },
   ];
 
   private ref: DynamicDialogRef | undefined;

@@ -106,6 +106,21 @@ export class ViewStructureComponent implements OnInit {
     },
   };
 
+  private readonly ADD_TEXT = {
+    label: 'Text',
+    type: SVGNodeType.TEXT,
+    command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
+      const id: PID = ev.item.idRef || this.selectedItem?.id!;
+      id &&
+        this.project.addChildItem(id, ev.item.type, {
+          x: 0,
+          y: 1,
+          style: { 'font-size': 1 },
+          text: 'Text',
+        } as any);
+    },
+  };
+
   private readonly MENU_ITEM_ADD_SVG: MenuItem[] = [
     {
       label: 'Definitions',
@@ -118,6 +133,7 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_CIRCLE },
     { ...this.ADD_ELLIPSE },
     { ...this.ADD_LINE },
+    { ...this.ADD_TEXT },
   ];
 
   private readonly MENU_ITEM_ADD_DEFS: MenuItem[] = [
@@ -137,6 +153,7 @@ export class ViewStructureComponent implements OnInit {
     { ...this.ADD_CIRCLE },
     { ...this.ADD_ELLIPSE },
     { ...this.ADD_LINE },
+    { ...this.ADD_TEXT },
   ];
 
   private readonly MENU_ITEM_REMOVE: MenuItem = {
