@@ -86,17 +86,24 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
   }
 
   private bindDragElement(): void {
+    const parent = this.svgCanvas().parentElement!;
+
     const up$ = fromEvent(this.svgCanvas(), 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
-    const start = new VectorModel();
-    const zoom = this.zoom();
+    const canvasSize = new VectorModel(1, 1);
+    const prev = new VectorModel();
+
     fromEvent<MouseEvent>(this.svgCanvas()!, 'mousedown')
       .pipe(
         filter(() => this.value === 'drag'),
         filter((ev) => (ev.target! as HTMLElement).tagName !== 'svg'),
         filter((ev) => ev.buttons === 1),
+        tap(() => {
+          const rec = parent.getBoundingClientRect();
+          canvasSize.update(rec.width, rec.height);
+        }),
         switchMap((event: MouseEvent) => {
-          start.x = event.clientX;
-          start.y = event.clientY;
+          prev.update(event.clientX, event.clientY);
+
           return fromEvent<MouseEvent>(this.svgCanvas()!, 'mousemove').pipe(
             map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
             takeUntil(up$),
@@ -107,16 +114,23 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
         // TODO need to recalculate shift coefficients
-        const coefficients = zoom / 100;
-        this.project.dragMoveSelectedItem({ x: (ev.x - start.x) * coefficients, y: (ev.y - start.y) * coefficients });
-        start.x = ev.x;
-        start.y = ev.y;
+        this.moveItem({ x: ev.x - prev.x, y: ev.y - prev.y } as VectorModel, canvasSize);
+
+        prev.update(ev.x, ev.y);
       });
+  }
+
+  private moveItem(shift: VectorModel, canvasSize: VectorModel): void {
+    const zoom = this.zoom();
+    this.project.dragMoveSelectedItem({
+      x: (shift.x / canvasSize.x) * zoom * 10,
+      y: (shift.y / canvasSize.x) * zoom * 10,
+    } as VectorModel);
   }
 
   private bindTransformElement(): void {
     const up$ = fromEvent(this.svgCanvas(), 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
-    const start = new VectorModel();
+    const prev = new VectorModel();
     const zoom = this.zoom();
     fromEvent<MouseEvent>(this.svgCanvas()!, 'mousedown')
       .pipe(
@@ -124,8 +138,8 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
         filter((ev: MouseEvent) => (ev.target! as HTMLElement).hasAttribute('data-action')),
         filter((ev: MouseEvent) => ev.buttons === 1),
         switchMap((event: MouseEvent) => {
-          start.x = event.clientX;
-          start.y = event.clientY;
+          prev.update(event.clientX, event.clientY);
+
           const action = (event.target! as HTMLElement).getAttribute('data-action') as string;
           const actionParam = (event.target! as HTMLElement).getAttribute(`data-${action}`) as string;
 
@@ -145,17 +159,18 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
         console.log(ev);
-        // TODO need to recalculate shift coefficients
+
         const coefficients = zoom / 100;
         this.project.transformSelectedItem(ev.action, ev.param, {
-          x: (ev.x - start.x) * coefficients,
-          y: (ev.y - start.y) * coefficients,
-        });
-        //this.project.dragMoveSelectedItem({ x: (ev.x - start.x) * coefficients, y: (ev.y - start.y) * coefficients });
-        start.x = ev.x;
-        start.y = ev.y;
+          x: (ev.x - prev.x) * coefficients,
+          y: (ev.y - prev.y) * coefficients,
+        } as VectorModel);
+
+        prev.update(ev.x, ev.y);
       });
   }
+
+  private transformItem(shift: VectorModel, canvasSize: VectorModel) {}
 
   private renderItemSelection() {
     this.elRef?.remove();

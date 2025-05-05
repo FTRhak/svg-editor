@@ -19,7 +19,7 @@ export class CanvasGridRenderDirective {
 
   constructor() {
     let zoom: number = 1;
-    let center: VectorModel = { x: 0, y: 0 };
+    let center: VectorModel = { x: 0, y: 0 } as VectorModel;
     effect(() => {
       zoom = this.zoom();
       this.rendered ? this.gridUpdate(zoom, center) : this.gridRender(zoom, center);

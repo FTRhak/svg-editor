@@ -1,0 +1,47 @@
+import { SVGPathNodeModel } from './svg-path-node.model';
+import { SVGPathNodeType } from './svg-path-node.type';
+
+export class SVGPathNodeCModel extends SVGPathNodeModel {
+  public x1!: number;
+  public y1!: number;
+  public x2!: number;
+  public y2!: number;
+  public x!: number;
+  public y!: number;
+  constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
+    super(type, prev);
+    /*let params = paramValues!.split(',');
+    let paramsList: string[] = [];
+
+    if (params.length < 6) {
+      params = params.reduce((ac: string[], cv) => {
+        if (cv.lastIndexOf('-') > 0) {
+          ac = ac.concat(cv.split('-').map((el, index) => (index !== 0 ? '-' : '') + el));
+        } else {
+          ac.push(cv);
+        }
+
+        return ac;
+      }, []).filter((el) => el !== '');
+    } else {
+      paramsList = params;
+    }
+    console.log(type, params);*/
+
+    const params = this.normalizeParams(paramValues, 6);
+
+    this.x1 = parseFloat(params[0] || '0');
+    this.y1 = parseFloat(params[1] || '0');
+    this.x2 = parseFloat(params[2] || '0');
+    this.y2 = parseFloat(params[3] || '0');
+    this.x = parseFloat(params[4] || '0');
+    this.y = parseFloat(params[5] || '0');
+  }
+
+  public override render(): string {
+    return (
+      `${this.type}${this.x1},${this.y1},${this.x2},${this.y2},${this.x},${this.y}` +
+      (this._next ? this._next.render() : '')
+    );
+  }
+}

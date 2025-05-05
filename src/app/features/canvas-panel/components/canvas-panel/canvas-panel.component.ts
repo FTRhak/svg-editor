@@ -41,7 +41,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   width = signal<number>(1);
   height = signal<number>(1);
 
-  center = signal<VectorModel>({ x: 0, y: 0 });
+  center = signal<VectorModel>({ x: 0, y: 0 } as VectorModel);
   zoom = signal<number>(1);
   //view!: RectModel;
 
@@ -55,12 +55,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       const center = this.center();
 
       const svgBorder = this.SVG_BORDER * zoom;
-      const rec = new RectModel(
-        center.x * zoom,
-        center.y * zoom,
-        baseSize * zoom - center.x,
-        baseSize * (height / width) * zoom - center.y,
-      );
+      const rec = new RectModel(center.x, center.y, baseSize * zoom, baseSize * (height / width) * zoom);
 
       this.svgCanvas()?.nativeElement.setAttribute('viewBox', `${rec.x} ${rec.y} ${rec.width} ${rec.height}`);
       this.svgBgView()
@@ -122,20 +117,25 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   }
 
   private bindDragCanvas() {
-    const up$ = fromEvent(this.svgCanvas()?.nativeElement!, 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
-    const start = new VectorModel();
-    const startCenter = new VectorModel();
-    const zoom = this.zoom();
-    fromEvent<MouseEvent>(this.svgCanvas()?.nativeElement!, 'mousedown')
+    const targetCanvas = this.svgCanvas()!.nativeElement;
+    const parent = targetCanvas.parentElement!;
+
+    const up$ = fromEvent(targetCanvas, 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
+
+    const canvasSize = new VectorModel(1, 1);
+    const prev = new VectorModel();
+
+    fromEvent<MouseEvent>(targetCanvas, 'mousedown')
       .pipe(
         filter((ev) => (ev.target! as HTMLElement).tagName === 'svg'),
         filter((ev) => ev.buttons === 1),
+        tap(() => {
+          const rec = parent.getBoundingClientRect();
+          canvasSize.update(rec.width, rec.height);
+        }),
         switchMap((event: MouseEvent) => {
-          start.x = event.clientX;
-          start.y = event.clientY;
-          startCenter.x = this.center().x;
-          startCenter.y = this.center().y;
-          return fromEvent<MouseEvent>(this.svgCanvas()?.nativeElement!, 'mousemove').pipe(
+          prev.update(event.clientX, event.clientY);
+          return fromEvent<MouseEvent>(targetCanvas, 'mousemove').pipe(
             //debounceTime(10),
             map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
             takeUntil(up$),
@@ -145,11 +145,18 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       )
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
-        this.center.set({
-          x: startCenter.x - ((ev.x - start.x) * zoom) / 100,
-          y: startCenter.y - ((ev.y - start.y) * zoom) / 100,
-        });
+        this.drag({ x: ev.x - prev.x, y: ev.y - prev.y } as VectorModel, canvasSize);
+        prev.update(ev.x, ev.y);
       });
+  }
+
+  private drag(shift: VectorModel, canvasSize: VectorModel) {
+    const zoom = this.zoom();
+    const center = this.center();
+    this.center.set({
+      x: center.x - (shift.x / canvasSize.x) * zoom * 10,
+      y: center.y - (shift.y / canvasSize.x) * zoom * 10,
+    } as VectorModel);
   }
 
   private renderSVG(svg: SVGRootModel, rootNode: SVGGElement): void {

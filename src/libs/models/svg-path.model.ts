@@ -1,6 +1,8 @@
 import { Generator, isNotUndefined } from '../utils';
+import { pathStringToArray } from '../utils/path-convert.utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
+import { SVGPathNodeModel } from './svg-path-node.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 import { VectorModel } from './vector.model';
@@ -8,7 +10,21 @@ import { VectorModel } from './vector.model';
 export class SVGPathModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.PATH;
   public override readonly _id: PID;
-  public d!: string;
+
+  private _d!: SVGPathNodeModel[];
+
+  private _dd: SVGPathNodeModel[] = [];
+
+  public get d(): string {
+    const res = this._d[0].render();
+
+    return res;
+  }
+
+  public set d(value: string) {
+    this._d = pathStringToArray(value);
+    console.log('__', this._d);
+  }
 
   public override children: TreeNodeModel[] = [];
 

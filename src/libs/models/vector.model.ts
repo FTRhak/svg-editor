@@ -6,4 +6,9 @@ export class VectorModel {
     this.x = x;
     this.y = y;
   }
+
+  public update(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 }
