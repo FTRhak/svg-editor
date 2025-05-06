@@ -10,23 +10,6 @@ export class SVGPathNodeCModel extends SVGPathNodeModel {
   public y!: number;
   constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
-    /*let params = paramValues!.split(',');
-    let paramsList: string[] = [];
-
-    if (params.length < 6) {
-      params = params.reduce((ac: string[], cv) => {
-        if (cv.lastIndexOf('-') > 0) {
-          ac = ac.concat(cv.split('-').map((el, index) => (index !== 0 ? '-' : '') + el));
-        } else {
-          ac.push(cv);
-        }
-
-        return ac;
-      }, []).filter((el) => el !== '');
-    } else {
-      paramsList = params;
-    }
-    console.log(type, params);*/
 
     const params = this.normalizeParams(paramValues, 6);
 

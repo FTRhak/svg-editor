@@ -10,6 +10,6 @@ export class SVGPathNodeHModel extends SVGPathNodeModel {
   }
 
   public override render(): string {
-    return `${this.type}${this.x}`;
+    return `${this.type}${this.x}` + (this._next ? this._next.render() : '');
   }
 }

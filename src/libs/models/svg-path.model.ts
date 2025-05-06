@@ -11,13 +11,10 @@ export class SVGPathModel extends TreeNodeStyleModel {
   public override readonly _type = SVGNodeType.PATH;
   public override readonly _id: PID;
 
-  private _d!: SVGPathNodeModel[];
-
-  private _dd: SVGPathNodeModel[] = [];
+  private _d: SVGPathNodeModel[] = [];
 
   public get d(): string {
-    const res = this._d[0].render();
-
+    const res = this._d.length > 0 ? this._d[0]?.render() : '';
     return res;
   }
 

@@ -17,7 +17,6 @@ export function pathStringToArray(path: string): SVGPathNodeModel[] {
   path = path.replaceAll('\n', '').replaceAll('\r', '').replaceAll('\t', '');
 
   let list = path.split(regPath);
-  console.log('LIST:', list);
   let pathObj: SVGPathNodeModel[] = [];
   let i = 0;
 

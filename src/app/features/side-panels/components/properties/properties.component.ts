@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ViewContainerRef } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ProjectService } from '@core/services';
 import { SVGNodeType, SVGRootModel, TreeNodeModel } from '@libs';
@@ -24,6 +24,8 @@ export class PropertiesComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
   private readonly viewContainer = inject(ViewContainerRef);
+
+  public nodeId = signal<string>('');
 
   public ngOnInit(): void {
     fromEvent<[SVGRootModel, TreeNodeModel]>(this.project.events, 'project:item:selected')
@@ -65,6 +67,7 @@ export class PropertiesComponent implements OnInit {
         }
 
         if (component) {
+          this.nodeId.set(item._id);
           component.setInput('node', item);
         }
       });

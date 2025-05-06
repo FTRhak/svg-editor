@@ -3,7 +3,14 @@ import { SVGPathNodeType } from './svg-path-node.type';
 
 export class SVGPathNodeModel {
   public readonly id: string;
-  public readonly type: SVGPathNodeType;
+  private readonly _type: SVGPathNodeType;
+  private _isLocal: boolean = false;
+
+  public get type(): SVGPathNodeType {
+    return this._isLocal
+      ? (this._type.toLowerCase() as SVGPathNodeType)
+      : (this._type.toUpperCase() as SVGPathNodeType);
+  }
 
   protected _prev?: SVGPathNodeModel | undefined = undefined;
   protected _next?: SVGPathNodeModel | undefined = undefined;
@@ -13,7 +20,8 @@ export class SVGPathNodeModel {
   }
 
   constructor(type: SVGPathNodeType, prev: SVGPathNodeModel | undefined = undefined) {
-    this.type = type;
+    this._type = type.toUpperCase() as SVGPathNodeType;
+    this._isLocal = type === type.toLowerCase();
     this._prev = prev;
 
     this.id = Generator.getId('d-');
@@ -32,21 +40,17 @@ export class SVGPathNodeModel {
     let paramsList: string[] = [];
 
     if (params.length < countItems) {
-      params = params
-        .reduce((ac: string[], cv) => {
-          if (cv.lastIndexOf('-') > 0) {
-            ac = ac.concat(cv.split('-').map((el, index) => (index !== 0 ? '-' : '') + el));
-          } else {
-            ac.push(cv);
-          }
-
-          return ac;
-        }, [])
-        .filter((el) => el !== '');
+      params.forEach((el) => {
+        if (el.lastIndexOf('-') > 0) {
+          paramsList = paramsList.concat(el.split('-').map((el, index) => (index !== 0 ? '-' : '') + el));
+        } else {
+          paramsList.push(el);
+        }
+      });
     } else {
       paramsList = params;
     }
 
-    return paramsList;
+    return paramsList.filter((el) => el !== '');
   }
 }

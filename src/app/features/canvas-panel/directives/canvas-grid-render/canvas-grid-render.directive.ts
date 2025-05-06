@@ -22,7 +22,9 @@ export class CanvasGridRenderDirective {
     let center: VectorModel = { x: 0, y: 0 } as VectorModel;
     effect(() => {
       zoom = this.zoom();
-      this.rendered ? this.gridUpdate(zoom, center) : this.gridRender(zoom, center);
+      console.log('ZOOM:', zoom);
+      //this.rendered ? this.gridUpdate(zoom, center) : this.gridRender(zoom, center);
+      this.gridRender(zoom, center);
     });
 
     effect(() => {
@@ -38,7 +40,8 @@ export class CanvasGridRenderDirective {
     let horizontalLines = '';
     let verticalLines = '';
 
-    const gridStep = 1;
+    const gridStep = Math.floor(zoom / 2) + 1;
+    //console.log('gridRender:', gridStep);
 
     horizontalLines += `<line data-type="axe" class="grid-line" x1="0" y1="-100" x2="0" y2="100" stroke-width="${gridAxeLineWidth}"></line>`;
     for (let i = gridStep; i < 100; i += gridStep) {
@@ -57,6 +60,7 @@ export class CanvasGridRenderDirective {
   }
 
   private gridUpdate(zoom: number, center: VectorModel) {
+    //console.log('gridUpdate:', zoom);
     const gridLineWidth = this.SVG_GRID_LINE * zoom;
     const gridAxeLineWidth = this.SVG_GRID_LINE * zoom * 3;
 
