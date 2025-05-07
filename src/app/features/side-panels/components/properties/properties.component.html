@@ -1,4 +1,6 @@
-<div class="id-info">
-  <label>ID:</label>
-  <span>{{ nodeId() }}</span>
-</div>
+@if (nodeId(); as nodeId) {
+  <div class="id-info">
+    <label>ID:</label>
+    <span>{{ nodeId }}</span>
+  </div>
+}

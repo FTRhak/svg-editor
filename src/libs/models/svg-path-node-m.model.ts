@@ -1,5 +1,6 @@
 import { SVGPathNodeModel } from './svg-path-node.model';
 import { SVGPathNodeType } from './svg-path-node.type';
+import { VectorModel } from './vector.model';
 
 export class SVGPathNodeMModel extends SVGPathNodeModel {
   public x!: number;
@@ -14,5 +15,12 @@ export class SVGPathNodeMModel extends SVGPathNodeModel {
 
   public override render(): string {
     return `${this.type}${this.x},${this.y}` + (this._next ? this._next.render() : '');
+  }
+
+  public override moveShift(shift: VectorModel): void {
+    if (!this.isLocal) {
+      this.x += shift.x;
+      this.y += shift.y;
+    }
   }
 }

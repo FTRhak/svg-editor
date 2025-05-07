@@ -16,12 +16,14 @@ import { regPath, SVGPathNodeType } from '../models/svg-path-node.type';
 export function pathStringToArray(path: string): SVGPathNodeModel[] {
   path = path.replaceAll('\n', '').replaceAll('\r', '').replaceAll('\t', '');
 
-  let list = path.split(regPath);
+  let list = path.split(regPath).filter((el) => el !== '');
   let pathObj: SVGPathNodeModel[] = [];
   let i = 0;
 
   let prev: SVGPathNodeModel | undefined = undefined;
   let currentItem: SVGPathNodeModel | undefined = undefined;
+
+  console.log('list:', list);
   while (list.length > i) {
     const item = list[i] as SVGPathNodeType;
     currentItem = undefined;

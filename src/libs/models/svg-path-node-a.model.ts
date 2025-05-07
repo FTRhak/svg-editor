@@ -1,5 +1,6 @@
 import { SVGPathNodeModel } from './svg-path-node.model';
 import { SVGPathNodeType } from './svg-path-node.type';
+import { VectorModel } from './vector.model';
 
 export class SVGPathNodeAModel extends SVGPathNodeModel {
   public rx!: number;
@@ -29,5 +30,14 @@ export class SVGPathNodeAModel extends SVGPathNodeModel {
       `${this.type}${this.rx},${this.ry},${this.xAxisRotation},${this.largeArcFlag},${this.sweepFlag},${this.x},${this.y}` +
       (this._next ? this._next.render() : '')
     );
+  }
+
+  public override moveShift(shift: VectorModel): void {
+    if (!this.isLocal) {
+      this.rx += shift.x;
+      this.ry += shift.y;
+      this.x += shift.x;
+      this.y += shift.y;
+    }
   }
 }

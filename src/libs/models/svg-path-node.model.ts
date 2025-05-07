@@ -1,5 +1,6 @@
 import { Generator } from '@libs/utils';
 import { SVGPathNodeType } from './svg-path-node.type';
+import { VectorModel } from './vector.model';
 
 export class SVGPathNodeModel {
   public readonly id: string;
@@ -10,6 +11,10 @@ export class SVGPathNodeModel {
     return this._isLocal
       ? (this._type.toLowerCase() as SVGPathNodeType)
       : (this._type.toUpperCase() as SVGPathNodeType);
+  }
+
+  public get isLocal(): boolean {
+    return this._isLocal;
   }
 
   protected _prev?: SVGPathNodeModel | undefined = undefined;
@@ -36,7 +41,7 @@ export class SVGPathNodeModel {
   }
 
   protected normalizeParams(value: string, countItems: number): string[] {
-    let params = value!.split(',');
+    let params = value!.split(/[\s|\,]/gi);
     let paramsList: string[] = [];
 
     if (params.length < countItems) {
@@ -52,5 +57,9 @@ export class SVGPathNodeModel {
     }
 
     return paramsList.filter((el) => el !== '');
+  }
+
+  public moveShift(shift: VectorModel): void {
+    console.warn('Need to implement moveShift for SVGPathNodeModel');
   }
 }

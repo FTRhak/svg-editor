@@ -20,7 +20,7 @@ export class SVGPathModel extends TreeNodeStyleModel {
 
   public set d(value: string) {
     this._d = pathStringToArray(value);
-    console.log('__', this._d);
+    //console.log('__', this._d);
   }
 
   public override children: TreeNodeModel[] = [];
@@ -37,7 +37,7 @@ export class SVGPathModel extends TreeNodeStyleModel {
   }
 
   public override moveShift(shift: VectorModel) {
-    console.warn('Need to implement moveShift for SVGPathModel');
+    this._d.forEach((node) => node.moveShift(shift));
     return ['d'];
   }
 
