@@ -2,7 +2,7 @@ import { Generator, isNotUndefined } from '../utils';
 import { pathStringToArray } from '../utils/path-convert.utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
-import { SVGPathNodeModel } from './svg-path-node.model';
+import { SVGPathNodeModel } from './path-nodes/svg-path-node.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 import { VectorModel } from './vector.model';

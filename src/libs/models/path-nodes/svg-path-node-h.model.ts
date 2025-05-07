@@ -1,6 +1,6 @@
 import { SVGPathNodeModel } from './svg-path-node.model';
-import { SVGPathNodeType } from './svg-path-node.type';
-import { VectorModel } from './vector.model';
+import { SVGPathNodeType } from '../svg-path-node.type';
+import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeHModel extends SVGPathNodeModel {
   public x!: number;
