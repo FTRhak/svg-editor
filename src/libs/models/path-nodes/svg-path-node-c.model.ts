@@ -3,16 +3,16 @@ import { SVGPathNodeType } from '../svg-path-node.type';
 import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeCModel extends SVGPathNodeModel {
+  public static readonly ParamsCount = 6;
+
   public x1!: number;
   public y1!: number;
   public x2!: number;
   public y2!: number;
   public x!: number;
   public y!: number;
-  constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
+  constructor(type: SVGPathNodeType, params: string[], prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
-
-    const params = this.normalizeParams(paramValues, 6);
 
     this.x1 = parseFloat(params[0] || '0');
     this.y1 = parseFloat(params[1] || '0');

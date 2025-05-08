@@ -169,7 +169,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       svg.children.forEach((item) => {
         res += item.render() + '\n';
       });
-      console.log(res);
+
       rootNode.innerHTML = res;
     }
   }

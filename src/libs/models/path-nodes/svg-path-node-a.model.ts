@@ -3,6 +3,8 @@ import { SVGPathNodeType } from '../svg-path-node.type';
 import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeAModel extends SVGPathNodeModel {
+  public static readonly ParamsCount = 7;
+
   public rx!: number;
   public ry!: number;
   public xAxisRotation!: number;
@@ -11,10 +13,8 @@ export class SVGPathNodeAModel extends SVGPathNodeModel {
   public x!: number;
   public y!: number;
 
-  constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
+  constructor(type: SVGPathNodeType, params: string[], prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
-
-    const params = this.normalizeParams(paramValues, 7);
 
     this.rx = parseFloat(params[0] || '0');
     this.ry = parseFloat(params[1] || '0');

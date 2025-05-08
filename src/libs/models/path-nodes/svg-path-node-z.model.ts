@@ -3,6 +3,8 @@ import { SVGPathNodeType } from '../svg-path-node.type';
 import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeZModel extends SVGPathNodeModel {
+  public static readonly ParamsCount = 0;
+
   constructor(type: SVGPathNodeType, prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
   }

@@ -53,25 +53,6 @@ export class SVGPathNodeModel {
     return '';
   }
 
-  protected normalizeParams(value: string, countItems: number): string[] {
-    let params = value!.split(/[\s|\,]/gi);
-    let paramsList: string[] = [];
-
-    if (params.length < countItems) {
-      params.forEach((el) => {
-        if (el.lastIndexOf('-') > 0) {
-          paramsList = paramsList.concat(el.split('-').map((el, index) => (index !== 0 ? '-' : '') + el));
-        } else {
-          paramsList.push(el);
-        }
-      });
-    } else {
-      paramsList = params;
-    }
-
-    return paramsList.filter((el) => el !== '');
-  }
-
   public moveShift(shift: VectorModel): void {
     console.warn('Need to implement moveShift for SVGPathNodeModel');
   }

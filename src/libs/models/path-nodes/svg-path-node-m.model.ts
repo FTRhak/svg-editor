@@ -3,6 +3,8 @@ import { SVGPathNodeType } from '../svg-path-node.type';
 import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeMModel extends SVGPathNodeModel {
+  public static readonly ParamsCount = 2;
+
   public x!: number;
   public y!: number;
 
@@ -20,9 +22,8 @@ export class SVGPathNodeMModel extends SVGPathNodeModel {
     this._isLocal = newValue;
   }*/
 
-  constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
+  constructor(type: SVGPathNodeType, params: string[], prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
-    const params = this.normalizeParams(paramValues, 2);
 
     this.x = parseFloat(params[0] || '0');
     this.y = parseFloat(params[1] || '0');
