@@ -1,5 +1,5 @@
 import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, inject, input, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Popover } from 'primeng/popover';
 
@@ -32,6 +32,8 @@ export class InputSvgColorComponent implements ControlValueAccessor {
     this._value = val;
     this.onChange(this._value);
   }
+
+  public size = input<'small' | 'large'>();
 
   @Input()
   get disabled(): boolean {

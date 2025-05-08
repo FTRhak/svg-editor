@@ -1,26 +1,13 @@
 <form [formGroup]="form">
   <group-properties-style [form]="form"></group-properties-style>
   <p-floatlabel variant="on" class="mb-1">
-    <p-inputnumber
-      id="strokeWidthField"
-      size="small"
-      name="strokeWidth"
-      formControlName="strokeWidth"
-      class="w-100"
-      mode="decimal"
-      [min]="0"
-      [max]="999"
-      [step]="1"
-    />
-    <label for="strokeWidthField">Stroke Width</label>
-  </p-floatlabel>
-  <p-floatlabel variant="on" class="mb-1">
     <textarea
       id="dField"
       rows="5"
       size="small"
       class="w-100 p-filled"
       name="d"
+      [rows]="4"
       [readonly]="true"
       pTextarea
       formControlName="d"

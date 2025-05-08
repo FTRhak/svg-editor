@@ -4,9 +4,9 @@
     @if (fields.includes('fill')) {
       <p-floatlabel variant="on" class="mb-1">
         <p-inputgroup>
-          <input-svg-color formControlName="fill"></input-svg-color>
+          <input-svg-color formControlName="fill" size="small"></input-svg-color>
           <p-inputgroup-addon>
-            <p-button icon="pi pi-lock" severity="secondary" fieldLock="fill" />
+            <p-button icon="pi pi-lock" severity="secondary" size="small" fieldLock="fill" />
           </p-inputgroup-addon>
         </p-inputgroup>
         <label for="fillField">Fill</label>
@@ -17,9 +17,9 @@
     @if (fields.includes('stroke')) {
       <p-floatlabel variant="on" class="mb-1">
         <p-inputgroup>
-          <input-svg-color formControlName="stroke"></input-svg-color>
+          <input-svg-color formControlName="stroke" size="small"></input-svg-color>
           <p-inputgroup-addon>
-            <p-button icon="pi pi-lock" severity="secondary" fieldLock="stroke" />
+            <p-button icon="pi pi-lock" severity="secondary" size="small" fieldLock="stroke" />
           </p-inputgroup-addon>
         </p-inputgroup>
         <label for="strokeField">Stroke</label>
@@ -35,7 +35,6 @@
             size="small"
             name="strokeWidth"
             formControlName="strokeWidth"
-            class="w-100"
             mode="decimal"
             [minFractionDigits]="0"
             [maxFractionDigits]="10"
@@ -62,10 +61,9 @@
             size="small"
             name="transformField"
             formControlName="transform"
-            class="w-100"
           />
           <p-inputgroup-addon>
-            <p-button icon="pi pi-lock" severity="secondary" fieldLock="transform" />
+            <p-button icon="pi pi-lock" severity="secondary" size="small" fieldLock="transform" />
           </p-inputgroup-addon>
         </p-inputgroup>
         <label for="transformField">Transform</label>
@@ -76,17 +74,9 @@
     @if (fields.includes('style')) {
       <p-floatlabel variant="on" class="mb-1">
         <p-inputgroup>
-          <input
-            type="text"
-            pInputText
-            id="styleField"
-            size="small"
-            name="styleField"
-            formControlName="style"
-            class="w-100"
-          />
+          <input type="text" pInputText id="styleField" size="small" name="styleField" formControlName="style" />
           <p-inputgroup-addon>
-            <p-button icon="pi pi-lock" severity="secondary" fieldLock="style" />
+            <p-button icon="pi pi-lock" severity="secondary" size="small" fieldLock="style" />
           </p-inputgroup-addon>
         </p-inputgroup>
         <label for="styleField">Style</label>

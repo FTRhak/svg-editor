@@ -2,17 +2,18 @@
   <input
     type="text"
     pInputText
-    size="small"
+    pSize="small"
     name="transformField"
     [(ngModel)]="value"
     readonly
+    autocomplete="off"
     [disabled]="disabled"
-    class="w-100"
   />
   <p-button
     icon="pi pi-palette"
     class="select-color-popover-button"
     severity="secondary"
+    [size]="size()"
     (click)="op.toggle($event)"
     [disabled]="disabled"
   />
