@@ -8,4 +8,5 @@ export type ProjectEventName =
   | 'project:item:selected'
   | 'project:item:updated'
   | 'project:item:moved'
-  | 'project:item:transformed';
+  | 'project:item:transformed'
+  | 'project:item-path:updated';

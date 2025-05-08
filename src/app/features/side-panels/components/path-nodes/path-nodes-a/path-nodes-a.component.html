@@ -1,7 +1,7 @@
 <form [formGroup]="form">
   <p-inputgroup>
     <p-inputgroup-addon>
-      <p-button severity="secondary" [label]="node().type" size="small" />
+      <p-button severity="secondary" [label]="node().type" size="small" (click)="onToggleType()" />
     </p-inputgroup-addon>
     <p-inputnumber
       id="rxField"

@@ -4,8 +4,8 @@ import { VectorModel } from '../vector.model';
 
 export class SVGPathNodeModel {
   public readonly id: string;
-  private readonly _type: SVGPathNodeType;
-  private _isLocal: boolean = false;
+  protected readonly _type: SVGPathNodeType;
+  protected _isLocal: boolean = false;
 
   public get type(): SVGPathNodeType {
     return this._isLocal
@@ -13,8 +13,17 @@ export class SVGPathNodeModel {
       : (this._type.toUpperCase() as SVGPathNodeType);
   }
 
+  public set type(type: SVGPathNodeType) {
+    this._isLocal = type === type.toLowerCase();
+  }
+
   public get typeAbsolute(): SVGPathNodeType {
     return this._type.toUpperCase() as SVGPathNodeType;
+  }
+
+  public set isLocal(value: boolean) {
+    console.warn(`${this._type} isLocal value changed directly`);
+    this._isLocal = value;
   }
 
   public get isLocal(): boolean {

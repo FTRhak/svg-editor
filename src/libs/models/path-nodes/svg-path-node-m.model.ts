@@ -5,6 +5,21 @@ import { VectorModel } from '../vector.model';
 export class SVGPathNodeMModel extends SVGPathNodeModel {
   public x!: number;
   public y!: number;
+
+  /*public override set isLocal(type: SVGPathNodeType) {
+    const newValue = type === type.toLowerCase();
+    if (this._isLocal !== newValue) {
+      if (this.prev) {
+        if (newValue) {
+        } else {
+          //this.x = this.prev.x + this.x;
+        }
+      }
+    }
+
+    this._isLocal = newValue;
+  }*/
+
   constructor(type: SVGPathNodeType, paramValues: string, prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
     const params = this.normalizeParams(paramValues, 2);

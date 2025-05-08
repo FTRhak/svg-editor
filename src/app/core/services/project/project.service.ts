@@ -1,5 +1,14 @@
 import { Injectable } from '@angular/core';
-import { PID, SVGDefsModel, SVGNodeType, SVGRootModel, TreeNodeModel, TreeNodeStyleModel, VectorModel } from '@libs';
+import {
+  PID,
+  SVGDefsModel,
+  SVGNodeType,
+  SVGPathNodeModel,
+  SVGRootModel,
+  TreeNodeModel,
+  TreeNodeStyleModel,
+  VectorModel,
+} from '@libs';
 import { EventManager } from '../../models';
 
 @Injectable({
@@ -93,6 +102,20 @@ export class ProjectService {
       item[propertyName] = value;
       this.events.trigger('project:item:updated', this.project, item, propertyName, value);
       //this.events.trigger('project:tree:updates', this.project, [item]);
+    }
+  }
+
+  public setNodePropertyPathItem(id: PID, pathNodeId: PID, propertyName: string, value: any) {
+    const item: any = this.project.toList().find((item) => item._id === id);
+    if (item && item._type === SVGNodeType.PATH) {
+      const pathNode: any = item.dArray.find((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
+      if (pathNode) {
+        pathNode[propertyName] = value;
+
+        this.events.trigger('project:item-path:updated', this.project, item, pathNode, propertyName, value);
+        this.events.trigger('project:item:updated', this.project, item, 'd', item.d);
+        //this.events.trigger('project:tree:updates', this.project, [item]);
+      }
     }
   }
 

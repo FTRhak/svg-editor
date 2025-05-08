@@ -3,34 +3,34 @@
     <li [cdkOption]="pathItem.id" class="list-path-node">
       @switch (pathItem.typeAbsolute) {
         @case ('M') {
-          <path-nodes-m [node]="pathItem"></path-nodes-m>
+          <path-nodes-m [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-m>
         }
         @case ('A') {
-          <path-nodes-a [node]="pathItem"></path-nodes-a>
+          <path-nodes-a [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-a>
         }
         @case ('H') {
-          <path-nodes-h [node]="pathItem"></path-nodes-h>
+          <path-nodes-h [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-h>
         }
         @case ('L') {
-          <path-nodes-l [node]="pathItem"></path-nodes-l>
+          <path-nodes-l [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-l>
         }
         @case ('V') {
-          <path-nodes-v [node]="pathItem"></path-nodes-v>
+          <path-nodes-v [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-v>
         }
         @case ('C') {
-          <path-nodes-c [node]="pathItem"></path-nodes-c>
+          <path-nodes-c [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-c>
         }
         @case ('S') {
-          <path-nodes-s [node]="pathItem"></path-nodes-s>
+          <path-nodes-s [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-s>
         }
         @case ('T') {
-          <path-nodes-t [node]="pathItem"></path-nodes-t>
+          <path-nodes-t [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-t>
         }
         @case ('Q') {
-          <path-nodes-q [node]="pathItem"></path-nodes-q>
+          <path-nodes-q [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-q>
         }
         @case ('Z') {
-          <path-nodes-z [node]="pathItem"></path-nodes-z>
+          <path-nodes-z [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-z>
         }
       }
     </li>

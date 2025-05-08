@@ -1,6 +1,7 @@
-import { Component, input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { SVGPathNodeModel, SVGPathNodeQModel } from '@libs';
+import { ProjectService } from '@core/services';
+import { PID, SVGPathNodeModel, SVGPathNodeQModel } from '@libs';
 
 @Component({
   selector: 'path-nodes-q',
@@ -9,7 +10,12 @@ import { SVGPathNodeModel, SVGPathNodeQModel } from '@libs';
   styleUrl: './path-nodes-q.component.scss',
 })
 export class PathNodesQComponent implements OnInit {
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly project = inject(ProjectService);
+
+  public readonly pathId = input.required<PID>();
   public node = input.required<SVGPathNodeQModel | SVGPathNodeModel>();
+  public readonly changeNode = output<[PID, string, any]>();
 
   public form!: FormGroup;
 
@@ -22,5 +28,9 @@ export class PathNodesQComponent implements OnInit {
       x: new FormControl({ value: node.x || 0, disabled: false }),
       y: new FormControl({ value: node.y || 0, disabled: false }),
     });
+  }
+
+  public onToggleType() {
+    this.changeNode.emit([this.node().id, 'isLocal', !this.node().isLocal]);
   }
 }
