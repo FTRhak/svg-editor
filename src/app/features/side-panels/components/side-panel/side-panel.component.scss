@@ -1,0 +1,30 @@
+.side-panel {
+  --p-accordion-content-padding: 0px;
+
+  .group-path-property-commands {
+    --p-form-field-sm-font-size: 0.75rem;
+    --p-form-field-sm-padding-x: 0.3rem;
+    --p-form-field-sm-padding-y: 0.25rem;
+
+    --p-button-sm-font-size: 0.75rem;
+    --p-button-sm-padding-x: 0.5rem;
+    --p-button-sm-padding-y: 0.25rem;
+
+    --p-inputtext-sm-font-size: 0.75rem;
+    --p-inputtext-sm-padding-x: 0.3rem;
+    --p-inputtext-sm-padding-y: 0.25rem;
+
+    --p-inputgroup-addon-min-width: 1.75rem;
+
+    .path-node-type {
+      width: 100%;
+      .p-button-sm {
+        width: 100%;
+      }
+    }
+
+    .path-node-item-value {
+      max-width: 16%;
+    }
+  }
+}

@@ -1,13 +1,19 @@
 <form [formGroup]="form">
   <p-inputgroup>
     <p-inputgroup-addon>
-      <p-button severity="secondary" [label]="node().type" size="small" (click)="onToggleType()" />
+      <p-button
+        severity="secondary"
+        [label]="node().type"
+        size="small"
+        class="path-node-type"
+        (click)="onToggleType()"
+      />
     </p-inputgroup-addon>
     <p-inputnumber
       id="yField"
       size="small"
       name="y"
-      class="w-100"
+      class="path-node-item-value"
       mode="decimal"
       [minFractionDigits]="0"
       [maxFractionDigits]="10"

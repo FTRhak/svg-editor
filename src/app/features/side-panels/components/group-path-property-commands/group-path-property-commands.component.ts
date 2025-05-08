@@ -7,6 +7,7 @@ import { PID, SVGPathModel, SVGPathNodeModel } from '@libs';
   standalone: false,
   templateUrl: './group-path-property-commands.component.html',
   styleUrl: './group-path-property-commands.component.scss',
+  host: { class: 'group-path-property-commands' },
 })
 export class GroupPathPropertyCommandsComponent {
   private readonly destroyRef = inject(DestroyRef);
