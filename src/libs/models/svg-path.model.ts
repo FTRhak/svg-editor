@@ -13,14 +13,18 @@ export class SVGPathModel extends TreeNodeStyleModel {
 
   private _d: SVGPathNodeModel[] = [];
 
+  public set d(value: string) {
+    this._d = pathStringToArray(value);
+    //console.log('__', this._d);
+  }
+
   public get d(): string {
     const res = this._d.length > 0 ? this._d[0]?.render() : '';
     return res;
   }
 
-  public set d(value: string) {
-    this._d = pathStringToArray(value);
-    //console.log('__', this._d);
+  public get dArray(): SVGPathNodeModel[] {
+    return this._d;
   }
 
   public override children: TreeNodeModel[] = [];

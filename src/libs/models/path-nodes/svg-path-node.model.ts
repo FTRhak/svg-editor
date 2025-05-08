@@ -13,6 +13,10 @@ export class SVGPathNodeModel {
       : (this._type.toUpperCase() as SVGPathNodeType);
   }
 
+  public get typeAbsolute(): SVGPathNodeType {
+    return this._type.toUpperCase() as SVGPathNodeType;
+  }
+
   public get isLocal(): boolean {
     return this._isLocal;
   }

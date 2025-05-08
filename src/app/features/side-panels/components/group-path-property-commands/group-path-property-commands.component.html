@@ -1,0 +1,38 @@
+<ul cdkListbox cdkListboxMultiple cdkListboxUseActiveDescendant class="list-path-nodes">
+  @for (pathItem of path(); track pathItem) {
+    <li [cdkOption]="pathItem.id" class="list-path-node">
+      @switch (pathItem.typeAbsolute) {
+        @case ('M') {
+          <path-nodes-m [node]="pathItem"></path-nodes-m>
+        }
+        @case ('A') {
+          <path-nodes-a [node]="pathItem"></path-nodes-a>
+        }
+        @case ('H') {
+          <path-nodes-h [node]="pathItem"></path-nodes-h>
+        }
+        @case ('L') {
+          <path-nodes-l [node]="pathItem"></path-nodes-l>
+        }
+        @case ('V') {
+          <path-nodes-v [node]="pathItem"></path-nodes-v>
+        }
+        @case ('C') {
+          <path-nodes-c [node]="pathItem"></path-nodes-c>
+        }
+        @case ('S') {
+          <path-nodes-s [node]="pathItem"></path-nodes-s>
+        }
+        @case ('T') {
+          <path-nodes-t [node]="pathItem"></path-nodes-t>
+        }
+        @case ('Q') {
+          <path-nodes-q [node]="pathItem"></path-nodes-q>
+        }
+        @case ('Z') {
+          <path-nodes-z [node]="pathItem"></path-nodes-z>
+        }
+      }
+    </li>
+  }
+</ul>

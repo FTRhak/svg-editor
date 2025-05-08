@@ -27,4 +27,13 @@
     ></textarea>
     <label for="dField">D (path)</label>
   </p-floatlabel>
+
+  <p-accordion value="0">
+    <p-accordion-panel value="0">
+      <p-accordion-header>Commands</p-accordion-header>
+      <p-accordion-content>
+        <group-path-property-commands [node]="node()"></group-path-property-commands>
+      </p-accordion-content>
+    </p-accordion-panel>
+  </p-accordion>
 </form>

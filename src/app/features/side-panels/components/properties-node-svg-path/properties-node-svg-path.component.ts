@@ -1,8 +1,8 @@
-import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
-import { SVGPathModel, SVGRootModel, TreeNodeModel } from '@libs';
+import { SVGPathModel, SVGPathNodeModel, SVGRootModel, TreeNodeModel } from '@libs';
 import { isUndefined, styleToString } from '@libs/utils';
 import { debounceTime, fromEvent } from 'rxjs';
 

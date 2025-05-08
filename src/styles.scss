@@ -29,3 +29,21 @@ line.grid-line {
 svg text {
   user-select: none;
 }
+
+/*.p-inputtext-sm {
+  font-size: var(--p-inputtext-sm-font-size);
+  padding-block: var(--p-inputtext-sm-padding-y);
+  padding-inline: var(--p-inputtext-sm-padding-x);
+}*/
+
+/*
+font-size: var(--p-button-sm-font-size);
+    padding-block: var(--p-button-sm-padding-y);
+    padding-inline: var(--p-button-sm-padding-x);
+*/
+
+:root {
+  --p-form-field-sm-font-size: 0.75rem;
+  --p-form-field-sm-padding-x: 0.3rem;
+  --p-form-field-sm-padding-y: 0.25rem;
+}

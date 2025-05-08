@@ -15,7 +15,7 @@ export class SVGPathNodeAModel extends SVGPathNodeModel {
     super(type, prev);
 
     const params = this.normalizeParams(paramValues, 7);
-    console.log('A:', params);
+
     this.rx = parseFloat(params[0] || '0');
     this.ry = parseFloat(params[1] || '0');
     this.xAxisRotation = parseFloat(params[2] || '0');
