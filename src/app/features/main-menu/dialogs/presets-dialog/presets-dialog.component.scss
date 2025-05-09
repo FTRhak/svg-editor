@@ -1,0 +1,21 @@
+.list-presets {
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.preset-item {
+  padding: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  aspect-ratio: 1 / 1;
+  height: 80px;
+
+  &.cdk-option-active {
+    background-color: rgba(204, 204, 204, 0.4);
+  }
+}

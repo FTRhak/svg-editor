@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ProjectService } from '@core/services';
+import { CreateSvgNodeService, ProjectService } from '@core/services';
 import { PID, SVGNodeType, SVGRootModel, TreeItem } from '@libs';
 import { MenuItem } from 'primeng/api';
 import { ContextMenu } from 'primeng/contextmenu';
@@ -15,6 +15,7 @@ import { fromEvent } from 'rxjs';
 })
 export class ViewStructureComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly createSvgNodeService = inject(CreateSvgNodeService);
   private project = inject(ProjectService);
 
   /*private readonly ADD_DEFS = {
@@ -39,7 +40,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Linear Gradient',
     type: SVGNodeType.LINEAR_GRADIENT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.project.addDefItem(ev.item.type);
+      this.createSvgNodeService.createDefsLinearGradient();
     },
   };
 
@@ -47,7 +48,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Radial Gradient',
     type: SVGNodeType.RADIAL_GRADIENT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.project.addDefItem(ev.item.type);
+      this.createSvgNodeService.createDefsRadialGradient();
     },
   };
 
@@ -55,8 +56,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Group',
     type: SVGNodeType.GROUP,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id && this.project.addChildItem(id, ev.item.type);
+      this.createSvgNodeService.createGroupDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -64,8 +64,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Rect',
     type: SVGNodeType.RECT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id && this.project.addChildItem(id, ev.item.type, { x: 0, y: 0, width: 1, height: 1 });
+      this.createSvgNodeService.createRectDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -73,8 +72,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Circle',
     type: SVGNodeType.CIRCLE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id && this.project.addChildItem(id, ev.item.type, { cx: 1, cy: 1, r: 1 });
+      this.createSvgNodeService.createCircleDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -82,8 +80,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Ellipse',
     type: SVGNodeType.ELLIPSE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id && this.project.addChildItem(id, ev.item.type, { cx: 2, cy: 1, rx: 2, ry: 1 });
+      this.createSvgNodeService.createEllipseDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -91,9 +88,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Line',
     type: SVGNodeType.LINE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id &&
-        this.project.addChildItem(id, ev.item.type, { x1: 0, y1: 0, x2: 1, y2: 1, stroke: 'black', strokeWidth: 0.1 });
+      this.createSvgNodeService.createLineDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -101,8 +96,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Path',
     type: SVGNodeType.PATH,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id && this.project.addChildItem(id, ev.item.type);
+      this.createSvgNodeService.createPathDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -110,14 +104,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Text',
     type: SVGNodeType.TEXT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      const id: PID = ev.item.idRef || this.selectedItem?.id!;
-      id &&
-        this.project.addChildItem(id, ev.item.type, {
-          x: 0,
-          y: 1,
-          style: { 'font-size': 1 },
-          text: 'Text',
-        } as any);
+      this.createSvgNodeService.createTextDef(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 

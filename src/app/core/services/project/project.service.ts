@@ -27,6 +27,10 @@ export class ProjectService {
     return this.project.children.find((item) => item._type === SVGNodeType.DEFS) as SVGDefsModel;
   }
 
+  public get selectedItemId(): PID {
+    return this.selectedItem?._id || this.project._id;
+  }
+
   createNewProject() {
     this.project = new SVGRootModel();
     this.events.trigger('project:created', this.project);

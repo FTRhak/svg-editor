@@ -1,0 +1,17 @@
+<div class="preset-item">
+  <div class="preset-item-icon">
+    <svg
+      [attr.width]="size() + 'px'"
+      [attr.height]="size() + 'px'"
+      viewBox="0  0  320  320"
+      version="1.0"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      @for (item of svg(); track item) {
+        <path [attr.d]="item"></path>
+      }
+    </svg>
+  </div>
+
+  <label class="preset-item-name">{{ label() }}</label>
+</div>

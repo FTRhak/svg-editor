@@ -1,8 +1,9 @@
 import { Component, inject, OnDestroy } from '@angular/core';
-import { ProjectService } from '@core/services';
+import { CreateSvgNodeService, ProjectService } from '@core/services';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImportDialogComponent } from '../../dialogs/import-dialog/import-dialog.component';
-import { ViewCodeDialogComponent } from '@features/main-menu/dialogs/view-code-dialog/view-code-dialog.component';
+import { ViewCodeDialogComponent } from '../../dialogs/view-code-dialog/view-code-dialog.component';
+import { PresetsDialogComponent } from '@features/main-menu/dialogs/presets-dialog/presets-dialog.component';
 
 @Component({
   selector: 'main-menu',
@@ -13,6 +14,7 @@ import { ViewCodeDialogComponent } from '@features/main-menu/dialogs/view-code-d
 })
 export class MainMenuComponent implements OnDestroy {
   private readonly project = inject(ProjectService);
+  private readonly createSvgNodeService = inject(CreateSvgNodeService);
   private readonly dialogService = inject(DialogService);
 
   public readonly items = [
@@ -61,9 +63,85 @@ export class MainMenuComponent implements OnDestroy {
       icon: 'pi pi-plus',
       items: [
         {
+          label: 'Defs',
+          icon: 'pi pi-fw pi-plus',
+          items: [
+            {
+              label: 'Linear Gradient',
+              icon: 'pi pi-fw pi-plus',
+              command: () => {
+                this.createSvgNodeService.createDefsLinearGradient();
+              },
+            },
+            {
+              label: 'Radial Gradient',
+              icon: 'pi pi-fw pi-plus',
+              command: () => {
+                this.createSvgNodeService.createDefsRadialGradient();
+              },
+            },
+          ],
+        },
+        {
+          label: 'Group',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createGroupDef();
+          },
+        },
+        {
+          label: 'Path',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createPathDef();
+          },
+        },
+        {
           label: 'Rectangle',
           icon: 'pi pi-fw pi-plus',
-          command: () => {},
+          command: () => {
+            this.createSvgNodeService.createRectDef();
+          },
+        },
+        {
+          label: 'Circle',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createCircleDef();
+          },
+        },
+        {
+          label: 'Ellipse',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createEllipseDef();
+          },
+        },
+        {
+          label: 'Line',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createLineDef();
+          },
+        },
+        {
+          label: 'Text',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.createSvgNodeService.createTextDef();
+          },
+        },
+      ],
+    },
+    {
+      label: 'Object',
+      items: [
+        {
+          label: 'Insert preset',
+          icon: 'pi pi-fw pi-plus',
+          command: () => {
+            this.insertPreset();
+          },
         },
       ],
     },
@@ -73,6 +151,11 @@ export class MainMenuComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.ref?.close();
+  }
+
+  public insertPreset() {
+    this.ref = this.dialogService.open(PresetsDialogComponent, { header: 'Presets', modal: true, width: '575px' });
+    this.ref.onClose.subscribe(() => {});
   }
 
   public showResultCode() {
