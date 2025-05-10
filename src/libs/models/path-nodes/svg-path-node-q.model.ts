@@ -36,11 +36,9 @@ export class SVGPathNodeQModel extends SVGPathNodeModel {
   }
 
   public override resize(xCoefficient: number, yCoefficient: number): void {
-    if (!this.isLocal) {
-      this.x1 *= xCoefficient;
-      this.y1 *= yCoefficient;
-      this.x *= xCoefficient;
-      this.y *= yCoefficient;
-    }
+    this.x1 *= xCoefficient;
+    this.y1 *= yCoefficient;
+    this.x *= xCoefficient;
+    this.y *= yCoefficient;
   }
 }

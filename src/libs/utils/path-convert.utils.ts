@@ -59,8 +59,9 @@ export function pathStringToArray(path: string): SVGPathNodeModel[] {
   let i = 0;
 
   while (list.length > i) {
-    const item = list[i] as SVGPathNodeType;
+    const item = list[i].trim() as SVGPathNodeType;
     currentItem = undefined;
+
     if (item !== '') {
       let params = list[i + 1] ? normalizeParams(list[i + 1]) : [];
 

@@ -33,4 +33,12 @@
   .p-fieldset-legend {
     font-size: 1rem;
   }
+
+  .button-group-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    column-gap: 2px;
+  }
 }

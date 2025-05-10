@@ -20,6 +20,8 @@ export class PresetsDialogComponent implements OnInit {
   public list = signal<PresetItem[]>([]);
 
   public selectedItem: PresetItem[] = [];
+  public doResize: boolean = true;
+  public doAspectRatio: boolean = true;
 
   async ngOnInit() {
     const { PresetsCollectionModule } = await import('@features/presets-collection');
@@ -34,7 +36,7 @@ export class PresetsDialogComponent implements OnInit {
 
   onClickInsert() {
     this.selectedItem.forEach((item) => {
-      this.project.insertPresetItems(item.paths);
+      this.project.insertPresetItems(item.paths, this.doResize, this.doAspectRatio);
     });
     this.ref?.close(true);
   }

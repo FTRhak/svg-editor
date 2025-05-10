@@ -150,18 +150,13 @@ export class ProjectService {
     return items;
   }
 
-  public resizeSelectedItem(sizeCoefficient: number) {
-    if (this.selectedItem) {
-      const changedProperties = this.selectedItem?.resize(sizeCoefficient, sizeCoefficient);
+  public resizeSelectedItem(sizeCoefficient: number): void {
+    const item = this.selectedItem;
+    if (item) {
+      const changedProperties = item?.resize(sizeCoefficient, sizeCoefficient);
 
       changedProperties.forEach((prop: string) =>
-        this.events.trigger(
-          'project:item:updated',
-          this.project,
-          this.selectedItem,
-          prop,
-          (this.selectedItem as any)[prop],
-        ),
+        this.events.trigger('project:item:updated', this.project, item, prop, (item as any)[prop]),
       );
     }
   }
