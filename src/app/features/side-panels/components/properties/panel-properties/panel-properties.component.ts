@@ -15,12 +15,12 @@ import { PropertiesNodeSvgTextComponent } from '../properties-node-svg-text/prop
 import { PropertiesNodeSvgComponent } from '../properties-node-svg/properties-node-svg.component';
 
 @Component({
-  selector: 'properties',
+  selector: 'panel-properties',
   standalone: false,
-  templateUrl: './properties.component.html',
-  styleUrl: './properties.component.scss',
+  templateUrl: './panel-properties.component.html',
+  styleUrl: './panel-properties.component.scss',
 })
-export class PropertiesComponent implements OnInit {
+export class PanelPropertiesComponent implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly project = inject(ProjectService);
   private readonly viewContainer = inject(ViewContainerRef);

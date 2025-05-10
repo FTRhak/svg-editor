@@ -1,0 +1,14 @@
+export { GroupPathPropertyCommandsComponent } from './group-path-property-commands/group-path-property-commands.component';
+export { GroupPropertiesStopComponent } from './group-properties-stop/group-properties-stop.component';
+export { GroupPropertiesStyleComponent } from './group-properties-style/group-properties-style.component';
+export { PanelPropertiesComponent } from './panel-properties/panel-properties.component';
+export { PropertiesNodeSvgCircleComponent } from './properties-node-svg-circle/properties-node-svg-circle.component';
+export { PropertiesNodeSvgEllipseComponent } from './properties-node-svg-ellipse/properties-node-svg-ellipse.component';
+export { PropertiesNodeSvgGroupComponent } from './properties-node-svg-group/properties-node-svg-group.component';
+export { PropertiesNodeSvgLineComponent } from './properties-node-svg-line/properties-node-svg-line.component';
+export { PropertiesNodeSvgLinearGradientComponent } from './properties-node-svg-linear-gradient/properties-node-svg-linear-gradient.component';
+export { PropertiesNodeSvgPathComponent } from './properties-node-svg-path/properties-node-svg-path.component';
+export { PropertiesNodeSvgRadialGradientComponent } from './properties-node-svg-radial-gradient/properties-node-svg-radial-gradient.component';
+export { PropertiesNodeSvgRectComponent } from './properties-node-svg-rect/properties-node-svg-rect.component';
+export { PropertiesNodeSvgTextComponent } from './properties-node-svg-text/properties-node-svg-text.component';
+export { PropertiesNodeSvgComponent } from './properties-node-svg/properties-node-svg.component';

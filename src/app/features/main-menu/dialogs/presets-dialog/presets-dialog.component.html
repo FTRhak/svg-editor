@@ -1,25 +1,24 @@
 <div class="mb-2">
   <ul cdkListbox class="list-presets" [(ngModel)]="selectedItem">
     @for (item of list(); track item) {
-    <li [cdkOption]="item" class="preset-item">
-      <preview-svg [label]="item.label" [svg]="item.paths" />
-    </li>
+      <li [cdkOption]="item" class="preset-item">
+        <preview-svg [label]="item.label" [svg]="item.paths" />
+      </li>
     }
   </ul>
 </div>
 <div class="mb-2">
-<p-card>
-  <div>
-    <p-checkbox inputId="ingredient1" [(ngModel)]="doResize" [binary]="true" />
-    <label for="ingredient1" class="m-0 ml-2"> Resize </label>
-  </div>
-  <div>
-    <p-checkbox inputId="ingredient2" [(ngModel)]="doAspectRatio" [binary]="true" />
-    <label for="ingredient2" class="m-0 ml-2"> Aspect ratio </label>
-  </div>
-</p-card>
+  <p-card>
+    <div>
+      <p-checkbox inputId="ingredient1" [(ngModel)]="doResize" [binary]="true" />
+      <label for="ingredient1" class="m-0 ml-2">Resize</label>
+    </div>
+    <div>
+      <p-checkbox inputId="ingredient2" [(ngModel)]="doAspectRatio" [binary]="true" />
+      <label for="ingredient2" class="m-0 ml-2">Aspect ratio</label>
+    </div>
+  </p-card>
 </div>
-
 
 <div class="d-flex justify-space-between">
   <p-button label="Insert" (onClick)="onClickInsert()" severity="primary" />
