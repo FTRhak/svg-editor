@@ -104,8 +104,12 @@ export class SVGRectModel extends TreeNodeStyleModel {
     return res;
   }
 
-  public override renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
-    const selectionRecSize = 0.1;
+  public override renderSelectionMoveArea(
+    fill: string,
+    stroke: string,
+    strokeWidth: number = 0.01,
+    selectionRecSize: number = 0.1,
+  ): string {
     let res =
       `<rect ` +
       this.renderPartStyle() +
@@ -123,8 +127,8 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` class="action-move"` +
       (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
-      ` width="0.1"` +
-      ` height="0.1"` +
+      ` width="${selectionRecSize}"` +
+      ` height="${selectionRecSize}"` +
       ` fill="blue"` +
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
@@ -134,8 +138,8 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y - selectionRecSize / 2}"` : '') +
-      ` width="0.1"` +
-      ` height="0.1"` +
+      ` width="${selectionRecSize}"` +
+      ` height="${selectionRecSize}"` +
       ` fill="blue"` +
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
@@ -145,8 +149,8 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
-      ` width="0.1"` +
-      ` height="0.1"` +
+      ` width="${selectionRecSize}"` +
+      ` height="${selectionRecSize}"` +
       ` fill="blue"` +
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n` +
@@ -156,8 +160,8 @@ export class SVGRectModel extends TreeNodeStyleModel {
       ` class="action-transform"` +
       (isNotUndefined(this.x) ? ` x="${this.x + this.width - selectionRecSize / 2}"` : '') +
       (isNotUndefined(this.y) ? ` y="${this.y + this.height - selectionRecSize / 2}"` : '') +
-      ` width="0.1"` +
-      ` height="0.1"` +
+      ` width="${selectionRecSize}"` +
+      ` height="${selectionRecSize}"` +
       ` fill="blue"` +
       ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
       `></rect>\n`;

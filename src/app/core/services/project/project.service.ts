@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   PID,
+  RectModel,
   SVGDefsModel,
   SVGNodeType,
   SVGPathModel,
@@ -38,6 +39,7 @@ export class ProjectService {
     widthScene: number = 10,
     heightScene: number = 10,
   ): void {
+    console.log('createNewProject', width, height, widthScene, heightScene);
     this.project = new SVGRootModel(0, 0, widthScene, heightScene);
     this.project.width = `${width}px`;
     this.project.height = `${height}px`;
@@ -203,6 +205,20 @@ export class ProjectService {
         this.events.trigger('project:item:updated', this.project, item, prop, (item as any)[prop]),
       );
       this.events.trigger('project:item:transformed', this.project, item, shift);
+    }
+  }
+
+  public getBoundingItemRect() {
+    const item: any = null; //this.selectedItem;
+    if (item) {
+      return item.getBoundingRect();
+    } else {
+      return new RectModel(
+        this.project.viewBox.x,
+        this.project.viewBox.y,
+        this.project.viewBox.width,
+        this.project.viewBox.height,
+      );
     }
   }
 }

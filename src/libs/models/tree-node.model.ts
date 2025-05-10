@@ -1,4 +1,5 @@
 import { SVGNodeType } from './node.type';
+import { RectModel } from './rect.model';
 import { StyleAttributeModel } from './style-attribute.model';
 import { TreeItem } from './tree-item.model';
 import { TreeNodeStyleModel } from './tree-node-style.model';
@@ -40,7 +41,13 @@ export class TreeNodeModel {
     return `<${this._type} data-id="${this._id}"/>`;
   }
 
-  public renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number): string {
+  public renderSelectionMoveArea(
+    fill: string,
+    stroke: string,
+    strokeWidth: number = 0.01,
+    selectionRecSize: number = 0.1,
+  ): string {
+    console.warn(`Need to implement renderSelectionMoveArea for TreeNodeModel ${this._type}`);
     return `<${this._type} data-id="${this._id}"/>`;
   }
 
@@ -66,6 +73,11 @@ export class TreeNodeModel {
   public getMaxPoint(): VectorModel {
     console.warn(`Need to implement getMaxPoint for TreeNodeModel ${this._type}`);
     return new VectorModel(0, 0);
+  }
+
+  public getBoundingRect(): RectModel {
+    console.warn(`Need to implement getBoundingRect for TreeNodeModel ${this._type}`);
+    return new RectModel();
   }
 
   public clone(): TreeNodeModel {

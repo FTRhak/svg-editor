@@ -39,6 +39,13 @@ export class SVGPathModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number, zoom: number = 1): string {
+    let res = '';
+    this._d.forEach((node) => (res += node.renderSelectionMoveArea(fill, stroke, strokeWidth, zoom)));
+
+    return res;
+  }
+
   public override moveShift(shift: VectorModel) {
     this._d.forEach((node) => node.moveShift(shift));
     return ['d'];

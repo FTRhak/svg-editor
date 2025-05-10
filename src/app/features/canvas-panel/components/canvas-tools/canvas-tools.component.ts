@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, effect, inject, input, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
 import { ProjectService } from '@core/services';
@@ -34,6 +34,15 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
     { name: 'Edit Mode', value: 'edit', icon: 'pi pi-pencil' },
   ];
 
+  constructor() {
+    const baseSize = 10;
+
+    effect(() => {
+      const zoom = this.zoom();
+      this.renderItemSelection();
+    });
+  }
+
   public ngOnInit(): void {
     fromEvent<[SVGRootModel, TreeNodeModel]>(this.project.events, 'project:item:selected')
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -48,7 +57,7 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([project, item, shift]) => {
         if (this.elRef && this.selectedEl) {
-          this.elRef.innerHTML = this.selectedEl.renderSelectionMoveArea('rgba(203,203,203,0.3)', 'red', 0.01);
+          this.renderItemSelection();
         }
       });
 
@@ -56,7 +65,7 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([project, item, shift]) => {
         if (this.elRef && this.selectedEl) {
-          this.elRef.innerHTML = this.selectedEl.renderSelectionMoveArea('rgba(203,203,203,0.3)', 'red', 0.01);
+          this.renderItemSelection();
         }
       });
   }
@@ -175,13 +184,19 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
   private renderItemSelection() {
     this.elRef?.remove();
     if (this.selectedEl) {
+      const zoom = this.zoom();
       const container = this.svgCanvas();
       const domSelectedEl = container?.querySelector(`[data-id="${this.selectedEl._id}"]`);
 
       this.elRef = this.win.document.createElementNS('http://www.w3.org/2000/svg', 'g');
       this.elRef.setAttribute('id', 'selection-highlight');
 
-      this.elRef.innerHTML = this.selectedEl?.renderSelectionMoveArea('rgba(203,203,203,0.3)', 'red', 0.01);
+      this.elRef.innerHTML = this.selectedEl?.renderSelectionMoveArea(
+        'rgba(203,203,203,0.3)',
+        'red',
+        zoom * 0.005,
+        zoom * 0.1,
+      );
 
       domSelectedEl?.parentElement?.appendChild(this.elRef);
     }

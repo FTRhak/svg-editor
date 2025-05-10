@@ -161,8 +161,6 @@ export class MainMenuComponent implements OnDestroy {
       width: '400px',
     });
     this.ref.onClose.subscribe(() => {});
-
-    this.project.createNewProject();
   }
 
   public insertPreset() {

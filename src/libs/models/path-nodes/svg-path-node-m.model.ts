@@ -1,26 +1,34 @@
 import { SVGPathNodeModel } from './svg-path-node.model';
 import { SVGPathNodeType } from '../svg-path-node.type';
 import { VectorModel } from '../vector.model';
+import { isNotUndefined } from '@libs/utils';
 
 export class SVGPathNodeMModel extends SVGPathNodeModel {
   public static readonly ParamsCount = 2;
 
-  public x!: number;
-  public y!: number;
+  //#region property X
+  private _x!: number;
 
-  /*public override set isLocal(type: SVGPathNodeType) {
-    const newValue = type === type.toLowerCase();
-    if (this._isLocal !== newValue) {
-      if (this.prev) {
-        if (newValue) {
-        } else {
-          //this.x = this.prev.x + this.x;
-        }
-      }
-    }
+  public set x(value: number) {
+    this._x = value;
+  }
 
-    this._isLocal = newValue;
-  }*/
+  public get x(): number {
+    return this._x;
+  }
+  //#endregion
+
+  //#region property Y
+  private _y!: number;
+
+  public set y(value: number) {
+    this._y = value;
+  }
+
+  public get y(): number {
+    return this._y;
+  }
+  //#endregion
 
   constructor(type: SVGPathNodeType, params: string[], prev: SVGPathNodeModel | undefined = undefined) {
     super(type, prev);
@@ -33,19 +41,42 @@ export class SVGPathNodeMModel extends SVGPathNodeModel {
     return `${this.type}${this.x},${this.y}` + (this._next ? this._next.render() : '');
   }
 
+  public override renderSelectionMoveArea(
+    fill: string,
+    stroke: string,
+    strokeWidth: number,
+    selectionRecSize: number = 0.1,
+  ): string {
+    let res = '';
+
+    res +=
+      `<rect ` +
+      ` data-action="transform"` +
+      ` data-transform="width"` +
+      ` class="action-transform"` +
+      ` x="${this._x - selectionRecSize / 2}"` +
+      ` y="${this._y - selectionRecSize / 2}"` +
+      ` width="${selectionRecSize}"` +
+      ` height="${selectionRecSize}"` +
+      ` fill="blue"` +
+      ` stroke="${stroke}" stroke-width="${strokeWidth}" ` +
+      `></rect>\n`;
+    return res;
+  }
+
   public override moveShift(shift: VectorModel): void {
     if (!this.isLocal) {
-      this.x += shift.x;
-      this.y += shift.y;
+      this._x += shift.x;
+      this._y += shift.y;
     }
   }
 
   public override getMaxPoint(): VectorModel {
-    return new VectorModel(this.x, this.y);
+    return new VectorModel(this._x, this._y);
   }
 
   public override resize(xCoefficient: number, yCoefficient: number): void {
-    this.x *= xCoefficient;
-    this.y *= yCoefficient;
+    this._x *= xCoefficient;
+    this._y *= yCoefficient;
   }
 }

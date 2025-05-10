@@ -54,6 +54,11 @@ export class SVGPathNodeModel {
     return '';
   }
 
+  public renderSelectionMoveArea(fill: string, stroke: string, strokeWidth: number, zoom: number = 1): string {
+    console.warn(`Need to implement renderSelectionMoveArea for SVGPathNodeModel ${this._type}`);
+    return '';
+  }
+
   public moveShift(shift: VectorModel): void {
     console.warn(`Need to implement moveShift for SVGPathNodeModel ${this._type}`);
   }

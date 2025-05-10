@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'zoom-panel',
@@ -6,4 +6,17 @@ import { Component } from '@angular/core';
   templateUrl: './zoom-panel.component.html',
   styleUrl: './zoom-panel.component.scss',
 })
-export class ZoomPanelComponent {}
+export class ZoomPanelComponent {
+  public readonly zoom = input.required<number>();
+
+  public readonly zoomChange = output<number>();
+  public readonly fitCanvas = output<void>();
+
+  onZoomChanged(zoomValue: number) {
+    this.zoomChange.emit(zoomValue);
+  }
+
+  onFitCanvas() {
+    this.fitCanvas.emit();
+  }
+}

@@ -78,10 +78,21 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       });
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     this.bindMouseWheel_Zoom();
     this.bindResizeCanvas();
     this.bindDragCanvas();
+  }
+
+  public onFitCanvas() {
+    const rect = this.project.getBoundingItemRect();
+
+    //this.center.set(new VectorModel(rect.x, rect.y));
+    this.zoom.set(1);
+  }
+
+  public onZoomChanged(zoomValue: number) {
+    this.zoom.update((value) => value * zoomValue);
   }
 
   private bindMouseWheel_Zoom() {

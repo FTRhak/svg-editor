@@ -11,4 +11,4 @@
   <g #svgManualEdit></g>
 </svg>
 <canvas-tools [canvasRef]="svgCanvasRef" [zoom]="zoom()" [center]="center()"></canvas-tools>
-<zoom-panel></zoom-panel>
+<zoom-panel [zoom]="zoom()" (zoomChange)="onZoomChanged($event)" (fitCanvas)="onFitCanvas()"></zoom-panel>

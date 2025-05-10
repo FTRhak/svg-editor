@@ -14,11 +14,23 @@ export class NewProjectDialogComponent {
   private ref = inject(DynamicDialogRef);
 
   public readonly form = new FormGroup({
-    width: new FormControl(10, [Validators.required, Validators.min(1), Validators.max(1024 * 4)]),
-    height: new FormControl(10, [Validators.required, Validators.min(1), Validators.max(1024 * 4)]),
+    width: new FormControl(10, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.min(1), Validators.max(1024 * 4)],
+    }),
+    height: new FormControl(10, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.min(1), Validators.max(1024 * 4)],
+    }),
 
-    widthScene: new FormControl(10, [Validators.required, Validators.min(1), Validators.max(1024 * 4)]),
-    heightScene: new FormControl(10, [Validators.required, Validators.min(1), Validators.max(1024 * 4)]),
+    widthScene: new FormControl(10, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.min(1), Validators.max(1024 * 4)],
+    }),
+    heightScene: new FormControl(10, {
+      nonNullable: true,
+      validators: [Validators.required, Validators.min(1), Validators.max(1024 * 4)],
+    }),
   });
 
   onClickCancel() {
@@ -26,7 +38,8 @@ export class NewProjectDialogComponent {
   }
 
   onClickCreate() {
-    this.project.createNewProject();
+    const model = this.form.value;
+    this.project.createNewProject(model.width, model.height, model.widthScene, model.heightScene);
     this.ref?.close();
   }
 }

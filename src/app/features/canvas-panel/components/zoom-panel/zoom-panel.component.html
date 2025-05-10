@@ -1,2 +1,7 @@
-<button>+</button>
-<button>-</button>
+<p-toolbar>
+  <p-button icon="pi pi-expand" size="small" severity="secondary" (click)="onFitCanvas()"></p-button>
+  <p-button-group>
+    <p-button icon="pi pi-plus" size="small" severity="secondary" (click)="onZoomChanged(0.5)"></p-button>
+    <p-button icon="pi pi-minus" size="small" severity="secondary" (click)="onZoomChanged(2)"></p-button>
+  </p-button-group>
+</p-toolbar>
