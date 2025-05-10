@@ -86,49 +86,49 @@ export class MainMenuComponent implements OnDestroy {
           label: 'Group',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createGroupDef();
+            this.createSvgNodeService.createDefaultGroup();
           },
         },
         {
           label: 'Path',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createPathDef();
+            this.createSvgNodeService.createDefaultPath();
           },
         },
         {
           label: 'Rectangle',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createRectDef();
+            this.createSvgNodeService.createDefaultRect();
           },
         },
         {
           label: 'Circle',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createCircleDef();
+            this.createSvgNodeService.createDefaultCircle();
           },
         },
         {
           label: 'Ellipse',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createEllipseDef();
+            this.createSvgNodeService.createDefaultEllipse();
           },
         },
         {
           label: 'Line',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createLineDef();
+            this.createSvgNodeService.createDefaultLine();
           },
         },
         {
           label: 'Text',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.createSvgNodeService.createTextDef();
+            this.createSvgNodeService.createDefaultText();
           },
         },
       ],

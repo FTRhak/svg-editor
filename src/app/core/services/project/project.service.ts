@@ -3,6 +3,7 @@ import {
   PID,
   SVGDefsModel,
   SVGNodeType,
+  SVGPathModel,
   SVGPathNodeModel,
   SVGRootModel,
   TreeNodeModel,
@@ -15,11 +16,11 @@ import { EventManager } from '../../models';
   providedIn: 'root',
 })
 export class ProjectService {
+  private readonly projectEvents = new EventManager();
   private project: SVGRootModel = new SVGRootModel();
-  private projectEvents = new EventManager();
   private selectedItem: TreeNodeModel | null = null;
 
-  public get events() {
+  public get events(): EventManager {
     return this.projectEvents;
   }
 
@@ -31,13 +32,13 @@ export class ProjectService {
     return this.selectedItem?._id || this.project._id;
   }
 
-  createNewProject() {
+  public createNewProject(): void {
     this.project = new SVGRootModel();
     this.events.trigger('project:created', this.project);
     this.events.trigger('project:tree:updates', this.project, []);
   }
 
-  importSVG(svgCode: string) {
+  public importSVG(svgCode: string): void {
     const d = document.createElement('div');
     d.innerHTML = svgCode;
     const svgNode: SVGSVGElement | null = d.querySelector('svg');
@@ -48,32 +49,32 @@ export class ProjectService {
     }
   }
 
-  exportSVG() {
+  public exportSVG(): string {
     TreeNodeStyleModel.renderDebug = false;
     const res = `<?xml version="1.0" encoding="utf-8"?>\n` + this.project.render();
     TreeNodeStyleModel.renderDebug = true;
     return res;
   }
 
-  public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}) {
+  public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}): TreeNodeModel | null {
     const item = this.project.addChild(parentId, type, config);
-    this.events.trigger('project:item-added', this.project, item);
+    this.events.trigger('project:item:added', this.project, item);
     this.events.trigger('project:tree:updates', this.project, [item]);
     return item;
   }
 
-  public addDefItem(type: SVGNodeType, config: { [key: string]: any } = {}) {
+  public addDefItem(type: SVGNodeType, config: { [key: string]: any } = {}): TreeNodeModel | null {
     let defs = this.defs!;
     if (!defs) {
       defs = this.addChildItem(this.project._id, SVGNodeType.DEFS, {})! as SVGDefsModel;
     }
     const item = this.project.addChild(defs._id, type, config);
-    this.events.trigger('project:item-added', this.project, item);
+    this.events.trigger('project:item:added', this.project, item);
     this.events.trigger('project:tree:updates', this.project, [item]);
     return item;
   }
 
-  public removeItem(id: PID) {
+  public removeItem(id: PID): void {
     let item: TreeNodeModel | undefined | null = null;
     const removeFn = (parent: TreeNodeModel) => {
       item = parent.children.find((item) => item._id === id);
@@ -87,12 +88,12 @@ export class ProjectService {
     removeFn(this.project);
 
     if (item) {
-      this.events.trigger('project:item-removed', this.project, item);
+      this.events.trigger('project:item:removed', this.project, item);
       this.events.trigger('project:tree:updates', this.project, [item]);
     }
   }
 
-  public selectItem(id: PID | null) {
+  public selectItem(id: PID | null): void {
     if (this.selectedItem?._id === id) return;
 
     const item = this.project.toList().find((item) => item._id === id);
@@ -100,7 +101,7 @@ export class ProjectService {
     this.events.trigger('project:item:selected', this.project, this.selectedItem);
   }
 
-  public setNodeProperty(id: PID, propertyName: string, value: any) {
+  public setNodeProperty(id: PID, propertyName: string, value: any): void {
     const item: any = this.project.toList().find((item) => item._id === id);
     if (item) {
       item[propertyName] = value;
@@ -109,8 +110,8 @@ export class ProjectService {
     }
   }
 
-  public setNodePropertyPathItem(id: PID, pathNodeId: PID, propertyName: string, value: any) {
-    const item: any = this.project.toList().find((item) => item._id === id);
+  public setNodePropertyPathItem(id: PID, pathNodeId: PID, propertyName: string, value: any): void {
+    const item = this.project.toList().find((item) => item._id === id) as SVGPathModel;
     if (item && item._type === SVGNodeType.PATH) {
       const pathNode: any = item.dArray.find((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
       if (pathNode) {
@@ -123,18 +124,16 @@ export class ProjectService {
     }
   }
 
-  public insertPresetItems(paths: string[], resize: boolean = false, aspectRatio: boolean = true) {
+  public insertPresetItems(paths: string[], resize: boolean = false, aspectRatio: boolean = true): TreeNodeModel[] {
     const id = this.selectedItemId;
     const items: TreeNodeModel[] = paths.map((path) => this.addChildItem(id, SVGNodeType.PATH, { d: path })!);
 
     if (resize) {
       const points = items.map((item) => item.getMaxPoint());
-      console.log('points: ', points);
       const point = points.reduce<[number, number]>(
         (acc, point) => [acc[0] < point.x ? point.x : acc[0], acc[1] < point.y ? point.y : acc[1]],
         [0, 0],
       );
-      console.log('point: ', point);
 
       const w = this.project.viewBox.width - this.project.viewBox.x;
       const h = this.project.viewBox.height - this.project.viewBox.y;
@@ -142,13 +141,12 @@ export class ProjectService {
       const scaleX = w / (aspectRatio ? Math.max(point[0], point[1]) : point[0]);
       const scaleY = h / (aspectRatio ? Math.max(point[0], point[1]) : point[1]);
 
-      console.log(w, h, ' | ', scaleX, scaleY);
-
       items.forEach((item) => item.resize(scaleX, scaleY));
     }
 
-    items.forEach((item) => this.events.trigger('project:item-added', this.project, item));
+    items.forEach((item) => this.events.trigger('project:item:added', this.project, item));
     this.events.trigger('project:tree:updates', this.project, items);
+
     return items;
   }
 
@@ -157,7 +155,7 @@ export class ProjectService {
    * If the item is moved, an event "project:item:updated" is triggered for each changed property.
    * @param shift The vector to shift the item by.
    */
-  public dragMoveSelectedItem(shift: VectorModel) {
+  public dragMoveSelectedItem(shift: VectorModel): void {
     const item: any = this.selectedItem;
     if (item) {
       const changedProperties = item.moveShift(shift);
@@ -168,7 +166,7 @@ export class ProjectService {
     }
   }
 
-  public transformSelectedItem(action: string, transformAnchor: string[], shift: VectorModel) {
+  public transformSelectedItem(action: string, transformAnchor: string[], shift: VectorModel): void {
     const item: TreeNodeModel = this.selectedItem!;
     if (item) {
       /*transformAnchor.forEach((anchor: string, index: number) => {

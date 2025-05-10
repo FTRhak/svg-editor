@@ -4,7 +4,7 @@ export class EventManager {
   private events: Map<ProjectEventName, Function[]> = new Map();
   constructor() {}
 
-  on(event: ProjectEventName, callback: Function) {
+  on(event: ProjectEventName, callback: Function): void {
     if (!this.events.has(event)) {
       this.events.set(event, []);
     }
@@ -15,7 +15,7 @@ export class EventManager {
       console.warn('Have already this event');
     }
   }
-  off(event: ProjectEventName, callback: Function) {
+  off(event: ProjectEventName, callback: Function): void {
     if (this.events.has(event)) {
       const index = this.events.get(event)?.indexOf(callback);
       if (index && index !== -1) {
@@ -24,7 +24,7 @@ export class EventManager {
     }
   }
 
-  offAll(event: ProjectEventName | null = null) {
+  offAll(event: ProjectEventName | null = null): void {
     if (event) {
       this.events.delete(event);
     } else {
@@ -32,7 +32,7 @@ export class EventManager {
     }
   }
 
-  trigger(event: ProjectEventName, ...args: any[]) {
+  trigger(event: ProjectEventName, ...args: any[]): void {
     if (this.events.has(event)) {
       this.events.get(event)?.forEach((callback) => {
         callback(...args);

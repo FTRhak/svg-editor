@@ -56,7 +56,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Group',
     type: SVGNodeType.GROUP,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createGroupDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultGroup(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -64,7 +64,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Rect',
     type: SVGNodeType.RECT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createRectDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultRect(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -72,7 +72,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Circle',
     type: SVGNodeType.CIRCLE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createCircleDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultCircle(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -80,7 +80,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Ellipse',
     type: SVGNodeType.ELLIPSE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createEllipseDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultEllipse(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -88,7 +88,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Line',
     type: SVGNodeType.LINE,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createLineDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultLine(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -96,7 +96,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Path',
     type: SVGNodeType.PATH,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createPathDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultPath(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 
@@ -104,7 +104,7 @@ export class ViewStructureComponent implements OnInit {
     label: 'Text',
     type: SVGNodeType.TEXT,
     command: (ev: { item: { idRef: PID; type: SVGNodeType }; originalEvent: Event }) => {
-      this.createSvgNodeService.createTextDef(ev.item.idRef || this.selectedItem?.id!);
+      this.createSvgNodeService.createDefaultText(ev.item.idRef || this.selectedItem?.id!);
     },
   };
 

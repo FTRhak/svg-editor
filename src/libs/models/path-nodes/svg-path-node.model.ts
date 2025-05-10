@@ -50,6 +50,7 @@ export class SVGPathNodeModel {
   }
 
   public render(): string {
+    console.warn(`Need to implement render for SVGPathNodeModel ${this._type}`);
     return '';
   }
 

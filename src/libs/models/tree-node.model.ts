@@ -49,16 +49,21 @@ export class TreeNodeModel {
   }
 
   public moveShift(shift: VectorModel): string[] {
+    console.warn(`Need to implement moveShift for TreeNodeModel ${this._type}`);
     return [];
   }
 
   public transformShift(anchor: string[], shift: VectorModel): string[] {
+    console.warn(`Need to implement transformShift for TreeNodeModel ${this._type}`);
     return [];
   }
 
-  public resize(xCoefficient: number, yCoefficient: number): void {}
+  public resize(xCoefficient: number, yCoefficient: number): void {
+    console.warn(`Need to implement resize for TreeNodeModel ${this._type}`);
+  }
 
   public getMaxPoint(): VectorModel {
+    console.warn(`Need to implement getMaxPoint for TreeNodeModel ${this._type}`);
     return new VectorModel(0, 0);
   }
 
@@ -67,6 +72,7 @@ export class TreeNodeModel {
   }
 
   public static importFromDom(dom: any): TreeNodeModel {
+    console.warn(`Need to implement importFromDom for TreeNodeModel`);
     return new TreeNodeModel();
   }
 
