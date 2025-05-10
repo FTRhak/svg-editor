@@ -144,6 +144,14 @@ export class SVGLineModel extends TreeNodeStyleModel {
     return anchor;
   }
 
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    this.x1 *= xCoefficient;
+    this.y1 *= yCoefficient;
+    this.x2 *= xCoefficient;
+    this.y2 *= yCoefficient;
+    return ['x1', 'y1', 'x2', 'y2'];
+  }
+
   public static override importFromDom(dom: SVGLineElement) {
     const node = new SVGLineModel({
       fill: dom.getAttribute('fill')! || undefined,

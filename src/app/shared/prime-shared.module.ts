@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AccordionModule } from 'primeng/accordion';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
+import { ButtonGroupModule } from 'primeng/buttongroup';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ColorPickerModule } from 'primeng/colorpicker';
@@ -58,6 +59,7 @@ const modules = [
   SelectButtonModule,
   TieredMenuModule,
   PopoverModule,
+  ButtonGroupModule,
 ];
 
 @NgModule({

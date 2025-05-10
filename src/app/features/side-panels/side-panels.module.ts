@@ -33,6 +33,7 @@ import { PropertiesComponent } from './components/properties/properties.componen
 import { SidePanelComponent } from './components/side-panel/side-panel.component';
 import { ViewStructureComponent } from './components/view-structure/view-structure.component';
 import { FieldLockDirective } from './directives/field-lock/field-lock.directive';
+import { PanelActionsComponent } from './components/panel-actions/panel-actions.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { FieldLockDirective } from './directives/field-lock/field-lock.directive
     PathNodesVComponent,
     PathNodesZComponent,
     GroupPathPropertyCommandsComponent,
+    PanelActionsComponent,
   ],
   exports: [SidePanelComponent],
   imports: [CommonModule, CdkListboxModule, PrimeSharedModule, SharedModule, ReactiveFormsModule, InputColorModule],

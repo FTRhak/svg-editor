@@ -34,4 +34,8 @@ export class SVGDefsModel extends TreeNodeModel {
     const node = new SVGDefsModel({});
     return node;
   }
+
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    return [];
+  }
 }

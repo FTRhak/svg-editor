@@ -119,6 +119,11 @@ export class SVGCircleModel extends TreeNodeStyleModel {
     }
   }
 
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    this.r *= xCoefficient;
+    return ['r'];
+  }
+
   public static override importFromDom(dom: SVGCircleElement) {
     const node = new SVGCircleModel({
       fill: dom.getAttribute('fill')! || undefined,

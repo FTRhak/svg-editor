@@ -24,6 +24,10 @@ export class SVGGroupModel extends TreeNodeStyleModel {
     return res;
   }
 
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    return [];
+  }
+
   public static override importFromDom(dom: SVGGElement) {
     const node = new SVGGroupModel({
       fill: dom.getAttribute('fill')! || undefined,

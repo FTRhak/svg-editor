@@ -183,6 +183,14 @@ export class SVGRectModel extends TreeNodeStyleModel {
     return anchor;
   }
 
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    this.width *= xCoefficient;
+    this.height *= yCoefficient;
+    this.x *= xCoefficient;
+    this.y *= yCoefficient;
+    return ['x', 'y', 'width', 'height'];
+  }
+
   public static override importFromDom(dom: SVGRectElement) {
     const node = new SVGRectModel({
       fill: dom.getAttribute('fill')! || undefined,

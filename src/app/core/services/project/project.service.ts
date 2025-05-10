@@ -150,6 +150,22 @@ export class ProjectService {
     return items;
   }
 
+  public resizeSelectedItem(sizeCoefficient: number) {
+    if (this.selectedItem) {
+      const changedProperties = this.selectedItem?.resize(sizeCoefficient, sizeCoefficient);
+
+      changedProperties.forEach((prop: string) =>
+        this.events.trigger(
+          'project:item:updated',
+          this.project,
+          this.selectedItem,
+          prop,
+          (this.selectedItem as any)[prop],
+        ),
+      );
+    }
+  }
+
   /**
    * Shifts the selected item by the given vector.
    * If the item is moved, an event "project:item:updated" is triggered for each changed property.

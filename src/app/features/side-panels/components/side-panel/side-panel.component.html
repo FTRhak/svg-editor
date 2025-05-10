@@ -15,10 +15,14 @@
       <p-tabs [value]="0" scrollable>
         <p-tablist>
           <p-tab [value]="0">Properties</p-tab>
+          <p-tab [value]="1">Actions</p-tab>
         </p-tablist>
         <p-tabpanels>
           <p-tabpanel [value]="0">
             <properties></properties>
+          </p-tabpanel>
+          <p-tabpanel [value]="1">
+            <panel-actions></panel-actions>
           </p-tabpanel>
         </p-tabpanels>
       </p-tabs>

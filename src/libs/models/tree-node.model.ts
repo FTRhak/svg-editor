@@ -58,8 +58,9 @@ export class TreeNodeModel {
     return [];
   }
 
-  public resize(xCoefficient: number, yCoefficient: number): void {
+  public resize(xCoefficient: number, yCoefficient: number): string[] {
     console.warn(`Need to implement resize for TreeNodeModel ${this._type}`);
+    return [];
   }
 
   public getMaxPoint(): VectorModel {

@@ -56,8 +56,9 @@ export class SVGPathModel extends TreeNodeStyleModel {
     return point;
   }
 
-  public override resize(xCoefficient: number, yCoefficient: number): void {
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
     this._d.forEach((node) => node.resize(xCoefficient, yCoefficient));
+    return ['d'];
   }
 
   public static override importFromDom(dom: SVGPathElement) {

@@ -148,6 +148,14 @@ export class SVGEllipseModel extends TreeNodeStyleModel {
     }
   }
 
+  public override resize(xCoefficient: number, yCoefficient: number): string[] {
+    this.rx = this.rx * xCoefficient;
+    this.ry = this.ry * yCoefficient;
+    this._cx = this._cx * xCoefficient;
+    this._cy = this._cy * yCoefficient;
+    return ['rx', 'ry', 'cx', 'cy'];
+  }
+
   public static override importFromDom(dom: SVGEllipseElement) {
     const node = new SVGEllipseModel({
       fill: dom.getAttribute('fill')! || undefined,
