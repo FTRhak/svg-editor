@@ -1,6 +1,7 @@
 import { hasStyleProperties, isNotUndefined, styleToString } from '@libs/utils';
 import { TreeNodeModel } from './tree-node.model';
 import { StyleAttributeModel } from './style-attribute.model';
+import { VectorModel } from './vector.model';
 
 export class TreeNodeStyleModel extends TreeNodeModel {
   public static renderDebug: boolean = true;

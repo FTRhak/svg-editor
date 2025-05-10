@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <ul cdkListbox cdkListboxUseActiveDescendant class="list-presets">
+  <ul cdkListbox class="list-presets" [(ngModel)]="selectedItem">
     @for (item of list(); track item) {
       <li [cdkOption]="item" class="preset-item">
         <preview-svg [label]="item.label" [svg]="item.paths" />
@@ -8,6 +8,6 @@
   </ul>
 </div>
 <div class="d-flex justify-space-between">
-  <p-button label="Select" (onClick)="onClickSelect()" severity="primary" />
+  <p-button label="Insert" (onClick)="onClickInsert()" severity="primary" />
   <p-button label="Cancel" (onClick)="onClickCancel()" severity="secondary" />
 </div>

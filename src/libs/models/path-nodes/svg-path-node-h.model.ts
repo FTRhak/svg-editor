@@ -21,4 +21,12 @@ export class SVGPathNodeHModel extends SVGPathNodeModel {
       this.x += shift.x;
     }
   }
+
+  public override getMaxPoint(): VectorModel {
+    return new VectorModel(this.x, this.prev?.getMaxPoint().y || 0);
+  }
+
+  public override resize(xCoefficient: number, yCoefficient: number): void {
+    this.x *= xCoefficient;
+  }
 }

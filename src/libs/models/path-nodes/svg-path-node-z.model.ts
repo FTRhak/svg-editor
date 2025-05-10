@@ -14,4 +14,10 @@ export class SVGPathNodeZModel extends SVGPathNodeModel {
   }
 
   public override moveShift(shift: VectorModel): void {}
+
+  public override getMaxPoint(): VectorModel {
+    return this.prev?.getMaxPoint() || new VectorModel(0, 0);
+  }
+
+  public override resize(xCoefficient: number, yCoefficient: number): void {}
 }

@@ -31,4 +31,17 @@ export class SVGPathNodeSModel extends SVGPathNodeModel {
       this.y = (this.y || 0) + shift.y;
     }
   }
+
+  public override getMaxPoint(): VectorModel {
+    return new VectorModel(Math.max(this.x2, this.x), Math.max(this.y2, this.y));
+  }
+
+  public override resize(xCoefficient: number, yCoefficient: number): void {
+    if (!this.isLocal) {
+      this.x2 *= xCoefficient;
+      this.y2 *= yCoefficient;
+      this.x *= xCoefficient;
+      this.y *= yCoefficient;
+    }
+  }
 }

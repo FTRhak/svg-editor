@@ -123,6 +123,35 @@ export class ProjectService {
     }
   }
 
+  public insertPresetItems(paths: string[], resize: boolean = false, aspectRatio: boolean = true) {
+    const id = this.selectedItemId;
+    const items: TreeNodeModel[] = paths.map((path) => this.addChildItem(id, SVGNodeType.PATH, { d: path })!);
+
+    if (resize) {
+      const points = items.map((item) => item.getMaxPoint());
+      console.log('points: ', points);
+      const point = points.reduce<[number, number]>(
+        (acc, point) => [acc[0] < point.x ? point.x : acc[0], acc[1] < point.y ? point.y : acc[1]],
+        [0, 0],
+      );
+      console.log('point: ', point);
+
+      const w = this.project.viewBox.width - this.project.viewBox.x;
+      const h = this.project.viewBox.height - this.project.viewBox.y;
+
+      const scaleX = w / (aspectRatio ? Math.max(point[0], point[1]) : point[0]);
+      const scaleY = h / (aspectRatio ? Math.max(point[0], point[1]) : point[1]);
+
+      console.log(w, h, ' | ', scaleX, scaleY);
+
+      items.forEach((item) => item.resize(scaleX, scaleY));
+    }
+
+    items.forEach((item) => this.events.trigger('project:item-added', this.project, item));
+    this.events.trigger('project:tree:updates', this.project, items);
+    return items;
+  }
+
   /**
    * Shifts the selected item by the given vector.
    * If the item is moved, an event "project:item:updated" is triggered for each changed property.

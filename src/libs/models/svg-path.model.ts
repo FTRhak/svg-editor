@@ -15,7 +15,6 @@ export class SVGPathModel extends TreeNodeStyleModel {
 
   public set d(value: string) {
     this._d = pathStringToArray(value);
-    //console.log('__', this._d);
   }
 
   public get d(): string {
@@ -43,6 +42,22 @@ export class SVGPathModel extends TreeNodeStyleModel {
   public override moveShift(shift: VectorModel) {
     this._d.forEach((node) => node.moveShift(shift));
     return ['d'];
+  }
+
+  public override getMaxPoint(): VectorModel {
+    const point = new VectorModel(0, 0);
+    const points = this._d.map((node) => node.getMaxPoint());
+
+    points.forEach((pointItem) => {
+      if (point.x < pointItem.x) point.x = pointItem.x;
+      if (point.y < pointItem.y) point.y = pointItem.y;
+    });
+
+    return point;
+  }
+
+  public override resize(xCoefficient: number, yCoefficient: number): void {
+    this._d.forEach((node) => node.resize(xCoefficient, yCoefficient));
   }
 
   public static override importFromDom(dom: SVGPathElement) {

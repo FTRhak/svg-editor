@@ -26,7 +26,7 @@ export class SVGRootModel extends TreeNodeModel {
   public y!: string;
   public baseProfile!: string;
   public preserveAspectRatio!: string;
-  viewBox?: RectModel;
+  viewBox: RectModel;
 
   public override children: TreeNodeModel[] = [];
 

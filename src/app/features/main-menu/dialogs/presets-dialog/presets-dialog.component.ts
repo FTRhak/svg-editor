@@ -2,6 +2,11 @@ import { Component, createNgModule, inject, OnInit, signal } from '@angular/core
 import { ProjectService } from '@core/services';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
+interface PresetItem {
+  label: string;
+  paths: string[];
+}
+
 @Component({
   selector: 'presets-dialog',
   standalone: false,
@@ -12,13 +17,11 @@ export class PresetsDialogComponent implements OnInit {
   private readonly project = inject(ProjectService);
   private ref = inject(DynamicDialogRef);
 
-  public list = signal<any[]>([]);
+  public list = signal<PresetItem[]>([]);
+
+  public selectedItem: PresetItem[] = [];
 
   async ngOnInit() {
-    /*import('@features/presets-collection').then(
-                (m) => m.PresetsCollectionModule
-            );*/
-
     const { PresetsCollectionModule } = await import('@features/presets-collection');
     const moduleObj = createNgModule(PresetsCollectionModule).instance;
 
@@ -29,7 +32,10 @@ export class PresetsDialogComponent implements OnInit {
     this.ref?.close();
   }
 
-  onClickSelect() {
-    this.ref?.close();
+  onClickInsert() {
+    this.selectedItem.forEach((item) => {
+      this.project.insertPresetItems(item.paths);
+    });
+    this.ref?.close(true);
   }
 }

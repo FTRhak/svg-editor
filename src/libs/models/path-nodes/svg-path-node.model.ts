@@ -54,6 +54,15 @@ export class SVGPathNodeModel {
   }
 
   public moveShift(shift: VectorModel): void {
-    console.warn('Need to implement moveShift for SVGPathNodeModel');
+    console.warn(`Need to implement moveShift for SVGPathNodeModel ${this._type}`);
+  }
+
+  public getMaxPoint(): VectorModel {
+    console.warn(`Need to implement getMaxPoint for SVGPathNodeModel ${this._type}`);
+    return new VectorModel(0, 0);
+  }
+
+  public resize(xCoefficient: number, yCoefficient: number): void {
+    console.warn(`Need to implement resize for SVGPathNodeModel ${this._type}`);
   }
 }

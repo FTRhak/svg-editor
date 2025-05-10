@@ -56,6 +56,12 @@ export class TreeNodeModel {
     return [];
   }
 
+  public resize(xCoefficient: number, yCoefficient: number): void {}
+
+  public getMaxPoint(): VectorModel {
+    return new VectorModel(0, 0);
+  }
+
   public clone(): TreeNodeModel {
     return new TreeNodeModel(this);
   }
