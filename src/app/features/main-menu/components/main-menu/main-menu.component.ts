@@ -4,6 +4,7 @@ import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { ImportDialogComponent } from '../../dialogs/import-dialog/import-dialog.component';
 import { ViewCodeDialogComponent } from '../../dialogs/view-code-dialog/view-code-dialog.component';
 import { PresetsDialogComponent } from '@features/main-menu/dialogs/presets-dialog/presets-dialog.component';
+import { NewProjectDialogComponent } from '@features/main-menu/dialogs/new-project-dialog/new-project-dialog.component';
 
 @Component({
   selector: 'main-menu',
@@ -26,7 +27,7 @@ export class MainMenuComponent implements OnDestroy {
           label: 'New',
           icon: 'pi pi-fw pi-plus',
           command: () => {
-            this.project.createNewProject();
+            this.createNewProject();
           },
         },
         {
@@ -151,6 +152,17 @@ export class MainMenuComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.ref?.close();
+  }
+
+  public createNewProject() {
+    this.ref = this.dialogService.open(NewProjectDialogComponent, {
+      header: 'New Project',
+      modal: true,
+      width: '400px',
+    });
+    this.ref.onClose.subscribe(() => {});
+
+    this.project.createNewProject();
   }
 
   public insertPreset() {

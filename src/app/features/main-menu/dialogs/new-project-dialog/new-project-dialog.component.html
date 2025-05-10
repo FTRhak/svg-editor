@@ -1,0 +1,77 @@
+<form [formGroup]="form" (submit)="onClickCreate()">
+  <div class="my-1">
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputnumber
+        inputId="widthField"
+        size="small"
+        name="width"
+        formControlName="width"
+        class="w-100"
+        mode="decimal"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        [min]="0"
+        [max]="99999"
+        [step]="1"
+        autocomplete="off"
+      />
+      <label for="widthField">Width</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputnumber
+        inputId="heightField"
+        size="small"
+        name="height"
+        formControlName="height"
+        class="w-100"
+        mode="decimal"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        [min]="0"
+        [max]="99999"
+        [step]="1"
+        autocomplete="off"
+      />
+      <label for="heightField">Height</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputnumber
+        inputId="widthSceneField"
+        size="small"
+        name="widthScene"
+        formControlName="widthScene"
+        class="w-100"
+        mode="decimal"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        [min]="0"
+        [max]="99999"
+        [step]="1"
+        autocomplete="off"
+      />
+      <label for="widthSceneField">Width Scene</label>
+    </p-floatlabel>
+    <p-floatlabel variant="on" class="mb-1">
+      <p-inputnumber
+        inputId="heightSceneField"
+        size="small"
+        name="heightScene"
+        formControlName="heightScene"
+        class="w-100"
+        mode="decimal"
+        [minFractionDigits]="0"
+        [maxFractionDigits]="0"
+        [min]="0"
+        [max]="99999"
+        [step]="1"
+        autocomplete="off"
+      />
+      <label for="heightSceneField">Height Scene</label>
+    </p-floatlabel>
+  </div>
+
+  <div class="d-flex justify-space-between">
+    <p-button label="Crate" type="submit" severity="primary" />
+    <p-button label="Cancel" (onClick)="onClickCancel()" severity="secondary" />
+  </div>
+</form>

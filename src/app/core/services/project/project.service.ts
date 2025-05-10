@@ -32,8 +32,15 @@ export class ProjectService {
     return this.selectedItem?._id || this.project._id;
   }
 
-  public createNewProject(): void {
-    this.project = new SVGRootModel();
+  public createNewProject(
+    width: number = 10,
+    height: number = 10,
+    widthScene: number = 10,
+    heightScene: number = 10,
+  ): void {
+    this.project = new SVGRootModel(0, 0, widthScene, heightScene);
+    this.project.width = `${width}px`;
+    this.project.height = `${height}px`;
     this.events.trigger('project:created', this.project);
     this.events.trigger('project:tree:updates', this.project, []);
   }
