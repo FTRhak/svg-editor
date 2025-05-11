@@ -3,9 +3,9 @@
 set -e
 
 git clone "https://github.com/FTRhak/svg-editor.git" .svg-editor-master
-cd .svg-path-editor-master
+cd .svg-editor-master
 npm install
-npm run build
+npm run build:prod
 git checkout gh-pages
 rm -rf *.ico *.html *.js *.css *.txt assets
 mv dist/svg-editor/browser/* .
