@@ -33,4 +33,4 @@ jobs:
         path: dist
 
     - name: Deploy
-      uses: actions/deploy-pages@v1
+      uses: actions/deploy-pages@v4
