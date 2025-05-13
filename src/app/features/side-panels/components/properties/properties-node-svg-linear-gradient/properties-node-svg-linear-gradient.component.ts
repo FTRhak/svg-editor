@@ -61,7 +61,7 @@ export class PropertiesNodeSvgLinearGradientComponent {
         ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => {
           if (property !== 'stops') {
-            this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
+            this.form.valid && this.project.setNodeProperty(this.node()._id, property, value);
           }
         });
     }

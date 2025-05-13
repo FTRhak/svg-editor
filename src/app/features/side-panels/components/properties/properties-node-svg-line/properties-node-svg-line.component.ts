@@ -1,10 +1,9 @@
-import { Component, DestroyRef, inject, input } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, input, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
-import { SVGLineModel, SVGRootModel, TreeNodeModel } from '@libs';
+import { SVGLineModel } from '@libs';
 import { isUndefined, styleToString } from '@libs/utils';
-import { debounceTime, fromEvent } from 'rxjs';
+import { PropertiesNodePanelModel } from '../models';
 
 interface SVGNode {
   fill: FormControl<string | null>;
@@ -24,9 +23,9 @@ interface SVGNode {
   templateUrl: './properties-node-svg-line.component.html',
   styleUrl: './properties-node-svg-line.component.scss',
 })
-export class PropertiesNodeSvgLineComponent {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly project = inject(ProjectService);
+export class PropertiesNodeSvgLineComponent extends PropertiesNodePanelModel implements OnInit {
+  protected override readonly destroyRef = inject(DestroyRef);
+  protected override readonly project = inject(ProjectService);
 
   public readonly node = input.required<SVGLineModel>();
 
@@ -46,22 +45,7 @@ export class PropertiesNodeSvgLineComponent {
       y2: new FormControl({ value: node.y2 || 0, disabled: isUndefined(node.y2) }),
     });
 
-    const rawValue = this.form.getRawValue();
-    const properties = Object.keys(rawValue);
-
-    for (const property of properties) {
-      this.form
-        .get(property)
-        ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
-        .subscribe((value) => {
-          this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
-        });
-    }
-
-    fromEvent<[SVGRootModel, TreeNodeModel, string, any]>(this.project.events, 'project:item:updated')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(([project, item, propertyName, value]) => {
-        this.form.setValue({ ...this.form.getRawValue(), [propertyName]: value } as any, { emitEvent: false });
-      });
+    this.updateNodeProperty(this.form, node._id);
+    this.listenNodeUpdates(this.form, node._id);
   }
 }

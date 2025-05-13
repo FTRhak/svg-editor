@@ -86,17 +86,17 @@ export class PropertiesNodeSvgRadialGradientComponent {
         ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => {
           if (property !== 'stops') {
-            this.form.get(property)?.valid && this.project.setNodeProperty(node._id, property, value);
+            this.form.valid && this.project.setNodeProperty(node._id, property, value);
           }
         });
     }
 
-    fromEvent<[SVGRootModel, TreeNodeModel, string, any]>(this.project.events, 'project:item:updated')
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(([project, item, propertyName, value]) => {
-        // console.log();
-        //this.form.setValue({ ...this.form.getRawValue(), [propertyName]: value } as any, { emitEvent: false });
-      });
+    //fromEvent<[SVGRootModel, TreeNodeModel, string, any]>(this.project.events, 'project:item:updated')
+    //  .pipe(takeUntilDestroyed(this.destroyRef))
+    //  .subscribe(([project, item, propertyName, value]) => {
+    // console.log();
+    //this.form.setValue({ ...this.form.getRawValue(), [propertyName]: value } as any, { emitEvent: false });
+    //});
   }
 
   addStop(model: SVGStopModel = {} as any) {

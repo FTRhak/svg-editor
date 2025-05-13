@@ -77,7 +77,7 @@ export class PropertiesNodeSvgComponent implements OnInit {
         .get(property)
         ?.valueChanges.pipe(debounceTime(500), takeUntilDestroyed(this.destroyRef))
         .subscribe((value) => {
-          this.form.get(property)?.valid && this.project.setNodeProperty(this.node()._id, property, value);
+          this.form.valid && this.project.setNodeProperty(this.node()._id, property, value);
         });
     }
   }
