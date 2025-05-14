@@ -30,6 +30,17 @@ export class SVGRootModel extends TreeNodeModel {
 
   public override children: TreeNodeModel[] = [];
 
+  protected override readonly canInsert: SVGNodeType[] = [
+    SVGNodeType.DEFS,
+    SVGNodeType.GROUP,
+    SVGNodeType.CIRCLE,
+    SVGNodeType.ELLIPSE,
+    SVGNodeType.LINE,
+    SVGNodeType.PATH,
+    SVGNodeType.RECT,
+    SVGNodeType.TEXT,
+  ];
+
   /**
    * Constructor
    *
@@ -38,22 +49,12 @@ export class SVGRootModel extends TreeNodeModel {
    * @param width - The width of the view box
    * @param height - The height of the view box
    */
-  constructor(x: number = 0, y: number = 0, width: number = 10, height: number = 10) {
+  constructor(x: number = 0, y: number = 0, width: number, height: number) {
     super();
     this._id = Generator.getId('svg-');
     this.width = `${width}px`;
     this.height = `${height}px`;
     this.viewBox = new RectModel(x, y, width, height);
-  }
-
-  public addChild(id: PID, type: SVGNodeType, config: { [key: string]: any }): TreeNodeModel | null {
-    const list = this.toList();
-    const item = list.find((item) => item._id === id);
-    if (item) {
-      const node = SVGRootModel.createNode(item, type, config);
-      return node;
-    }
-    return null;
   }
 
   public override render() {
@@ -126,15 +127,16 @@ export class SVGRootModel extends TreeNodeModel {
 
     if (node!) {
       parent.children.push(node);
+      node.parent = parent;
     }
 
     return node!;
   }
 
   public static override importFromDom(dom: SVGSVGElement): SVGRootModel {
-    const svg = new SVGRootModel();
-    svg.width = dom.width.baseVal.valueAsString;
-    svg.height = dom.height.baseVal.valueAsString;
+    const width = parseInt(dom.width.baseVal.valueAsString || '0');
+    const height = parseInt(dom.height.baseVal.valueAsString || '0');
+    const svg = new SVGRootModel(0, 0, width, height);
     svg.viewBox = dom.viewBox.baseVal;
 
     importChildren(svg, dom.children);
@@ -157,7 +159,7 @@ export class SVGRootModel extends TreeNodeModel {
   }
 }
 
-function importChildren(parent: TreeNodeModel, collection: HTMLCollection) {
+function importChildren(parent: TreeNodeModel, collection: HTMLCollection): void {
   Array.from(collection).forEach((item) => {
     switch (item.nodeName) {
       case SVGNodeType.GROUP:

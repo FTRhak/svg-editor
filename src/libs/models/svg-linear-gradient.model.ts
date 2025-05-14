@@ -10,6 +10,8 @@ export class SVGLinearGradientModel extends TreeNodeGradientModel {
 
   public override children: TreeNodeModel[] = [];
 
+  protected override readonly canInsert: SVGNodeType[] = [SVGNodeType.STOP];
+
   constructor(params: Partial<SVGLinearGradientModel>) {
     super(params);
     this._id = Generator.getId('linearGradient-');

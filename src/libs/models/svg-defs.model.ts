@@ -10,6 +10,8 @@ export class SVGDefsModel extends TreeNodeModel {
 
   public override children: TreeNodeModel[] = [];
 
+  protected override readonly canInsert: SVGNodeType[] = [SVGNodeType.LINEAR_GRADIENT, SVGNodeType.RADIAL_GRADIENT];
+
   public get gradients(): TreeNodeGradientModel[] {
     return this.children.filter(
       (item) => item._type === SVGNodeType.LINEAR_GRADIENT || item._type === SVGNodeType.RADIAL_GRADIENT,

@@ -8,19 +8,46 @@ import { VectorModel } from './vector.model';
 export class TreeNodeModel {
   public readonly _type!: SVGNodeType;
   public readonly _id!: string;
-  children: TreeNodeModel[] = [];
+
+  public children: TreeNodeModel[] = [];
+  public parent: TreeNodeModel | null = null;
+
+  protected readonly canInsert: SVGNodeType[] = [];
 
   constructor(params?: Partial<TreeNodeModel>) {}
 
-  public toTree(): TreeItem {
-    const item: TreeItem = new TreeItem(this._id, this._type);
+  public canInsertType(type: SVGNodeType): boolean {
+    return this.canInsert.includes(type);
+  }
+
+  /**
+   * Converts the tree node to a TreeItem structure, which is a flatten
+   * representation of the tree, suitable for the TreeView component.
+   *
+   * The function traverses the tree and creates a new tree structure
+   * with the same nodes and children, but with the `TreeItem` type.
+   *
+   * @returns The TreeItem representation of the tree.
+   */
+  public toTreeView(): TreeItem {
+    const item: TreeItem = new TreeItem(this._id, this._type, '', this.canInsert);
 
     this.children.forEach((child) => {
-      item.children.push(child.toTree());
+      item.children.push(child.toTreeView());
     });
     return item;
   }
 
+  /**
+   * Converts the tree node and its descendants into a flat list.
+   *
+   * The function traverses the entire tree starting from this node,
+   * adding each node to a list. The result is a linear representation
+   * of the tree structure, including all child nodes.
+   *
+   * @returns An array of TreeNodeModel instances representing the
+   *          entire subtree starting from this node.
+   */
   public toList(): TreeNodeModel[] {
     const list: TreeNodeModel[] = [this];
     this.children.forEach((child) => {
@@ -29,6 +56,7 @@ export class TreeNodeModel {
     return list;
   }
 
+  //#region Render
   public renderId(): string {
     let res = ``;
     if (TreeNodeStyleModel.renderDebug) {
@@ -38,7 +66,7 @@ export class TreeNodeModel {
   }
 
   public render(): string {
-    return `<${this._type} data-id="${this._id}"/>`;
+    return `<${this._type} ` + this.renderId() + `/>`;
   }
 
   public renderSelectionMoveArea(
@@ -50,11 +78,9 @@ export class TreeNodeModel {
     console.warn(`Need to implement renderSelectionMoveArea for TreeNodeModel ${this._type}`);
     return `<${this._type} data-id="${this._id}"/>`;
   }
+  //#endregion
 
-  public anchorPoints(): VectorModel[] {
-    return [];
-  }
-
+  //#region Transform
   public moveShift(shift: VectorModel): string[] {
     console.warn(`Need to implement moveShift for TreeNodeModel ${this._type}`);
     return [];
@@ -69,6 +95,7 @@ export class TreeNodeModel {
     console.warn(`Need to implement resize for TreeNodeModel ${this._type}`);
     return [];
   }
+  //#endregion
 
   public getMaxPoint(): VectorModel {
     console.warn(`Need to implement getMaxPoint for TreeNodeModel ${this._type}`);

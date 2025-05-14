@@ -162,7 +162,7 @@ export class ViewStructureComponent implements OnInit {
     fromEvent<[SVGRootModel, any[]]>(this.project.events, 'project:tree:updates')
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(([project, list]) => {
-        this.items.set([project.toTree()]);
+        this.items.set([project.toTreeView()]);
       });
   }
 

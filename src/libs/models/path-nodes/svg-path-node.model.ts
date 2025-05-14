@@ -37,6 +37,14 @@ export class SVGPathNodeModel {
     return this._prev;
   }
 
+  public get prevNodeEndPosition(): SVGPathNodeModel | undefined {
+    return this._prev;
+  }
+
+  public get getEndPosition(): VectorModel | undefined {
+    return this._next?.getMaxPoint();
+  }
+
   constructor(type: SVGPathNodeType, prev: SVGPathNodeModel | undefined = undefined) {
     this._type = type.toUpperCase() as SVGPathNodeType;
     this._isLocal = type === type.toLowerCase();

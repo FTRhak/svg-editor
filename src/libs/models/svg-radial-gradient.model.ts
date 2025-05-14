@@ -19,9 +19,9 @@ export class SVGRadialGradientModel extends TreeNodeGradientModel {
   public href!: string;
   public spreadMethod!: string; // pad | reflect | repeat
 
-  //  public xlinkHref!: string; // xlink:href
-
   public override children: TreeNodeModel[] = [];
+
+  protected override readonly canInsert: SVGNodeType[] = [SVGNodeType.STOP];
 
   constructor(params: Partial<SVGRadialGradientModel>) {
     super(params);

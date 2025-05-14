@@ -210,13 +210,4 @@ export class SVGRectModel extends TreeNodeStyleModel {
 
     return node;
   }
-
-  public override anchorPoints(): VectorModel[] {
-    return [
-      new VectorModel(this.x, this.y),
-      new VectorModel(this.x + this.width, this.y),
-      new VectorModel(this.x + this.width, this.y + this.height),
-      new VectorModel(this.x, this.y + this.height),
-    ];
-  }
 }

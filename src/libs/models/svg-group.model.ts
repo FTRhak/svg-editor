@@ -10,6 +10,16 @@ export class SVGGroupModel extends TreeNodeStyleModel {
 
   public override children: TreeNodeModel[] = [];
 
+  protected override readonly canInsert: SVGNodeType[] = [
+    SVGNodeType.GROUP,
+    SVGNodeType.CIRCLE,
+    SVGNodeType.ELLIPSE,
+    SVGNodeType.LINE,
+    SVGNodeType.PATH,
+    SVGNodeType.RECT,
+    SVGNodeType.TEXT,
+  ];
+
   constructor(params: Partial<SVGGroupModel>) {
     super(params);
     this._id = Generator.getId('group-');

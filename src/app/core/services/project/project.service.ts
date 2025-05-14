@@ -18,7 +18,7 @@ import { EventManager } from '../../models';
 })
 export class ProjectService {
   private readonly projectEvents = new EventManager();
-  private project: SVGRootModel = new SVGRootModel();
+  private project: SVGRootModel = new SVGRootModel(0, 0, 10, 10);
   private selectedItem: TreeNodeModel | null = null;
 
   public get events(): EventManager {
@@ -39,7 +39,6 @@ export class ProjectService {
     widthScene: number = 10,
     heightScene: number = 10,
   ): void {
-    console.log('createNewProject', width, height, widthScene, heightScene);
     this.project = new SVGRootModel(0, 0, widthScene, heightScene);
     this.project.width = `${width}px`;
     this.project.height = `${height}px`;
@@ -65,11 +64,26 @@ export class ProjectService {
     return res;
   }
 
+  public getItemToInsert(id: PID, type: SVGNodeType) {
+    const item = this.project.toList().find((item) => item._id === id);
+  }
+
   public addChildItem(parentId: PID, type: SVGNodeType, config: { [key: string]: any } = {}): TreeNodeModel | null {
-    const item = this.project.addChild(parentId, type, config);
-    this.events.trigger('project:item:added', this.project, item);
-    this.events.trigger('project:tree:updates', this.project, [item]);
-    return item;
+    let item = this.project.toList().find((item) => item._id === parentId);
+
+    while (item && !item.canInsertType(type)) {
+      item = item.parent!;
+    }
+
+    if (item) {
+      const node = SVGRootModel.createNode(item, type, config);
+
+      this.events.trigger('project:item:added', this.project, node);
+      this.events.trigger('project:tree:updates', this.project, [node]);
+
+      return node;
+    }
+    return null;
   }
 
   public addDefItem(type: SVGNodeType, config: { [key: string]: any } = {}): TreeNodeModel | null {
@@ -77,9 +91,14 @@ export class ProjectService {
     if (!defs) {
       defs = this.addChildItem(this.project._id, SVGNodeType.DEFS, {})! as SVGDefsModel;
     }
-    const item = this.project.addChild(defs._id, type, config);
-    this.events.trigger('project:item:added', this.project, item);
-    this.events.trigger('project:tree:updates', this.project, [item]);
+
+    const item = this.addChildItem(defs._id, type, config);
+
+    if (item) {
+      this.events.trigger('project:item:added', this.project, item);
+      this.events.trigger('project:tree:updates', this.project, [item]);
+    }
+
     return item;
   }
 

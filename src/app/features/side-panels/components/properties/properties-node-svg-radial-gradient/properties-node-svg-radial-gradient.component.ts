@@ -2,9 +2,9 @@ import { Component, DestroyRef, inject, input } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
-import { SVGNodeType, SVGRadialGradientModel, SVGRootModel, SVGStopModel, TreeNodeModel } from '@libs';
+import { SVGNodeType, SVGRadialGradientModel, SVGStopModel } from '@libs';
 import { isUndefined } from '@libs/utils';
-import { debounceTime, fromEvent } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 interface SVGNodeStop {
   id: FormControl<string | null>;
