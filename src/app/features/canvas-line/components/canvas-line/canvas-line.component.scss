@@ -1,0 +1,90 @@
+.canvas-line {
+  --line-width: 15px;
+  --line-bg-color: rgba(200, 200, 200, 0.5);
+  --separation-line-bg-color: rgba(33, 33, 33, 1);
+
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  user-select: none;
+  overflow: hidden;
+
+  .canvas-line-content {
+    display: flex;
+    justify-content: flex-start;
+    transform: translateX();
+  }
+
+  .canvas-line-section {
+    box-sizing: border-box;
+    position: relative;
+    font-size: 0.7rem;
+    line-height: 0.7rem;
+
+    &:before {
+      content: '';
+      position: absolute;
+    }
+
+    &:after {
+      content: attr(data-section-index) '';
+    }
+  }
+
+  &.orientation-horizontal {
+    right: 0px;
+    height: var(--line-width);
+    background-color: var(--line-bg-color);
+
+    .canvas-line-content {
+      transform: translateX(var(--line-shift, 0));
+    }
+
+    .canvas-line-section {
+      width: var(--section-width, 10%);
+      &:before {
+        left: 0px;
+        top: 0px;
+        bottom: 0px;
+        width: 1px;
+        background-color: var(--separation-line-bg-color);
+      }
+
+      &:after {
+        text-align: right;
+        line-height: var(--line-width);
+        padding: 0px 4px;
+      }
+    }
+  }
+
+  &.orientation-vertical {
+    bottom: 0px;
+    width: var(--line-width);
+    background-color: var(--line-bg-color);
+
+    .canvas-line-content {
+      flex-direction: column;
+      transform: translateY(var(--line-shift, 0));
+    }
+
+    .canvas-line-section {
+      height: var(--section-width, 10%);
+      &:before {
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        height: 1px;
+        background-color: var(--separation-line-bg-color);
+      }
+
+      &:after {
+        text-align: right;
+        line-height: var(--line-width);
+        transform: rotate(90deg) translate(4px, -4px);
+        position: absolute;
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+<div
+  class="canvas-line"
+  [class.orientation-horizontal]="orientation() === 'horizontal'"
+  [class.orientation-vertical]="orientation() === 'vertical'"
+>
+  <div class="canvas-line-content" style="--line-shift: {{ lineShift() }}px">
+    @for (item of lineData; track $index) {
+      <div
+        class="canvas-line-section"
+        style="--section-width: {{ sectionLength() }}px"
+        attr.data-section-index="{{ item }}"
+      ></div>
+    }
+  </div>
+</div>

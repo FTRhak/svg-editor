@@ -10,5 +10,6 @@
         "primeng",
         "selectbutton",
         "tieredmenu"
-    ]
+    ],
+    "nxConsole.generateAiAgentRules": true
 }
