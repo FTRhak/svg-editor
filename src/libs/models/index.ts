@@ -20,6 +20,7 @@ export { SVGGroupModel } from './svg-group.model';
 export { SVGLineModel } from './svg-line.model';
 export { SVGLinearGradientModel } from './svg-linear-gradient.model';
 export { SVGPathModel } from './svg-path.model';
+export type { SVGPathNodeType } from './svg-path-node.type';
 export { SVGRadialGradientModel } from './svg-radial-gradient.model';
 export { SVGRectModel } from './svg-rect.model';
 export { SVGRootModel } from './svg-root.model';

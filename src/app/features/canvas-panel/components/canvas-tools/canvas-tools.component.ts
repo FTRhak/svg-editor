@@ -114,7 +114,13 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
           prev.update(event.clientX, event.clientY);
 
           return fromEvent<MouseEvent>(this.svgCanvas()!, 'mousemove').pipe(
-            map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY, shiftKey: event.shiftKey, altKey: event.altKey, ctrlKey: event.ctrlKey })),
+            map((event: MouseEvent) => ({
+              x: event.clientX,
+              y: event.clientY,
+              shiftKey: event.shiftKey,
+              altKey: event.altKey,
+              ctrlKey: event.ctrlKey,
+            })),
             takeUntil(up$),
             takeUntilDestroyed(this.destroyRef),
           );

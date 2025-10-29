@@ -3,6 +3,7 @@ import { pathStringToArray } from '../utils/path-convert.utils';
 import { PID } from './id.type';
 import { SVGNodeType } from './node.type';
 import { SVGPathNodeModel } from './path-nodes/svg-path-node.model';
+import { SVGPathNodeType } from './svg-path-node.type';
 import { TreeNodeStyleModel } from './tree-node-style.model';
 import { TreeNodeModel } from './tree-node.model';
 import { VectorModel } from './vector.model';
@@ -32,6 +33,16 @@ export class SVGPathModel extends TreeNodeStyleModel {
     super(params);
     this._id = Generator.getId('path-');
     if (isNotUndefined(params.d)) this.d = params.d as string;
+  }
+
+  public addDNodeAt(pathNodeId: PID, dPathPart: string) {
+    const node = pathStringToArray(dPathPart);
+    const index = this._d.findIndex((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
+    this._d.splice(index + 1, 0, ...node);
+  }
+
+  public removeDNode(pathNodeId: PID) {
+    this._d = this._d.filter((nodeItem: SVGPathNodeModel) => nodeItem.id !== pathNodeId);
   }
 
   public override render() {

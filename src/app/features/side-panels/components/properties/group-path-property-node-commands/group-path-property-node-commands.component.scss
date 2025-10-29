@@ -1,0 +1,20 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &.cdk-option-active {
+    background-color: rgba(204, 204, 204, 0.5);
+  }
+
+  .path-node-actions {
+    --p-menubar-padding: 0px;
+    --p-menubar-gap: 0px;
+    --p-menubar-item-gap: 0px;
+    z-index: 2;
+
+    ::ng-deep .p-menubar-submenu {
+      z-index: 2;
+    }
+  }
+}

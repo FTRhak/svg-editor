@@ -6,6 +6,7 @@ import {
   SVGNodeType,
   SVGPathModel,
   SVGPathNodeModel,
+  SVGPathNodeType,
   SVGRootModel,
   TreeNodeModel,
   TreeNodeStyleModel,
@@ -149,6 +150,23 @@ export class ProjectService {
         this.events.trigger('project:item:updated', this.project, item, 'd', item.d);
         //this.events.trigger('project:tree:updates', this.project, [item]);
       }
+    }
+  }
+
+  public addNodePropertyPathItem(id: PID, pathNodeId: PID, dPathPart: string) {
+    console.log('addNodePropertyPathItem', id, pathNodeId, dPathPart);
+    const item = this.project.toList().find((item) => item._id === id) as SVGPathModel;
+    if (dPathPart && item && item._type === SVGNodeType.PATH) {
+      item.addDNodeAt(pathNodeId, dPathPart);
+      this.events.trigger('project:item:updated', this.project, item, 'd', item.d);
+    }
+  }
+
+  public removeNodePropertyPathItem(id: PID, pathNodeId: PID): void {
+    const item = this.project.toList().find((item) => item._id === id) as SVGPathModel;
+    if (item && item._type === SVGNodeType.PATH) {
+      item.removeDNode(pathNodeId);
+      this.events.trigger('project:item:updated', this.project, item, 'd', item.d);
     }
   }
 

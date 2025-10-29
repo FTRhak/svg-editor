@@ -1,7 +1,9 @@
 import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { PID, SVGPathNodeLModel, SVGPathNodeModel } from '@libs';
+import { debounceTime } from 'rxjs';
 
 @Component({
   selector: 'path-nodes-l',
@@ -38,6 +40,18 @@ export class PathNodesLComponent implements OnInit {
       x: new FormControl({ value: node.x || 0, disabled: false }),
       y: new FormControl({ value: node.y || 0, disabled: false }),
     });
+
+    const rawValue = this.form.getRawValue();
+    const properties = Object.keys(rawValue);
+
+    for (const property of properties) {
+      this.form
+        .get(property)
+        ?.valueChanges.pipe(debounceTime(300), takeUntilDestroyed(this.destroyRef))
+        .subscribe((value) => {
+          this.changeNode.emit([this.node().id, property, value]);
+        });
+    }
   }
 
   public onToggleType() {

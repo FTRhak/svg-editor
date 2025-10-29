@@ -7,6 +7,7 @@ import { PrimeSharedModule, SharedModule } from '@shared';
 import { PanelActionsComponent } from './components/panel-actions/panel-actions.component';
 import {
   GroupPathPropertyCommandsComponent,
+  GroupPathPropertyNodeCommandsComponent,
   GroupPropertiesStopComponent,
   GroupPropertiesStyleComponent,
   PanelPropertiesComponent,
@@ -66,6 +67,7 @@ import { FieldLockDirective } from './directives/field-lock/field-lock.directive
     PathNodesVComponent,
     PathNodesZComponent,
     GroupPathPropertyCommandsComponent,
+    GroupPathPropertyNodeCommandsComponent,
     PanelActionsComponent,
   ],
   exports: [SidePanelComponent],

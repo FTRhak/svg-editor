@@ -1,4 +1,5 @@
 export { GroupPathPropertyCommandsComponent } from './group-path-property-commands/group-path-property-commands.component';
+export { GroupPathPropertyNodeCommandsComponent } from './group-path-property-node-commands/group-path-property-node-commands.component';
 export { GroupPropertiesStopComponent } from './group-properties-stop/group-properties-stop.component';
 export { GroupPropertiesStyleComponent } from './group-properties-style/group-properties-style.component';
 export { PanelPropertiesComponent } from './panel-properties/panel-properties.component';
