@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ProjectService } from '@core/services';
 import { PID, SVGPathNodeLModel, SVGPathNodeModel } from '@libs';
@@ -15,9 +15,21 @@ export class PathNodesLComponent implements OnInit {
 
   public readonly pathId = input.required<PID>();
   public node = input.required<SVGPathNodeLModel | SVGPathNodeModel>();
+  public readonly x = input.required<number>();
+  public readonly y = input.required<number>();
+
   public readonly changeNode = output<[PID, string, any]>();
 
   public form!: FormGroup;
+
+  constructor() {
+    effect(() => {
+      const x = this.x();
+      const y = this.y();
+      this.form.get('x')?.setValue(x, { emitEvent: false });
+      this.form.get('y')?.setValue(y, { emitEvent: false });
+    });
+  }
 
   public ngOnInit(): void {
     const node = this.node() as SVGPathNodeLModel;

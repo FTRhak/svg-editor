@@ -114,7 +114,7 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
           prev.update(event.clientX, event.clientY);
 
           return fromEvent<MouseEvent>(this.svgCanvas()!, 'mousemove').pipe(
-            map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
+            map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY, shiftKey: event.shiftKey, altKey: event.altKey, ctrlKey: event.ctrlKey })),
             takeUntil(up$),
             takeUntilDestroyed(this.destroyRef),
           );
@@ -123,17 +123,24 @@ export class CanvasToolsComponent implements AfterViewInit, OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((ev) => {
         // TODO need to recalculate shift coefficients
-        this.moveItem({ x: ev.x - prev.x, y: ev.y - prev.y } as VectorModel, canvasSize);
+        this.moveItem({ x: ev.x - prev.x, y: ev.y - prev.y } as VectorModel, canvasSize, ev);
 
         prev.update(ev.x, ev.y);
       });
   }
 
-  private moveItem(shift: VectorModel, canvasSize: VectorModel): void {
+  private moveItem(shift: VectorModel, canvasSize: VectorModel, ev: any): void {
     const zoom = this.zoom();
+    let x = (shift.x / canvasSize.x) * zoom * 10;
+    let y = (shift.y / canvasSize.x) * zoom * 10;
+    // Move to project service
+    if (ev.shiftKey) {
+      x = Math.round(x * 100) / 100;
+      y = Math.round(y * 100) / 100;
+    }
     this.project.dragMoveSelectedItem({
-      x: (shift.x / canvasSize.x) * zoom * 10,
-      y: (shift.y / canvasSize.x) * zoom * 10,
+      x: x,
+      y: y,
     } as VectorModel);
   }
 

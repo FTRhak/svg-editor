@@ -1,9 +1,10 @@
 <ul cdkListbox cdkListboxMultiple cdkListboxUseActiveDescendant class="list-path-nodes">
-  @for (pathItem of path(); track pathItem) {
+  @for (pathItem of path(); track pathItem.id) {
     <li [cdkOption]="pathItem.id" class="list-path-node">
+      <div>
       @switch (pathItem.typeAbsolute) {
         @case ('M') {
-          <path-nodes-m [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-m>
+          <path-nodes-m [node]="pathItem" [x]="pathItem.x" [y]="pathItem.y" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-m>
         }
         @case ('A') {
           <path-nodes-a [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-a>
@@ -12,7 +13,7 @@
           <path-nodes-h [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-h>
         }
         @case ('L') {
-          <path-nodes-l [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-l>
+          <path-nodes-l [node]="pathItem" [x]="pathItem.x" [y]="pathItem.y" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-l>
         }
         @case ('V') {
           <path-nodes-v [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-v>
@@ -33,6 +34,11 @@
           <path-nodes-z [node]="pathItem" [pathId]="node()._id" (changeNode)="onChange($event)"></path-nodes-z>
         }
       }
+      </div>
+      <div>
+        <p-menu #menu [model]="menuAvtions" [popup]="true" />
+        <p-button (click)="menu.toggle($event)" size="small" icon="pi pi-ellipsis-v"/>
+      </div>
     </li>
   }
 </ul>

@@ -18,11 +18,13 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { ListboxModule } from 'primeng/listbox';
+import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelModule } from 'primeng/panel';
 import { PopoverModule } from 'primeng/popover';
 import { SelectModule } from 'primeng/select';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { SplitterModule } from 'primeng/splitter';
 import { TabsModule } from 'primeng/tabs';
 import { TieredMenuModule } from 'primeng/tieredmenu';
@@ -43,6 +45,7 @@ const modules = [
   InputNumberModule,
   ButtonModule,
   SplitterModule,
+  SplitButtonModule,
   ToolbarModule,
   ListboxModule,
   SelectModule,
@@ -51,6 +54,7 @@ const modules = [
   InputGroupAddonModule,
   ContextMenuModule,
   TreeModule,
+  MenuModule,
   TabsModule,
   ColorPickerModule,
   FileUploadModule,
