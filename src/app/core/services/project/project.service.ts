@@ -109,6 +109,7 @@ export class ProjectService {
       item = parent.children.find((item) => item._id === id);
       if (item) {
         parent.children = parent.children.filter((item) => item._id !== id);
+        item.destroy();
       } else if (!item) {
         parent.children.forEach((child) => removeFn(child));
       }
@@ -119,6 +120,7 @@ export class ProjectService {
     if (item) {
       this.events.trigger('project:item:removed', this.project, item);
       this.events.trigger('project:tree:updates', this.project, [item]);
+      this.events.trigger('project:item:selected', this.project, null);
     }
   }
 

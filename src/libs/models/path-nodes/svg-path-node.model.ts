@@ -83,4 +83,9 @@ export class SVGPathNodeModel {
   public resize(xCoefficient: number, yCoefficient: number): void {
     console.warn(`Need to implement resize for SVGPathNodeModel ${this._type}`);
   }
+
+  public remove() {
+    this._next = undefined;
+    this._prev = undefined;
+  }
 }

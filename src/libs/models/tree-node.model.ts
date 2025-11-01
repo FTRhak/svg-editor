@@ -111,6 +111,12 @@ export class TreeNodeModel {
     return new TreeNodeModel(this);
   }
 
+  public destroy(): void {
+    this.children.forEach((child) => child.destroy());
+    this.children = [];
+    this.parent = null;
+  }
+
   public static importFromDom(dom: any): TreeNodeModel {
     console.warn(`Need to implement importFromDom for TreeNodeModel`);
     return new TreeNodeModel();

@@ -55,6 +55,9 @@ export class SVGPathModel extends TreeNodeStyleModel {
   public removeDNode(pathNodeId: PID) {
     const index = this._d.findIndex((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
     if (index >= 0) {
+      // remove node links
+      this._d.find((nodeItem: SVGPathNodeModel) => nodeItem.id !== pathNodeId)?.remove();
+
       this._d = this._d.filter((nodeItem: SVGPathNodeModel) => nodeItem.id !== pathNodeId);
 
       const nextItem = this._d[index] ?? null;
