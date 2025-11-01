@@ -42,6 +42,16 @@ font-size: var(--p-button-sm-font-size);
     padding-inline: var(--p-button-sm-padding-x);
 */
 
+.logo {
+  background-image: url(../public/logo.png);
+  aspect-ratio: 672 / 448;
+  height: 32px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 :root {
   --p-form-field-sm-font-size: 0.75rem;
   --p-form-field-sm-padding-x: 0.3rem;

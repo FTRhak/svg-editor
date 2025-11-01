@@ -19,7 +19,6 @@ export class PathNodesMComponent extends PathNodesDPropertyModel implements OnIn
 
   public override readonly changeNode = output<[PID, string, any]>();
 
-
   constructor() {
     super();
     effect(() => {
