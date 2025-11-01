@@ -37,12 +37,31 @@ export class SVGPathModel extends TreeNodeStyleModel {
 
   public addDNodeAt(pathNodeId: PID, dPathPart: string) {
     const node = pathStringToArray(dPathPart);
+
     const index = this._d.findIndex((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
-    this._d.splice(index + 1, 0, ...node);
+    if (index >= 0) {
+      node[0].setPrev(this._d[index]);
+      this._d[index].setNext(node[0]);
+
+      if (index + 1 < this._d.length) {
+        node[node.length - 1].setNext(this._d[index + 1]);
+        this._d[index + 1].setPrev(node[node.length - 1]);
+      }
+
+      this._d.splice(index + 1, 0, ...node);
+    }
   }
 
   public removeDNode(pathNodeId: PID) {
-    this._d = this._d.filter((nodeItem: SVGPathNodeModel) => nodeItem.id !== pathNodeId);
+    const index = this._d.findIndex((nodeItem: SVGPathNodeModel) => nodeItem.id === pathNodeId);
+    if (index >= 0) {
+      this._d = this._d.filter((nodeItem: SVGPathNodeModel) => nodeItem.id !== pathNodeId);
+
+      const nextItem = this._d[index] ?? null;
+
+      this._d[index - 1].setNext(nextItem);
+      nextItem && nextItem.setPrev(this._d[index - 1]);
+    }
   }
 
   public override render() {

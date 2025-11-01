@@ -1,7 +1,7 @@
-import { Component, DestroyRef, inject, input, output } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProjectService } from '@core/services';
 import { PID, SVGPathNodeHModel, SVGPathNodeModel } from '@libs';
+import { PathNodesDPropertyModel } from '../path-nodes-d-property.model';
 
 @Component({
   selector: 'path-nodes-h',
@@ -9,15 +9,22 @@ import { PID, SVGPathNodeHModel, SVGPathNodeModel } from '@libs';
   templateUrl: './path-nodes-h.component.html',
   styleUrl: './path-nodes-h.component.scss',
 })
-export class PathNodesHComponent {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly project = inject(ProjectService);
+export class PathNodesHComponent extends PathNodesDPropertyModel implements OnInit {
+  protected override readonly destroyRef = inject(DestroyRef);
 
   public readonly pathId = input.required<PID>();
-  public node = input.required<SVGPathNodeHModel | SVGPathNodeModel>();
-  public readonly changeNode = output<[PID, string, any]>();
+  public override node = input.required<SVGPathNodeHModel | SVGPathNodeModel>();
+  public readonly x = input.required<number>();
 
-  public form!: FormGroup;
+  public override readonly changeNode = output<[PID, string, any]>();
+
+  constructor() {
+    super();
+    effect(() => {
+      const x = this.x();
+      this.form.get('x')?.setValue(x, { emitEvent: false });
+    });
+  }
 
   public ngOnInit(): void {
     const node = this.node() as SVGPathNodeHModel;
@@ -25,9 +32,7 @@ export class PathNodesHComponent {
     this.form = new FormGroup({
       x: new FormControl({ value: node.x || 0, disabled: false }),
     });
-  }
 
-  public onToggleType() {
-    this.changeNode.emit([this.node().id, 'isLocal', !this.node().isLocal]);
+    this.bindPropertyChanged();
   }
 }

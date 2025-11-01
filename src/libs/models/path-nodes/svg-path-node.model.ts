@@ -57,6 +57,10 @@ export class SVGPathNodeModel {
     this._next = node;
   }
 
+  public setPrev(node: SVGPathNodeModel): void {
+    this._prev = node;
+  }
+
   public render(): string {
     console.warn(`Need to implement render for SVGPathNodeModel ${this._type}`);
     return '';

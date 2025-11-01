@@ -11,10 +11,26 @@
         ></path-nodes-m>
       }
       @case ('A') {
-        <path-nodes-a [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-a>
+        <path-nodes-a
+          [node]="pathItem"
+          [rx]="pathItem.rx"
+          [ry]="pathItem.ry"
+          [xAxisRotation]="pathItem.xAxisRotation"
+          [largeArcFlag]="pathItem.largeArcFlag"
+          [sweepFlag]="pathItem.sweepFlag"
+          [x]="pathItem.x"
+          [y]="pathItem.y"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-a>
       }
       @case ('H') {
-        <path-nodes-h [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-h>
+        <path-nodes-h
+          [node]="pathItem"
+          [x]="pathItem.x"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-h>
       }
       @case ('L') {
         <path-nodes-l
@@ -26,19 +42,56 @@
         ></path-nodes-l>
       }
       @case ('V') {
-        <path-nodes-v [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-v>
+        <path-nodes-v
+          [node]="pathItem"
+          [y]="pathItem.y"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-v>
       }
       @case ('C') {
-        <path-nodes-c [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-c>
+        <path-nodes-c
+          [node]="pathItem"
+          [x]="pathItem.x"
+          [y]="pathItem.y"
+          [x1]="pathItem.x1"
+          [y1]="pathItem.y1"
+          [x2]="pathItem.x2"
+          [y2]="pathItem.y2"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-c>
       }
       @case ('S') {
-        <path-nodes-s [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-s>
+        <path-nodes-s
+          [node]="pathItem"
+          [x]="pathItem.x"
+          [y]="pathItem.y"
+          [x2]="pathItem.x2"
+          [y2]="pathItem.y2"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-s>
       }
       @case ('T') {
-        <path-nodes-t [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-t>
+        <path-nodes-t
+          [node]="pathItem"
+          [x]="pathItem.x"
+          [y]="pathItem.y"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-t>
       }
       @case ('Q') {
-        <path-nodes-q [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-q>
+        <path-nodes-q
+          [node]="pathItem"
+          [x]="pathItem.x"
+          [y]="pathItem.y"
+          [x1]="pathItem.x1"
+          [y1]="pathItem.y1"
+          [pathId]="nodeId()"
+          (changeNode)="onChange($event)"
+        ></path-nodes-q>
       }
       @case ('Z') {
         <path-nodes-z [node]="pathItem" [pathId]="nodeId()" (changeNode)="onChange($event)"></path-nodes-z>

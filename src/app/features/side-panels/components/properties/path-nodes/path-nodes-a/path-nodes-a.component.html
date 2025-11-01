@@ -42,9 +42,21 @@
       formControlName="ry"
     />
 
-    <p-inputgroup-addon><p-checkbox formControlName="xAxisRotation" [binary]="true" /></p-inputgroup-addon>
-    <p-inputgroup-addon><p-checkbox formControlName="largeArcFlag" [binary]="true" /></p-inputgroup-addon>
-    <p-inputgroup-addon><p-checkbox formControlName="sweepFlag" [binary]="true" /></p-inputgroup-addon>
+    <p-inputgroup-addon>
+      <p-checkbox
+        id="xAxisRotation"
+        size="small"
+        name="xAxisRotation"
+        formControlName="xAxisRotation"
+        [binary]="true"
+      />
+    </p-inputgroup-addon>
+    <p-inputgroup-addon>
+      <p-checkbox size="small" formControlName="largeArcFlag" name="largeArcFlag" [binary]="true" />
+    </p-inputgroup-addon>
+    <p-inputgroup-addon>
+      <p-checkbox size="small" formControlName="sweepFlag" name="sweepFlag" [binary]="true" />
+    </p-inputgroup-addon>
 
     <p-inputnumber
       id="xField"

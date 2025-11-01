@@ -35,6 +35,48 @@ export class GroupPathPropertyNodeCommandsComponent {
               },
             },
             {
+              label: 'Horizantal Line (H) node',
+              command: () => {
+                this.addNode('h0');
+              },
+            },
+            {
+              label: 'Vertical Line (V) node',
+              command: () => {
+                this.addNode('v0');
+              },
+            },
+            {
+              label: 'Curve (C) node',
+              command: () => {
+                this.addNode('c0,0,1,1,2,2');
+              },
+            },
+            {
+              label: 'Smooth Curve (S) node',
+              command: () => {
+                this.addNode('s0,1,1,0');
+              },
+            },
+            {
+              label: 'Smooth quadratic Bézier curve (T) node',
+              command: () => {
+                this.addNode('t1,0');
+              },
+            },
+            {
+              label: 'Quadratic Bézier curve (Q) node',
+              command: () => {
+                this.addNode('q2,0,1,1');
+              },
+            },
+            {
+              label: 'Elliptical (A) node',
+              command: () => {
+                this.addNode('a1,1,1,0,1,2,2');
+              },
+            },
+            {
               label: 'Close (Z) node',
               command: () => {
                 this.addNode('z');

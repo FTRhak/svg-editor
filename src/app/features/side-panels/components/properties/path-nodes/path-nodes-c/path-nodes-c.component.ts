@@ -1,7 +1,7 @@
-import { Component, DestroyRef, inject, input, OnInit, output } from '@angular/core';
+import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProjectService } from '@core/services';
 import { PID, SVGPathNodeCModel, SVGPathNodeModel } from '@libs';
+import { PathNodesDPropertyModel } from '../path-nodes-d-property.model';
 
 @Component({
   selector: 'path-nodes-c',
@@ -9,15 +9,37 @@ import { PID, SVGPathNodeCModel, SVGPathNodeModel } from '@libs';
   templateUrl: './path-nodes-c.component.html',
   styleUrl: './path-nodes-c.component.scss',
 })
-export class PathNodesCComponent implements OnInit {
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly project = inject(ProjectService);
+export class PathNodesCComponent extends PathNodesDPropertyModel implements OnInit {
+  protected override readonly destroyRef = inject(DestroyRef);
 
   public readonly pathId = input.required<PID>();
-  public node = input.required<SVGPathNodeCModel | SVGPathNodeModel>();
-  public readonly changeNode = output<[PID, string, any]>();
+  public override node = input.required<SVGPathNodeCModel | SVGPathNodeModel>();
+  public readonly x1 = input.required<number>();
+  public readonly y1 = input.required<number>();
+  public readonly x2 = input.required<number>();
+  public readonly y2 = input.required<number>();
+  public readonly x = input.required<number>();
+  public readonly y = input.required<number>();
 
-  public form!: FormGroup;
+  public override readonly changeNode = output<[PID, string, any]>();
+
+  constructor() {
+    super();
+    effect(() => {
+      const x = this.x();
+      const y = this.y();
+      const x1 = this.x1();
+      const y1 = this.y1();
+      const x2 = this.x2();
+      const y2 = this.y2();
+      this.form.get('x')?.setValue(x, { emitEvent: false });
+      this.form.get('y')?.setValue(y, { emitEvent: false });
+      this.form.get('x1')?.setValue(x1, { emitEvent: false });
+      this.form.get('y1')?.setValue(y1, { emitEvent: false });
+      this.form.get('x2')?.setValue(x2, { emitEvent: false });
+      this.form.get('y2')?.setValue(y2, { emitEvent: false });
+    });
+  }
 
   public ngOnInit(): void {
     const node = this.node() as SVGPathNodeCModel;
@@ -30,9 +52,7 @@ export class PathNodesCComponent implements OnInit {
       x: new FormControl({ value: node.x || 0, disabled: false }),
       y: new FormControl({ value: node.y || 0, disabled: false }),
     });
-  }
 
-  public onToggleType() {
-    this.changeNode.emit([this.node().id, 'isLocal', !this.node().isLocal]);
+    this.bindPropertyChanged();
   }
 }
