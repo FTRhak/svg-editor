@@ -7,6 +7,9 @@ import { debounceTime } from 'rxjs';
 export class PathNodesDPropertyModel {
   protected readonly destroyRef!: DestroyRef;
 
+  public readonly SETTINGS_MIN_NUM = -9999;
+  public readonly SETTINGS_MAX_NUM = 9999;
+
   public form!: FormGroup;
 
   public node!: InputSignal<any>;

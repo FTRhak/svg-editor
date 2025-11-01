@@ -1,6 +1,5 @@
 import { Component, DestroyRef, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ProjectService } from '@core/services';
 import { PID, SVGPathNodeModel, SVGPathNodeQModel } from '@libs';
 import { PathNodesDPropertyModel } from '../path-nodes-d-property.model';
 
