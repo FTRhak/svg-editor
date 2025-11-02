@@ -25,5 +25,6 @@
     "@nx/angular:component": {
       "style": "scss"
     }
-  }
+  },
+  "nxCloudId": "690735027af62b59cff04d6f"
 }
