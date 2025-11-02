@@ -148,7 +148,7 @@ export class MainMenuComponent implements OnDestroy {
     },
   ];
 
-  private ref: DynamicDialogRef | undefined;
+  private ref: DynamicDialogRef | null = null;
 
   ngOnDestroy(): void {
     this.ref?.close();
@@ -160,22 +160,22 @@ export class MainMenuComponent implements OnDestroy {
       modal: true,
       width: '400px',
     });
-    this.ref.onClose.subscribe(() => {});
+    this.ref!.onClose.subscribe(() => {});
   }
 
   public insertPreset() {
     this.ref = this.dialogService.open(PresetsDialogComponent, { header: 'Presets', modal: true, width: '575px' });
-    this.ref.onClose.subscribe(() => {});
+    this.ref!.onClose.subscribe(() => {});
   }
 
   public showResultCode() {
     this.ref = this.dialogService.open(ViewCodeDialogComponent, { header: 'SVG code', modal: true, width: '80vw' });
-    this.ref.onClose.subscribe(() => {});
+    this.ref!.onClose.subscribe(() => {});
   }
 
   public openFile() {
     this.ref = this.dialogService.open(ImportDialogComponent, { header: 'Import SVG', modal: true, width: '300px' });
-    this.ref.onClose.subscribe(() => {});
+    this.ref!.onClose.subscribe(() => {});
   }
 
   public exportProject() {
