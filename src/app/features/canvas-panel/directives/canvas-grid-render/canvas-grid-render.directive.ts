@@ -1,4 +1,5 @@
 import { DestroyRef, Directive, effect, ElementRef, inject, input } from '@angular/core';
+import { Application } from '@core/services';
 import { VectorModel } from '@libs';
 import { collectionToArray } from '@libs/utils';
 
@@ -8,6 +9,8 @@ import { collectionToArray } from '@libs/utils';
 })
 export class CanvasGridRenderDirective {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly app = inject(Application);
+
   private el: ElementRef<SVGGElement> = inject(ElementRef<SVGGElement>);
 
   private readonly SVG_GRID_LINE = 0.01;
@@ -22,13 +25,14 @@ export class CanvasGridRenderDirective {
     let center: VectorModel = { x: 0, y: 0 } as VectorModel;
     effect(() => {
       zoom = this.zoom();
-      console.log('ZOOM:', zoom);
+      //console.log('ZOOM:', zoom);
       //this.rendered ? this.gridUpdate(zoom, center) : this.gridRender(zoom, center);
       this.gridRender(zoom, center);
     });
 
     effect(() => {
       center = this.center();
+      //console.log('CENTER:', center);
       this.rendered ? this.gridUpdate(zoom, center) : this.gridRender(zoom, center);
     });
   }

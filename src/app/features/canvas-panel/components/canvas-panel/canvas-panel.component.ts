@@ -12,9 +12,9 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { WINDOW } from '@core/injectors';
-import { ProjectService } from '@core/services';
+import { Application, ProjectService } from '@core/services';
 import { RectModel, SVGNodeType, SVGRootModel, TreeNodeModel, VectorModel } from '@libs';
-import { debounceTime, filter, fromEvent, map, switchMap, takeUntil, tap } from 'rxjs';
+import { debounceTime, filter, fromEvent, map, merge, switchMap, takeUntil, tap } from 'rxjs';
 
 const normalizePropertyName = (str: string) => str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 
@@ -30,6 +30,7 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
   private readonly project = inject(ProjectService);
   private readonly el = inject(ElementRef);
   private readonly render = inject(Renderer2);
+  private readonly app = inject(Application);
 
   private readonly SVG_BORDER = 0.02;
   private readonly SVG_GRID_LINE = 0.01;
@@ -57,7 +58,9 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       const svgBorder = this.SVG_BORDER * zoom;
       const rec = new RectModel(center.x, center.y, baseSize * zoom, baseSize * (height / width) * zoom);
 
-      this.svgCanvas()?.nativeElement.setAttribute('viewBox', `${rec.x} ${rec.y} ${rec.width} ${rec.height}`);
+      this.app.setCanvasViewBox(rec);
+
+      //this.svgCanvas()?.nativeElement.setAttribute('viewBox', `${rec.x} ${rec.y} ${rec.width} ${rec.height}`);
       this.svgBgView()
         ?.nativeElement.querySelector('[data-id="borderSVGZone"]')
         ?.setAttribute('stroke-width', `${svgBorder}`);
@@ -76,6 +79,10 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
       .subscribe(([project, item, propertyName, value]) => {
         this.updateSVGNode(item, propertyName, value);
       });
+
+    this.app.canvasViewBox$.pipe(debounceTime(0), takeUntilDestroyed(this.destroyRef)).subscribe((rec) => {
+      this.svgCanvas()?.nativeElement.setAttribute('viewBox', `${rec.x} ${rec.y} ${rec.width} ${rec.height}`);
+    });
   }
 
   public ngAfterViewInit(): void {
@@ -122,6 +129,8 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
         this.el.nativeElement.style.height = `${event.height}px`;
         this.svgCanvas()!.nativeElement.setAttribute('width', `${event.width}px`);
         this.svgCanvas()!.nativeElement.setAttribute('height', `${event.height}px`);
+
+        this.app.setCanvasRect(this.svgCanvas()!.nativeElement.getBoundingClientRect());
       });
 
     this.win.dispatchEvent(new Event('resize'));
@@ -131,7 +140,9 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
     const targetCanvas = this.svgCanvas()!.nativeElement;
     const parent = targetCanvas.parentElement!;
 
-    const up$ = fromEvent(targetCanvas, 'mouseup').pipe(takeUntilDestroyed(this.destroyRef));
+    const up$ = merge(fromEvent(targetCanvas, 'mouseup'), fromEvent(targetCanvas, 'mouseleave')).pipe(
+      takeUntilDestroyed(this.destroyRef),
+    );
 
     const canvasSize = new VectorModel(1, 1);
     const prev = new VectorModel();
@@ -147,7 +158,6 @@ export class CanvasPanelComponent implements OnInit, AfterViewInit {
         switchMap((event: MouseEvent) => {
           prev.update(event.clientX, event.clientY);
           return fromEvent<MouseEvent>(targetCanvas, 'mousemove').pipe(
-            //debounceTime(10),
             map((event: MouseEvent) => ({ x: event.clientX, y: event.clientY })),
             takeUntil(up$),
             takeUntilDestroyed(this.destroyRef),
